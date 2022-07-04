@@ -1,0 +1,14 @@
+name: Link Check
+
+on:
+  schedule:
+    # Run every Monday at 8am to check URL links still resolve
+    - cron: "0 8 * * MON"
+
+jobs:
+  docs:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Build docs
+        run: sphinx-build -EWT --keep-going docs build/html -b linkcheck
