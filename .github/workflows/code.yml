@@ -73,7 +73,7 @@ jobs:
           SOURCE_DATE_EPOCH=$(git log -1 --pretty=%ct) pipx run --python $(which python${{ matrix.python }}) build --sdist --wheel
 
       - name: Upload Sdist as artifact
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: dist
           path: dist/*
