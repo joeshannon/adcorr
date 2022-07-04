@@ -75,7 +75,7 @@ jobs:
           SOURCE_DATE_EPOCH: $(git log -1 --pretty=%ct)
 
       - name: Upload Sdist as artifact
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: dist
           path: dist/*
@@ -110,7 +110,7 @@ jobs:
           CIBW_SKIP: "*-musllinux*"
 
       - name: Upload Wheel as artifact
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: dist
           path: dist/*
