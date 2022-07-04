@@ -4,7 +4,6 @@ on:
   push:
     branches:
       # Add more branches here to publish docs from other branches
-      - master
       - main
     tags:
       - "*"
@@ -42,7 +41,7 @@ jobs:
         run: sphinx-build -EWT --keep-going docs build/html
 
       - name: Move to versioned directory
-        # e.g. master or 0.1.2
+        # e.g. main or 0.1.2
         run: mv build/html ".github/pages/${GITHUB_REF##*/}"
 
       - name: Write versions.txt
