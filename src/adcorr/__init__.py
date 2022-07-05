@@ -18,9 +18,7 @@ from .thickness import normalize_thickness
 __all__ = [
     "__version__",
     "utils",
-    "load_data",
     "mask_frames",
-    "estimate_poisson_uncertainty",
     "correct_deadtime",
     "correct_dark_current",
     "normalize_frame_time",
@@ -34,5 +32,4 @@ __all__ = [
     "correct_polarization",
     "normalize_thickness",
     "correct_displaced_volume",
-    "azimuthally_integrate",
 ]
