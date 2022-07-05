@@ -23,13 +23,13 @@ def scattering_angles(
     """
     yy, xx = meshgrid(
         linspace(
-            -beam_center[1] * pixel_sizes[1],
-            (frame_shape[1] - beam_center[1]) * pixel_sizes[1],
+            (0.5 - beam_center[1]) * pixel_sizes[1],
+            (frame_shape[1] - 0.5 - beam_center[1]) * pixel_sizes[1],
             frame_shape[1],
         ),
         linspace(
-            -beam_center[0] * pixel_sizes[0],
-            (frame_shape[0] - beam_center[0]) * pixel_sizes[0],
+            (0.5 - beam_center[0]) * pixel_sizes[0],
+            (frame_shape[0] - 0.5 - beam_center[0]) * pixel_sizes[0],
             frame_shape[0],
         ),
     )
