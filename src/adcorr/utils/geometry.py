@@ -1,6 +1,19 @@
 from typing import Tuple
 
-from numpy import arctan, dtype, floating, hypot, linspace, meshgrid, ndarray
+from numpy import (
+    Inf,
+    arctan,
+    divide,
+    dtype,
+    floating,
+    full_like,
+    hypot,
+    linspace,
+    meshgrid,
+    ndarray,
+    where,
+    zeros_like,
+)
 
 
 def scattering_angles(
@@ -51,14 +64,20 @@ def azimuthal_angles(
     """
     yy, xx = meshgrid(
         linspace(
-            -beam_center[1],
-            (frame_shape[1] - beam_center[1]),
+            0.5 - beam_center[1],
+            (frame_shape[1] - 0.5 - beam_center[1]),
             frame_shape[1],
         ),
         linspace(
-            -beam_center[0],
-            (frame_shape[0] - beam_center[0]),
+            0.5 - beam_center[0],
+            (frame_shape[0] - 0.5 - beam_center[0]),
             frame_shape[0],
         ),
     )
-    return arctan(xx / yy)
+    return arctan(
+        where(
+            xx == 0,
+            zeros_like(xx),
+            divide(xx, yy, out=full_like(yy, Inf), where=yy != 0),
+        )
+    )
