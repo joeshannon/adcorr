@@ -1,31 +1,33 @@
-from typing import Any, TypeVar
+from typing import Any, Literal, Tuple, TypeVar, Union, cast
 
-from numpy import atleast_1d, dtype, exp, expand_dims, floating, ndarray
-from numpy.ma import MaskedArray, masked_array
+from numpy import atleast_1d, complexfloating, dtype, expand_dims, floating, ndarray
+from scipy.special import lambertw
 
 FrameDType = TypeVar("FrameDType", bound=dtype)
-FramesShape = TypeVar("FramesShape", bound=Any)
-TimesShape = TypeVar("TimesShape", bound=Any)
+NumFrames = TypeVar("NumFrames", bound=int)
+FrameWidth = TypeVar("FrameWidth", bound=int)
+FrameHeight = TypeVar("FrameHeight", bound=int)
 
 
 def correct_deadtime(
-    frames: MaskedArray[FramesShape, FrameDType],
-    count_times: ndarray[TimesShape, dtype[floating]],
+    frames: ndarray[Tuple[NumFrames, FrameWidth, FrameHeight], FrameDType],
+    count_times: ndarray[Tuple[Union[NumFrames, Literal[1]]], dtype[floating]],
     minimum_pulse_separation: float,
     minimum_arrival_separation: float,
-) -> MaskedArray[FramesShape, FrameDType]:
+) -> ndarray[Tuple[NumFrames, FrameWidth, FrameHeight], FrameDType]:
     """Correct for detector deadtime by scaling counts to account for overlapping events.
 
-    Correct for detector deadtime by scaling photon counts according to the liklihood
-    of overlapping events, as detailed in section 3.3.4 of 'Everything SAXS: small-
+    Correct for detector deadtime by iteratively solving for the number of incident
+    photons required to produce the observed value in a given time period subject to
+    detector characteristics, as detailed in section 3.3.4 of 'Everything SAXS: small-
     angle scattering pattern collection and correction'
     [https://doi.org/10.1088/0953-8984/25/38/383201].
 
     Args:
-        frames (MaskedArray[FramesShape, FrameDType]): A stack of frames to be
-            corrected.
-        count_times (ndarray[TimesShape, dtype[floating]]): The period over which
-            photons are counted for each frame.
+        frames (ndarray[Tuple[NumFrames, FrameWidth, FrameHeight], FrameDType]): A
+            stack of frames to be corrected.
+        count_times (ndarray[Tuple[Union[NumFrames, Literal[1]]], dtype[floating]]):
+            The period over which photons are counted for each frame.
         minimum_pulse_separation (float): The minimum time difference required between
             a prior pulse and the current pulse for the current pulse to be recorded
             correctly.
@@ -34,13 +36,29 @@ def correct_deadtime(
             be recorded correctly.
 
     Returns:
-        MaskedArray[FramesShape, FrameDType]: The corrected stack of frames.
+        ndarray[Tuple[NumFrames, FrameWidth, FrameHeight], FrameDType]: The corrected
+            stack of frames.
     """
-    overlap_likelihood = expand_dims(
+    if (count_times <= 0).any():
+        raise ValueError("Count times must be positive.")
+    if minimum_pulse_separation < 0:
+        raise ValueError("Minimum Pulse Separation must be non-negative.")
+    if minimum_arrival_separation < 0:
+        raise ValueError("Minimum Arrival Separation must be non-negative.")
+
+    if minimum_pulse_separation == 0 and minimum_arrival_separation == 0:
+        return frames
+
+    deadtime_proportion = expand_dims(
         atleast_1d(
             (minimum_pulse_separation + minimum_arrival_separation) / count_times
         ),
         (1, 2),
     )
-    corrected_frames = frames.data * exp(frames.data * overlap_likelihood)
-    return masked_array(corrected_frames, frames.mask)
+    return (
+        -cast(
+            ndarray[Any, dtype[complexfloating]],
+            lambertw(-deadtime_proportion * frames),
+        ).real
+        / deadtime_proportion
+    )
