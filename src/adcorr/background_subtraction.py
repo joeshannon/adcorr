@@ -1,16 +1,17 @@
-from typing import Any, Tuple, TypeVar
+from typing import Tuple, TypeVar
 
-from numpy import dtype
-from numpy.ma import MaskedArray, masked_array
+from numpy import dtype, ndarray
 
 FrameDType = TypeVar("FrameDType", bound=dtype)
-FramesShape = TypeVar("FramesShape", bound=Any)
+NumFrames = TypeVar("NumFrames", bound=int)
+FrameWidth = TypeVar("FrameWidth", bound=int)
+FrameHeight = TypeVar("FrameHeight", bound=int)
 
 
 def subtract_background(
-    foreground_frames: MaskedArray[FramesShape, FrameDType],
-    background_frame: MaskedArray[Tuple[int, int], FrameDType],
-) -> MaskedArray[FramesShape, FrameDType]:
+    foreground_frames: ndarray[Tuple[NumFrames, FrameWidth, FrameHeight], FrameDType],
+    background_frame: ndarray[Tuple[FrameWidth, FrameHeight], FrameDType],
+) -> ndarray[Tuple[NumFrames, FrameWidth, FrameHeight], FrameDType]:
     """Subtract a background frame from a sequence of foreground frames.
 
     Subtract a background frame from a sequence of foreground frames, as detailed in
@@ -18,15 +19,13 @@ def subtract_background(
     correction' [https://doi.org/10.1088/0953-8984/25/38/383201].
 
     Args:
-        foreground_frames (MaskedArray[FramesShape, FrameDType]): A sequence of
-            foreground frames to be corrected.
-        background_frame (MaskedArray[Tuple[int, int], FrameDType]): The background
-            which is to be corrected for.
+        foreground_frames (ndarray[Tuple[NumFrames, FrameWidth, FrameHeight],
+            FrameDType]): A sequence of foreground frames to be corrected.
+        background_frame (ndarray[Tuple[FrameWidth, FrameHeight], FrameDType]): The
+            background which is to be corrected for.
 
     Returns:
-        MaskedArray[FramesShape, FrameDType]: A sequence of corrected frames.
+        ndarray[Tuple[NumFrames, FrameWidth, FrameHeight], FrameDType]: A sequence of
+            corrected frames.
     """
-    return masked_array(
-        foreground_frames.data - background_frame.data,
-        foreground_frames.mask,
-    )
+    return foreground_frames - background_frame
