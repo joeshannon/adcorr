@@ -1,7 +1,6 @@
 from typing import Tuple, TypeVar
 
 from numpy import dtype, floating, ndarray
-from numpy.ma import MaskedArray, masked_array
 
 FrameDType = TypeVar("FrameDType", bound=dtype)
 NumFrames = TypeVar("NumFrames", bound=int)
@@ -10,9 +9,9 @@ FrameHeight = TypeVar("FrameHeight", bound=int)
 
 
 def correct_flatfield(
-    frames: MaskedArray[Tuple[NumFrames, FrameHeight, FrameWidth], FrameDType],
+    frames: ndarray[Tuple[NumFrames, FrameHeight, FrameWidth], FrameDType],
     flatfield: ndarray[Tuple[FrameHeight, FrameWidth], dtype[floating]],
-) -> MaskedArray[Tuple[NumFrames, FrameHeight, FrameWidth], FrameDType]:
+) -> ndarray[Tuple[NumFrames, FrameHeight, FrameWidth], FrameDType]:
     """Apply multiplicative flatfield correction, to correct for inter-pixel sensitivity.
 
     Apply multiplicative flatfield correction, to correct for inter-pixel sensitivity,
@@ -20,12 +19,13 @@ def correct_flatfield(
     correction sequence' [https://doi.org/10.1107/S1600576717015096].
 
     Args:
-        frames (MaskedArray[Tuple[NumFrames, FrameHeight, FrameWidth], FrameDType]): A
+        frames (ndarray[Tuple[NumFrames, FrameHeight, FrameWidth], FrameDType]): A
             stack of frames to be corrected.
         flatfield (ndarray[Tuple[FrameHeight, FrameWidth], dtype[floating]]): The
             multiplicative flatfield correction to be applied.
 
     Returns:
-        MaskedArray[Tuple[NumFrames, FrameHeight, FrameWidth], Uncertain]: _description_
+        ndarray[Tuple[NumFrames, FrameHeight, FrameWidth], FrameDType]: The corrected
+            stack of frames.
     """
-    return masked_array(frames.data * flatfield, frames.mask)
+    return frames * flatfield
