@@ -1,6 +1,6 @@
 from . import utils
 from ._version_git import __version__
-from .angular_efficiency import correct_angular_efficincy
+from .angular_efficiency import correct_angular_efficiency
 from .background_subtraction import subtract_background
 from .dark_current import correct_dark_current
 from .deadtime import correct_deadtime
@@ -27,7 +27,7 @@ __all__ = [
     "average_all_frames",
     "subtract_background",
     "correct_flatfield",
-    "correct_angular_efficincy",
+    "correct_angular_efficiency",
     "correct_solid_angle",
     "correct_polarization",
     "normalize_thickness",

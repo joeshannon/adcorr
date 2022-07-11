@@ -1,7 +1,6 @@
-from typing import Any, Tuple, TypeVar
+from typing import Any, Tuple, TypeVar, cast
 
-from numpy import cos, dtype, exp
-from numpy.ma import MaskedArray, masked_array
+from numpy import cos, dtype, exp, ndarray
 
 from .utils.geometry import scattering_angles
 
@@ -9,14 +8,14 @@ FrameDType = TypeVar("FrameDType", bound=dtype)
 FramesShape = TypeVar("FramesShape", bound=Any)
 
 
-def correct_angular_efficincy(
-    frames: MaskedArray[FramesShape, FrameDType],
+def correct_angular_efficiency(
+    frames: ndarray[FramesShape, FrameDType],
     beam_center: Tuple[float, float],
     pixel_sizes: Tuple[float, float],
     distance: float,
     absorption_coefficient: float,
     thickness: float,
-) -> MaskedArray[FramesShape, FrameDType]:
+) -> ndarray[FramesShape, FrameDType]:
     """Corrects for loss due to the angular efficiency of the detector head.
 
     Corrects for loss due to the angular efficiency of the detector head, as described
@@ -24,7 +23,7 @@ def correct_angular_efficincy(
     correction sequence' [https://doi.org/10.1107/S1600576717015096].
 
     Args:
-        frames (MaskedArray[FramesShape, FrameDType]): A stack of frames to be
+        frames (ndarray[FramesShape, FrameDType]): A stack of frames to be
             corrected.
         beam_center (Tuple[float, float]): The center position of the beam in pixels.
         pixel_sizes (Tuple[float, float]): The real space size of a detector pixel.
@@ -34,11 +33,23 @@ def correct_angular_efficincy(
         thickness (float): The thickness of the detector head material.
 
     Returns:
-        MaskedArray[FramesShape, FrameDType]: The corrected stack of frames.
+        ndarray[FramesShape, FrameDType]: The corrected stack of frames.
     """
-    absorption_efficiency = 1 - exp(
+    if absorption_coefficient <= 0.0:
+        raise ValueError("absorption coefficient must positive.")
+    if thickness <= 0.0:
+        raise ValueError("Thickness must be positive.")
+
+    absorption_efficiency = 1.0 - exp(
         -absorption_coefficient
         * thickness
-        / cos(scattering_angles(frames[0].shape, beam_center, pixel_sizes, distance))
+        / cos(
+            scattering_angles(
+                cast(tuple[int, int], frames.shape[-2:]),
+                beam_center,
+                pixel_sizes,
+                distance,
+            )
+        )
     )
-    return masked_array(frames / absorption_efficiency, frames.mask)
+    return frames / absorption_efficiency
