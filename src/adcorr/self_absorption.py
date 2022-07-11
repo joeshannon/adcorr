@@ -21,12 +21,12 @@ FrameWidth = TypeVar("FrameWidth", bound=int)
 FrameHeight = TypeVar("FrameHeight", bound=int)
 
 
-def correct_self_absorbtion(
+def correct_self_absorption(
     frames: ndarray[Tuple[NumFrames, FrameWidth, FrameHeight], FrameDType],
     beam_center: Tuple[float, float],
     pixel_sizes: Tuple[float, float],
     distance: float,
-    absorbtion_coefficient: float,
+    absorption_coefficient: float,
     thickness: float,
 ) -> ndarray[Tuple[NumFrames, FrameWidth, FrameHeight], FrameDType]:
     """Correct for transmission loss due to differences in observation angle.
@@ -41,22 +41,22 @@ def correct_self_absorbtion(
         beam_center (Tuple[float, float]): The center position of the beam in pixels.
         pixel_sizes (Tuple[float, float]): The real space size of a detector pixel.
         distance (float): The distance between the detector and the sample.
-        absorbtion_coefficient (float): The coefficient of absorbtion for a given
+        absorption_coefficient (float): The coefficient of absorption for a given
             material at a given photon energy.
         thickness (float): The thickness of the detector head material.
 
     Returns:
         ndarray[FramesShape, FrameDType]: The corrected stack of frames.
     """
-    if absorbtion_coefficient < 0.0:
-        raise ValueError("Absorbtion coefficient must non-negative.")
+    if absorption_coefficient < 0.0:
+        raise ValueError("absorption coefficient must non-negative.")
     if thickness < 0.0:
         raise ValueError("Thickness must be non-negative.")
 
     angles = scattering_angles(
         cast(Tuple[int, int], frames.shape[-2:]), beam_center, pixel_sizes, distance
     )
-    transmissibility = exp(-absorbtion_coefficient * thickness)
+    transmissibility = exp(-absorption_coefficient * thickness)
     secangle: ndarray[Tuple[int, int], dtype[floating]] = 1 / cos(angles)
     correction_factors: ndarray[Tuple[int, int], dtype[floating]] = divide(
         1 - power(transmissibility, secangle - 1),

@@ -11,7 +11,7 @@ from .frame_average import average_frames
 from .frame_time import normalize_frame_time
 from .masking import mask_frames
 from .polarization import correct_polarization
-from .self_absorbtion import correct_self_absorbtion
+from .self_absorption import correct_self_absorption
 from .solid_angle import correct_solid_angle
 from .thickness import normalize_thickness
 
@@ -23,7 +23,7 @@ __all__ = [
     "correct_dark_current",
     "normalize_frame_time",
     "normalize_transmitted_flux",
-    "correct_self_absorbtion",
+    "correct_self_absorption",
     "average_frames",
     "subtract_background",
     "correct_flatfield",

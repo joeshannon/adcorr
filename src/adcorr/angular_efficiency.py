@@ -14,7 +14,7 @@ def correct_angular_efficincy(
     beam_center: Tuple[float, float],
     pixel_sizes: Tuple[float, float],
     distance: float,
-    absorbtion_coefficient: float,
+    absorption_coefficient: float,
     thickness: float,
 ) -> MaskedArray[FramesShape, FrameDType]:
     """Corrects for loss due to the angular efficiency of the detector head.
@@ -29,16 +29,16 @@ def correct_angular_efficincy(
         beam_center (Tuple[float, float]): The center position of the beam in pixels.
         pixel_sizes (Tuple[float, float]): The real space size of a detector pixel.
         distance (float): The distance between the detector and the sample head.
-        absorbtion_coefficient (float): The coefficient of absorbtion for a given
+        absorption_coefficient (float): The coefficient of absorption for a given
             material at a given photon energy.
         thickness (float): The thickness of the detector head material.
 
     Returns:
         MaskedArray[FramesShape, FrameDType]: The corrected stack of frames.
     """
-    absorbtion_efficiency = 1 - exp(
-        -absorbtion_coefficient
+    absorption_efficiency = 1 - exp(
+        -absorption_coefficient
         * thickness
         / cos(scattering_angles(frames[0].shape, beam_center, pixel_sizes, distance))
     )
-    return masked_array(frames / absorbtion_efficiency, frames.mask)
+    return masked_array(frames / absorption_efficiency, frames.mask)
