@@ -1,20 +1,17 @@
-from typing import Literal, Tuple, TypeVar, Union
+from typing import Literal, Tuple, Union
 
 from numpy import atleast_1d, dtype, expand_dims, floating, ndarray
 
-FrameDType = TypeVar("FrameDType", bound=dtype)
-NumFrames = TypeVar("NumFrames", bound=int)
-FrameWidth = TypeVar("FrameWidth", bound=int)
-FrameHeight = TypeVar("FrameHeight", bound=int)
+from .utils.typing import Frames, NumFrames
 
 
 def correct_dark_current(
-    frames: ndarray[Tuple[NumFrames, FrameWidth, FrameHeight], FrameDType],
+    frames: Frames,
     count_times: ndarray[Tuple[Union[NumFrames, Literal[1]]], dtype[floating]],
     base_dark_current: float,
     temporal_dark_current: float,
     flux_dependant_dark_current: float,
-) -> ndarray[Tuple[NumFrames, FrameWidth, FrameHeight], FrameDType]:
+) -> Frames:
     """Correct by subtracting base, temporal and flux-dependant dark currents.
 
     Correct for incident dark current by subtracting a baselike, time dependant and a
@@ -23,18 +20,15 @@ def correct_dark_current(
     [https://doi.org/10.1088/0953-8984/25/38/383201].
 
     Args:
-        frames (ndarray[Tuple[NumFrames, FrameWidth, FrameHeight], FrameDType]): A
-            stack of frames to be corrected.
-        count_times (ndarray[Tuple[Union[NumFrames, Literal[1]]], dtype[floating]]):
-            The period over which photons are counted for each frame.
-        base_dark_current (float): The dark current flux, irrespective of time.
-        temporal_dark_current (float): The dark current flux, as a factor of time.
-        flux_dependant_dark_current (float): The dark current flux, as a factor of
-            incident flux.
+        frames: A stack of frames to be corrected.
+        count_times: The period over which photons are counted for each frame.
+        base_dark_current: The dark current flux, irrespective of time.
+        temporal_dark_current: The dark current flux, as a factor of time.
+        flux_dependant_dark_current: The dark current flux, as a factor of incident
+            flux.
 
     Returns:
-        ndarray[Tuple[NumFrames, FrameWidth, FrameHeight], FrameDType]: The
-            corrected stack of frames.
+        The corrected stack of frames.
     """
     if (count_times <= 0).any():
         raise ValueError("Count times must be positive.")

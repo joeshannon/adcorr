@@ -1,17 +1,14 @@
-from typing import Literal, Tuple, TypeVar, Union
+from typing import Literal, Tuple, Union
 
 from numpy import atleast_1d, dtype, expand_dims, floating, ndarray
 
-FrameDType = TypeVar("FrameDType", bound=dtype)
-NumFrames = TypeVar("NumFrames", bound=int)
-FrameWidth = TypeVar("FrameWidth", bound=int)
-FrameHeight = TypeVar("FrameHeight", bound=int)
+from .utils.typing import Frames, NumFrames
 
 
 def normalize_frame_time(
-    frames: ndarray[Tuple[NumFrames, FrameWidth, FrameHeight], FrameDType],
+    frames: Frames,
     count_times: ndarray[Tuple[Union[NumFrames, Literal[1]]], dtype[floating]],
-) -> ndarray[Tuple[NumFrames, FrameWidth, FrameHeight], FrameDType]:
+) -> Frames:
     """Normalize for detector frame rate by scaling photon counts according to count time.
 
     Normalize for detector frame rate by scaling photon counts according to count time,
@@ -19,14 +16,11 @@ def normalize_frame_time(
     collection and correction' [https://doi.org/10.1088/0953-8984/25/38/383201].
 
     Args:
-        frames (ndarray[Tuple[NumFrames, FrameWidth, FrameHeight], FrameDType]): A
-            stack of frames to be normalized.
-        count_times (ndarray[Tuple[Union[TimesShape, Literal[1]]], dtype[floating]]):
-            The period over which photons are counted for each frame.
+        frames: A stack of frames to be normalized.
+        count_times: The period over which photons are counted for each frame.
 
     Returns:
-        ndarray[Tuple[NumFrames, FrameWidth, FrameHeight], FrameDType]: The normalized
-            stack of frames.
+        The normalized stack of frames.
     """
     if (count_times <= 0).any():
         raise ValueError("Count times must be positive.")

@@ -1,23 +1,21 @@
-from typing import Any, TypeVar
+from typing import Any
 
-from numpy import bool_, broadcast_to, dtype, ndarray, number
+from numpy import bool_, broadcast_to, dtype, ndarray
 from numpy.ma import MaskedArray, masked_where
 
-FrameDType = TypeVar("FrameDType", bound=dtype[number])
-FramesShape = TypeVar("FramesShape", bound=Any)
+from .utils.typing import FrameDType, StackShape
 
 
 def mask_frames(
-    frames: ndarray[FramesShape, FrameDType],
-    mask: ndarray[Any, dtype[bool_]],
-) -> MaskedArray[FramesShape, FrameDType]:
+    frames: ndarray[StackShape, FrameDType], mask: ndarray[Any, dtype[bool_]]
+) -> MaskedArray[StackShape, FrameDType]:
     """Replaces masked elemenets of frames in a stack with zero.
 
     Args:
-        frames (ndarray[FrameShape, FrameDType]): A stack of frames to be masked.
-        mask (ndarray[Any, dtype[bool_]]): The boolean mask to apply to each frame.
+        frames: A stack of frames to be masked.
+        mask: The boolean mask to apply to each frame.
 
     Returns:
-        ndarray[FrameShape, FrameDType]: A stack of frames where pixels
+        A stack of frames where pixels.
     """
     return masked_where(broadcast_to(mask, frames.shape), frames)

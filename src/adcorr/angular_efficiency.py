@@ -1,21 +1,19 @@
-from typing import Any, Tuple, TypeVar, cast
+from typing import Tuple, cast
 
-from numpy import cos, dtype, exp, ndarray
+from numpy import cos, exp
 
 from .utils.geometry import scattering_angles
-
-FrameDType = TypeVar("FrameDType", bound=dtype)
-FramesShape = TypeVar("FramesShape", bound=Any)
+from .utils.typing import Frames
 
 
 def correct_angular_efficiency(
-    frames: ndarray[FramesShape, FrameDType],
+    frames: Frames,
     beam_center: Tuple[float, float],
     pixel_sizes: Tuple[float, float],
     distance: float,
     absorption_coefficient: float,
     thickness: float,
-) -> ndarray[FramesShape, FrameDType]:
+) -> Frames:
     """Corrects for loss due to the angular efficiency of the detector head.
 
     Corrects for loss due to the angular efficiency of the detector head, as described
@@ -23,20 +21,19 @@ def correct_angular_efficiency(
     correction sequence' [https://doi.org/10.1107/S1600576717015096].
 
     Args:
-        frames (ndarray[FramesShape, FrameDType]): A stack of frames to be
-            corrected.
-        beam_center (Tuple[float, float]): The center position of the beam in pixels.
-        pixel_sizes (Tuple[float, float]): The real space size of a detector pixel.
-        distance (float): The distance between the detector and the sample head.
-        absorption_coefficient (float): The coefficient of absorption for a given
-            material at a given photon energy.
-        thickness (float): The thickness of the detector head material.
+        frames: A stack of frames to be corrected.
+        beam_center: The center position of the beam in pixels.
+        pixel_sizes: The real space size of a detector pixel.
+        distance: The distance between the detector and the sample head.
+        absorption_coefficient: The coefficient of absorption for a given material at a
+            given photon energy.
+        thickness: The thickness of the detector head material.
 
     Returns:
-        ndarray[FramesShape, FrameDType]: The corrected stack of frames.
+        The corrected stack of frames.
     """
     if absorption_coefficient <= 0.0:
-        raise ValueError("absorption coefficient must positive.")
+        raise ValueError("Absorption Coefficient must positive.")
     if thickness <= 0.0:
         raise ValueError("Thickness must be positive.")
 

@@ -1,20 +1,17 @@
-from typing import Any, Literal, Tuple, TypeVar, Union, cast
+from typing import Any, Literal, Tuple, Union, cast
 
 from numpy import atleast_1d, complexfloating, dtype, expand_dims, floating, ndarray
 from scipy.special import lambertw
 
-FrameDType = TypeVar("FrameDType", bound=dtype)
-NumFrames = TypeVar("NumFrames", bound=int)
-FrameWidth = TypeVar("FrameWidth", bound=int)
-FrameHeight = TypeVar("FrameHeight", bound=int)
+from .utils.typing import Frames, NumFrames
 
 
 def correct_deadtime(
-    frames: ndarray[Tuple[NumFrames, FrameWidth, FrameHeight], FrameDType],
+    frames: Frames,
     count_times: ndarray[Tuple[Union[NumFrames, Literal[1]]], dtype[floating]],
     minimum_pulse_separation: float,
     minimum_arrival_separation: float,
-) -> ndarray[Tuple[NumFrames, FrameWidth, FrameHeight], FrameDType]:
+) -> Frames:
     """Correct for detector deadtime by scaling counts to account for overlapping events.
 
     Correct for detector deadtime by iteratively solving for the number of incident
@@ -24,20 +21,16 @@ def correct_deadtime(
     [https://doi.org/10.1088/0953-8984/25/38/383201].
 
     Args:
-        frames (ndarray[Tuple[NumFrames, FrameWidth, FrameHeight], FrameDType]): A
-            stack of frames to be corrected.
-        count_times (ndarray[Tuple[Union[NumFrames, Literal[1]]], dtype[floating]]):
-            The period over which photons are counted for each frame.
-        minimum_pulse_separation (float): The minimum time difference required between
-            a prior pulse and the current pulse for the current pulse to be recorded
+        frames: A stack of frames to be corrected.
+        count_times: The period over which photons are counted for each frame.
+        minimum_pulse_separation: The minimum time difference required between a prior
+            pulse and the current pulse for the current pulse to be recorded correctly.
+        minimum_arrival_separation: The minimum time difference required between the
+            current pulse and a subsequent pulse for the current pulse to be recorded
             correctly.
-        minimum_arrival_separation (float): The minimum time difference required
-            between the current pulse and a subsequent pulse for the current pulse to
-            be recorded correctly.
 
     Returns:
-        ndarray[Tuple[NumFrames, FrameWidth, FrameHeight], FrameDType]: The corrected
-            stack of frames.
+        The corrected stack of frames.
     """
     if (count_times <= 0).any():
         raise ValueError("Count times must be positive.")

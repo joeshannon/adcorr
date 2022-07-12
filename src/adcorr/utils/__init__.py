@@ -1,3 +1,3 @@
-from . import geometry
+from . import geometry, typing
 
-__all__ = ["geometry"]
+__all__ = ["geometry", "typing"]

@@ -1,15 +1,12 @@
-from typing import Tuple, TypeVar, cast
+from typing import cast
 
-from numpy import dtype, ndarray
-
-FrameDType = TypeVar("FrameDType", bound=dtype)
-FramesShape = TypeVar("FramesShape", bound=Tuple[int, int, int])
+from .utils.typing import Frames
 
 
 def normalize_thickness(
-    frames: ndarray[FramesShape, FrameDType],
+    frames: Frames,
     sample_thickness: float,
-) -> ndarray[FramesShape, FrameDType]:
+) -> Frames:
     """Normailizes pixel intensities by dividing by the sample thickness.
 
     Normailizes pixel intensities by dividing by the sample thickness, as detailed in
@@ -17,13 +14,13 @@ def normalize_thickness(
     correction' [https://doi.org/10.1088/0953-8984/25/38/383201].
 
     Args:
-        frames (ndarray[FramesShape, FrameDType]): A stack of frames to be corrected.
-        sample_thickness (float): The thickness of the exposed sample.
+        frames: A stack of frames to be corrected.
+        sample_thickness: The thickness of the exposed sample.
 
     Returns:
-        ndarray[FramesShape, FrameDType]: The normalized stack of frames.
+        The normalized stack of frames.
     """
     if sample_thickness <= 0:
         raise ValueError("Sample Thickness must be positive.")
 
-    return cast(ndarray[FramesShape, FrameDType], frames / sample_thickness)
+    return cast(Frames, frames / sample_thickness)

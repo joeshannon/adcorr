@@ -1,20 +1,18 @@
-from typing import Tuple, TypeVar, cast
+from typing import Tuple, cast
 
-from numpy import cos, dtype, ndarray, sin, square
+from numpy import cos, sin, square
 
 from .utils.geometry import azimuthal_angles, scattering_angles
-
-FrameDType = TypeVar("FrameDType", bound=dtype)
-FramesShape = TypeVar("FramesShape", bound=Tuple[int, int, int])
+from .utils.typing import Frames
 
 
 def correct_polarization(
-    frames: ndarray[FramesShape, FrameDType],
+    frames: Frames,
     beam_center: Tuple[float, float],
     pixel_sizes: Tuple[float, float],
     distance: float,
     horizontal_poarization: float = 0.5,
-) -> ndarray[FramesShape, FrameDType]:
+) -> Frames:
     """Corrects for the effect of polarization of the incident beam.
 
     Corrects for the effect of polarization of the incident beam, as detailed in
@@ -22,16 +20,16 @@ def correct_polarization(
     correction' [https://doi.org/10.1088/0953-8984/25/38/383201].
 
     Args:
-        frames (ndarray[FramesShape, FrameDType]): A stack of frames to be corrected.
-        beam_center (Tuple[float, float]): The center position of the beam in pixels.
-        pixel_sizes (Tuple[float, float]): The real space size of a detector pixel.
-        distance (float): The distance between the detector and the sample.
-        horizontal_poarization (float, optional): The fraction of incident radiation
-            polarized in the horizontal plane, where 0.5 signifies an unpolarized
-            source. Defaults to 0.5.
+        frames: A stack of frames to be corrected.
+        beam_center: The center position of the beam in pixels.
+        pixel_sizes: The real space size of a detector pixel.
+        distance: The distance between the detector and the sample.
+        horizontal_poarization: The fraction of incident radiation polarized in the
+            horizontal plane, where 0.5 signifies an unpolarized source. Defaults to
+            0.5.
 
     Returns:
-        ndarray[FramesShape, FrameDType]: The corrected stack of frames.
+        The corrected stack of frames.
     """
     if horizontal_poarization < 0.0 or horizontal_poarization > 1.0:
         raise ValueError("Horizontal Polarization must be within the interval [0, 1].")

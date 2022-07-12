@@ -1,5 +1,5 @@
 from math import exp
-from typing import Tuple, TypeVar, cast
+from typing import Tuple, cast
 
 from numpy import (
     cos,
@@ -14,21 +14,17 @@ from numpy import (
 )
 
 from .utils.geometry import scattering_angles
-
-FrameDType = TypeVar("FrameDType", bound=dtype)
-NumFrames = TypeVar("NumFrames", bound=int)
-FrameWidth = TypeVar("FrameWidth", bound=int)
-FrameHeight = TypeVar("FrameHeight", bound=int)
+from .utils.typing import Frames
 
 
 def correct_self_absorption(
-    frames: ndarray[Tuple[NumFrames, FrameWidth, FrameHeight], FrameDType],
+    frames: Frames,
     beam_center: Tuple[float, float],
     pixel_sizes: Tuple[float, float],
     distance: float,
     absorption_coefficient: float,
     thickness: float,
-) -> ndarray[Tuple[NumFrames, FrameWidth, FrameHeight], FrameDType]:
+) -> Frames:
     """Correct for transmission loss due to differences in observation angle.
 
     Correct for transmission loss due to differences in observation angle, as detailed
@@ -36,17 +32,16 @@ def correct_self_absorption(
     correction' [https://doi.org/10.1088/0953-8984/25/38/383201].
 
     Args:
-        frames (ndarray[Tuple[NumFrames, FrameWidth, FrameHeight], FrameDType]): A
-            stack of frames to be corrected.
-        beam_center (Tuple[float, float]): The center position of the beam in pixels.
-        pixel_sizes (Tuple[float, float]): The real space size of a detector pixel.
-        distance (float): The distance between the detector and the sample.
-        absorption_coefficient (float): The coefficient of absorption for a given
+        frames: A stack of frames to be corrected.
+        beam_center: The center position of the beam in pixels.
+        pixel_sizes: The real space size of a detector pixel.
+        distance: The distance between the detector and the sample.
+        absorption_coefficient: The coefficient of absorption for a given
             material at a given photon energy.
-        thickness (float): The thickness of the detector head material.
+        thickness: The thickness of the detector head material.
 
     Returns:
-        ndarray[FramesShape, FrameDType]: The corrected stack of frames.
+        The corrected stack of frames.
     """
     if absorption_coefficient < 0.0:
         raise ValueError("absorption coefficient must non-negative.")
