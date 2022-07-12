@@ -98,7 +98,7 @@ def test_scattering_angles_distance_negative():
 
 def test_azimuthal_angles_typical_2x2():
     assert isclose(
-        array([[0.785398163, -0.785398163], [-0.785398163, 0.785398163]]),
+        array([[-2.35619449, -0.785398163], [2.35619449, 0.785398163]]),
         azimuthal_angles((2, 2), (1.0, 1.0), (0.1, 0.1)),
     ).all()
 
@@ -107,9 +107,9 @@ def test_azimuthal_angles_typical_3x3():
     assert isclose(
         array(
             [
-                [0.78539816, 1.57079633, -0.78539816],
-                [0, 0, 0],
-                [-0.78539816, 1.57079633, 0.78539816],
+                [-2.35619449, -1.57079633, -0.78539816],
+                [3.14159265, 0, 0],
+                [2.35619449, 1.57079633, 0.78539816],
             ]
         ),
         azimuthal_angles((3, 3), (1.5, 1.5), (0.1, 0.1)),
@@ -118,7 +118,7 @@ def test_azimuthal_angles_typical_3x3():
 
 def test_azimuthal_angles_typical_3x2():
     assert isclose(
-        array([[1.10714872, -1.10714872], [0, 0], [-1.10714872, 1.10714872]]),
+        array([[-2.03444394, -1.10714872], [3.14159265, 0], [2.03444394, 1.10714872]]),
         azimuthal_angles((3, 2), (1.5, 1.0), (0.1, 0.1)),
     ).all()
 
@@ -129,7 +129,7 @@ def test_azimuthal_angles_zero_pixels():
 
 def test_azimuthal_angles_center_corner():
     assert isclose(
-        array([[0.785398163, 1.24904577], [0.321750554, 0.785398163]]),
+        array([[-2.35619449, -1.89254688], [-2.8198421, -2.35619449]]),
         azimuthal_angles((2, 2), (2.0, 2.0), (0.1, 0.1)),
     ).all()
 
@@ -143,20 +143,20 @@ def test_azimuthal_angles_center_outside():
 
 def test_azimuthal_angles_pixels_small():
     assert isclose(
-        array([[0.785398163, -0.785398163], [-0.785398163, 0.785398163]]),
+        array([[-2.35619449, -0.785398163], [2.35619449, 0.785398163]]),
         azimuthal_angles((2, 2), (1.0, 1.0), (1e-9, 1e-9)),
     ).all()
 
 
 def test_azimuthal_angles_pixels_large():
     assert isclose(
-        array([[0.785398163, -0.785398163], [-0.785398163, 0.785398163]]),
+        array([[-2.35619449, -0.785398163], [2.35619449, 0.785398163]]),
         azimuthal_angles((2, 2), (1.0, 1.0), (1e9, 1e9)),
     ).all()
 
 
 def test_azimuthal_angles_pixels_rectangular():
     assert isclose(
-        array([[0.463647609, -0.463647609], [-0.463647609, 0.463647609]]),
+        array([[-2.67794504, -0.46364761], [2.67794504, 0.46364761]]),
         azimuthal_angles((2, 2), (1.0, 1.0), (0.1, 0.2)),
     ).all()
