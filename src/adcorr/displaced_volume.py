@@ -1,16 +1,15 @@
-from typing import Tuple, TypeVar
+from typing import Tuple, TypeVar, cast
 
-from numpy import dtype
-from numpy.ma import MaskedArray, masked_array
+from numpy import dtype, ndarray
 
 FrameDType = TypeVar("FrameDType", bound=dtype)
 FramesShape = TypeVar("FramesShape", bound=Tuple[int, int, int])
 
 
 def correct_displaced_volume(
-    frames: MaskedArray[FramesShape, FrameDType],
+    frames: ndarray[FramesShape, FrameDType],
     displaced_fraction: float,
-) -> MaskedArray[FramesShape, FrameDType]:
+) -> ndarray[FramesShape, FrameDType]:
     """Correct for displaced volume of solvent by multiplying signal by retained fraction.
 
     Correct for displaced volume of solvent by multiplying signal by the retained
@@ -19,12 +18,13 @@ def correct_displaced_volume(
     [https://doi.org/10.1107/S1600576717015096].
 
     Args:
-        frames (MaskedArray[FramesShape, FrameDType]):  A stack of frames to be
-            corrected.
+        frames (ndarray[FramesShape, FrameDType]):  A stack of frames to be corrected.
         displaced_fraction (float): The fraction of solvent displaced by the analyte.
 
     Returns:
-        MaskedArray[FramesShape, FrameDType]: The corrected stack of frames.
+        ndarray[FramesShape, FrameDType]: The corrected stack of frames.
     """
-    retained_fraction = 1 - displaced_fraction
-    return masked_array(frames.data * retained_fraction, mask=frames.mask)
+    if displaced_fraction < 0.0 or displaced_fraction > 1.0:
+        raise ValueError("Displaced Fraction must be in interval [0, 1].")
+
+    return cast(ndarray[FramesShape, FrameDType], frames * (1.0 - displaced_fraction))
