@@ -1,19 +1,6 @@
 from typing import List, Tuple
 
-from numpy import (
-    Inf,
-    arctan,
-    divide,
-    dtype,
-    floating,
-    full_like,
-    hypot,
-    linspace,
-    meshgrid,
-    ndarray,
-    where,
-    zeros_like,
-)
+from numpy import arctan, arctan2, dtype, floating, hypot, linspace, meshgrid, ndarray
 
 
 def _relative_position_meshgrid(
@@ -73,10 +60,4 @@ def azimuthal_angles(
             from the beam center.
     """
     yy, xx = _relative_position_meshgrid(frame_shape, beam_center, pixel_sizes)
-    return arctan(
-        where(
-            xx == 0,
-            zeros_like(xx),
-            divide(xx, yy, out=full_like(yy, Inf), where=yy != 0),
-        )
-    )
+    return arctan2(xx, yy)
