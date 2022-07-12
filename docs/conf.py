@@ -3,10 +3,16 @@
 # This file only contains a selection of the most common options. For a full
 # list see the documentation:
 # https://www.sphinx-doc.org/en/main/usage/configuration.html
+from sphinx.domains.python import PythonDomain
 
 import adcorr
 
 # -- General configuration ------------------------------------------------
+
+# Workaround for NewType as autodata, to be removed when issue is resolved
+# see: https://github.com/sphinx-doc/sphinx/issues/9560
+assert PythonDomain.object_types["data"].roles == ("data", "obj")
+PythonDomain.object_types["data"].roles = ("data", "class", "obj")
 
 # General information about the project.
 project = "adcorr"
@@ -42,7 +48,16 @@ nitpicky = True
 # generating warnings in "nitpicky mode". Note that type should include the
 # domain name if present. Example entries would be ('py:func', 'int') or
 # ('envvar', 'LD_LIBRARY_PATH').
-nitpick_ignore = [("py:func", "int")]
+nitpick_ignore: list[tuple[str, str]] = [
+    ("py:class", "dtype"),
+    ("py:class", "floating"),
+    ("py:class", "ndarray"),
+    ("py:class", "numpy.bool_"),
+    ("py:class", "numpy.dtype"),
+    ("py:class", "numpy.floating"),
+    ("py:class", "numpy.ndarray"),
+    ("py:class", "numpy.ma.core.MaskedArray"),
+]
 
 # Both the class’ and the __init__ method’s docstring are concatenated and
 # inserted into the main body of the autoclass directive
