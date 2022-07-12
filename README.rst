@@ -13,6 +13,30 @@ Documentation  https://garryod.github.io/adcorr
 Releases       https://github.com/garryod/adcorr/releases
 ============== ==============================================
 
+A brief example of performing corrections using the library is presented below:
+
+.. code:: python
+
+    frames = load_my_frames()
+    mask = load_my_mask()
+    count_times = load_count_times()
+
+    frames = mask_frames(frames, mask)
+    frames = correct_deadtime(
+        frames,
+        count_times,
+        DETECTOR_MINIMUM_PULSE_SEPARATION,
+        DETECTOR_MINIMUM_ARRIVAL_SEPARATION,
+    )
+    frames = correct_dark_current(
+        frames,
+        count_times,
+        BASE_DARK_CURRENT,
+        TEMPORAL_DARK_CURRENT,
+        FLUX_DEPENDANT_DARK_CURRENT,
+    )
+    ...
+
 .. |code_ci| image:: https://github.com/garryod/adcorr/workflows/Code%20CI/badge.svg?branch=main
     :target: https://github.com/garryod/adcorr/actions?query=workflow%3A%22Code+CI%22
     :alt: Code CI
