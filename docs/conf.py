@@ -9,11 +9,6 @@ import adcorr
 
 # -- General configuration ------------------------------------------------
 
-# Workaround for NewType as autodata, to be removed when issue is resolved
-# see: https://github.com/sphinx-doc/sphinx/issues/9560
-assert PythonDomain.object_types["data"].roles == ("data", "obj")
-PythonDomain.object_types["data"].roles = ("data", "class", "obj")
-
 # General information about the project.
 project = "adcorr"
 
@@ -48,16 +43,12 @@ nitpicky = True
 # generating warnings in "nitpicky mode". Note that type should include the
 # domain name if present. Example entries would be ('py:func', 'int') or
 # ('envvar', 'LD_LIBRARY_PATH').
-nitpick_ignore: list[tuple[str, str]] = [
-    ("py:class", "dtype"),
-    ("py:class", "floating"),
-    ("py:class", "ndarray"),
-    ("py:class", "numpy.bool_"),
-    ("py:class", "numpy.dtype"),
-    ("py:class", "numpy.floating"),
-    ("py:class", "numpy.ndarray"),
-    ("py:class", "numpy.ma.core.MaskedArray"),
-]
+nitpick_ignore = [("py:class", "numpy.ma.core.MaskedArray")]
+
+# Workaround for NewType as autodata, to be removed when issue is resolved
+# see: https://github.com/sphinx-doc/sphinx/issues/9560
+assert PythonDomain.object_types["data"].roles == ("data", "obj")
+PythonDomain.object_types["data"].roles = ("data", "class", "obj")
 
 # Both the class’ and the __init__ method’s docstring are concatenated and
 # inserted into the main body of the autoclass directive
@@ -92,7 +83,10 @@ pygments_style = "sphinx"
 
 # This means you can link things like `str` and `asyncio` to the relevant
 # docs in the python documentation.
-intersphinx_mapping = dict(python=("https://docs.python.org/3/", None))
+intersphinx_mapping = dict(
+    python=("https://docs.python.org/3/", None),
+    numpy=("https://numpy.org/doc/stable/", None),
+)
 
 # A dictionary of graphviz graph attributes for inheritance diagrams.
 inheritance_graph_attrs = dict(rankdir="TB")
