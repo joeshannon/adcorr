@@ -38,7 +38,7 @@ def correct_self_absorption(
         distance: The distance between the detector and the sample.
         absorption_coefficient: The coefficient of absorption for a given
             material at a given photon energy.
-        thickness: The thickness of the detector head material.
+        thickness: The thickness of the sample material.
 
     Returns:
         The corrected stack of frames.
