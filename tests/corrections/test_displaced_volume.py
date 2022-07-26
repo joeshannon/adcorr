@@ -2,7 +2,7 @@ from numpy import Inf, array, isclose
 from numpy.ma import masked_where
 from pytest import raises
 
-from adcorr import correct_displaced_volume
+from adcorr.corrections import correct_displaced_volume
 
 
 def test_correct_displaced_volume_typical_2x2():

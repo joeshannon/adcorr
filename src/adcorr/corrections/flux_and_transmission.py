@@ -1,6 +1,6 @@
 from numpy import expand_dims, sum
 
-from .utils.typing import Frames
+from ..utils.typing import Frames
 
 
 def normalize_transmitted_flux(frames: Frames) -> Frames:

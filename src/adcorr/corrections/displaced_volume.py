@@ -1,6 +1,6 @@
 from typing import cast
 
-from .utils.typing import Frames
+from ..utils.typing import Frames
 
 
 def correct_displaced_volume(frames: Frames, displaced_fraction: float) -> Frames:

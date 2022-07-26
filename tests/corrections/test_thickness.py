@@ -2,7 +2,7 @@ from numpy import Inf, array, isclose
 from numpy.ma import masked_where
 from pytest import raises
 
-from adcorr import normalize_thickness
+from adcorr.corrections import normalize_thickness
 
 
 def test_normalize_thickness_typical_2x2():

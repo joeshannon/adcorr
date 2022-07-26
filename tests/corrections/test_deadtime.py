@@ -2,7 +2,7 @@ from numpy import Inf, array, isclose
 from numpy.ma import masked_where
 from pytest import raises
 
-from adcorr import correct_deadtime
+from adcorr.corrections import correct_deadtime
 
 
 def test_correct_deadtime_typical_2x2():

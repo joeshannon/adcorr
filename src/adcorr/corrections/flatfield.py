@@ -1,6 +1,6 @@
 from numpy import dtype, floating, ndarray
 
-from .utils.typing import Frames, FrameShape
+from ..utils.typing import Frames, FrameShape
 
 
 def correct_flatfield(

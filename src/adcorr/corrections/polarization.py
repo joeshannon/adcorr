@@ -2,8 +2,8 @@ from typing import Tuple, cast
 
 from numpy import cos, sin, square
 
-from .utils.geometry import azimuthal_angles, scattering_angles
-from .utils.typing import Frames
+from ..utils.geometry import azimuthal_angles, scattering_angles
+from ..utils.typing import Frames
 
 
 def correct_polarization(

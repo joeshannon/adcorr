@@ -1,7 +1,7 @@
 from numpy import Inf, array
 from pytest import raises
 
-from adcorr.masking import mask_frames
+from adcorr.corrections.masking import mask_frames
 
 
 def test_masking_typical_3x3():

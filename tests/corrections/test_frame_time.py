@@ -2,7 +2,7 @@ from numpy import Inf, array, isclose
 from numpy.ma import masked_where
 from pytest import raises
 
-from adcorr import normalize_frame_time
+from adcorr.corrections import normalize_frame_time
 
 
 def test_normalize_frame_time_typical_2x2():

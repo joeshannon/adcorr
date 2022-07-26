@@ -1,7 +1,7 @@
 from numpy import Inf, array, isclose
 from numpy.ma import masked_where
 
-from adcorr import correct_flatfield
+from adcorr.corrections import correct_flatfield
 
 
 def test_correct_flatfield_typical_2x2():

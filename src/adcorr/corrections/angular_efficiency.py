@@ -2,8 +2,8 @@ from typing import Tuple, cast
 
 from numpy import cos, exp
 
-from .utils.geometry import scattering_angles
-from .utils.typing import Frames
+from ..utils.geometry import scattering_angles
+from ..utils.typing import Frames
 
 
 def correct_angular_efficiency(

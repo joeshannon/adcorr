@@ -4,9 +4,9 @@ from numpy import Inf, array, isclose, pi
 from numpy.ma import masked_where
 from pytest import raises
 
-from adcorr import correct_polarization
+from adcorr.corrections import correct_polarization
 
-from .inaccessable_mock import AccessedError, inaccessable_mock
+from ..inaccessable_mock import AccessedError, inaccessable_mock
 
 
 def test_correct_polarization_typical_2x2():
@@ -81,10 +81,10 @@ def test_correct_polarization_passes_beam_center_to_scattering_angles_only():
             0.25,
         )
     with patch(
-        "adcorr.polarization.scattering_angles",
+        "adcorr.corrections.polarization.scattering_angles",
         MagicMock(return_value=array([[0.5, 0.5], [0.5, 0.5]])),
     ), patch(
-        "adcorr.polarization.azimuthal_angles",
+        "adcorr.corrections.polarization.azimuthal_angles",
         MagicMock(return_value=array([[pi / 4, -pi / 4], [-pi / 4, pi / 4]])),
     ):
         correct_polarization(
@@ -106,10 +106,10 @@ def test_correct_polarization_passes_pixel_sizes_to_scattering_angles_only():
             0.25,
         )
     with patch(
-        "adcorr.polarization.scattering_angles",
+        "adcorr.corrections.polarization.scattering_angles",
         MagicMock(return_value=array([[0.5, 0.5], [0.5, 0.5]])),
     ), patch(
-        "adcorr.polarization.azimuthal_angles",
+        "adcorr.corrections.polarization.azimuthal_angles",
         MagicMock(return_value=array([[pi / 4, -pi / 4], [-pi / 4, pi / 4]])),
     ):
         correct_polarization(
@@ -131,10 +131,10 @@ def test_correct_polarization_passes_distance_to_geometry_utils_only():
             0.25,
         )
     with patch(
-        "adcorr.polarization.scattering_angles",
+        "adcorr.corrections.polarization.scattering_angles",
         MagicMock(return_value=array([[0.5, 0.5], [0.5, 0.5]])),
     ), patch(
-        "adcorr.polarization.azimuthal_angles",
+        "adcorr.corrections.polarization.azimuthal_angles",
         MagicMock(return_value=array([[pi / 4, -pi / 4], [-pi / 4, pi / 4]])),
     ):
         correct_polarization(

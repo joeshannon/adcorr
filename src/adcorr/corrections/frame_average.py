@@ -1,6 +1,6 @@
 from math import prod
 
-from .utils.typing import Frames
+from ..utils.typing import Frames
 
 
 def average_all_frames(frames: Frames) -> Frames:

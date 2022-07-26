@@ -1,7 +1,7 @@
 from numpy import Inf, array, isclose
 from numpy.ma import masked_where
 
-from adcorr import subtract_background
+from adcorr.corrections import subtract_background
 
 
 def test_background_subtraction_typical_2x2():

@@ -3,7 +3,7 @@ from typing import Any, Literal, Tuple, Union, cast
 from numpy import atleast_1d, complexfloating, dtype, expand_dims, floating, ndarray
 from scipy.special import lambertw
 
-from .utils.typing import Frames, NumFrames
+from ..utils.typing import Frames, NumFrames
 
 
 def correct_deadtime(

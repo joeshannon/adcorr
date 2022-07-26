@@ -1,7 +1,7 @@
 from numpy import Inf, array, isclose
 from numpy.ma import masked_where
 
-from adcorr import normalize_transmitted_flux
+from adcorr.corrections import normalize_transmitted_flux
 
 
 def test_normalize_transmitted_flux_typical_2x2():

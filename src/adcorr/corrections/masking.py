@@ -3,7 +3,7 @@ from typing import Any
 from numpy import bool_, broadcast_to, dtype, ndarray
 from numpy.ma import MaskedArray, masked_where
 
-from .utils.typing import FrameDType, StackShape
+from ..utils.typing import FrameDType, StackShape
 
 
 def mask_frames(

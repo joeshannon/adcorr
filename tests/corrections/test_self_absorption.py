@@ -4,9 +4,9 @@ from numpy import Inf, array, isclose
 from numpy.ma import masked_where
 from pytest import raises
 
-from adcorr import correct_self_absorption
+from adcorr.corrections import correct_self_absorption
 
-from .inaccessable_mock import AccessedError, inaccessable_mock
+from ..inaccessable_mock import AccessedError, inaccessable_mock
 
 
 def test_correct_self_absorption_typical_2x2():
@@ -90,7 +90,7 @@ def test_correct_self_absorption_passes_beam_center_to_scattering_angles_only():
             0.1,
         )
     with patch(
-        "adcorr.self_absorption.scattering_angles",
+        "adcorr.corrections.self_absorption.scattering_angles",
         MagicMock(return_value=array([[0.5, 0.5], [0.5, 0.5]])),
     ):
         correct_self_absorption(
@@ -114,7 +114,7 @@ def test_correct_self_absorption_passes_pixel_sizes_to_scattering_angles_only():
             0.1,
         )
     with patch(
-        "adcorr.self_absorption.scattering_angles",
+        "adcorr.corrections.self_absorption.scattering_angles",
         MagicMock(return_value=array([[0.5, 0.5], [0.5, 0.5]])),
     ):
         correct_self_absorption(
@@ -138,7 +138,7 @@ def test_correct_self_absorption_passes_distance_to_scattering_angles_only():
             0.1,
         )
     with patch(
-        "adcorr.self_absorption.scattering_angles",
+        "adcorr.corrections.self_absorption.scattering_angles",
         MagicMock(return_value=array([[0.5, 0.5], [0.5, 0.5]])),
     ):
         correct_self_absorption(

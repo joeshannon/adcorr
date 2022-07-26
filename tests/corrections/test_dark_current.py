@@ -2,7 +2,7 @@ from numpy import Inf, array, isclose
 from numpy.ma import masked_where
 from pytest import raises
 
-from adcorr import correct_dark_current
+from adcorr.corrections import correct_dark_current
 
 
 def test_correct_dark_current_typical_2x2():

@@ -4,9 +4,9 @@ from numpy import Inf, array, isclose
 from numpy.ma import masked_where
 from pytest import raises
 
-from adcorr import correct_angular_efficiency
+from adcorr.corrections import correct_angular_efficiency
 
-from .inaccessable_mock import AccessedError, inaccessable_mock
+from ..inaccessable_mock import AccessedError, inaccessable_mock
 
 
 def test_correct_angular_efficiency_typical_2x2():
@@ -85,7 +85,7 @@ def test_correct_angular_efficiency_passes_beam_center_to_scattering_angles_only
             0.1,
         )
     with patch(
-        "adcorr.angular_efficiency.scattering_angles",
+        "adcorr.corrections.angular_efficiency.scattering_angles",
         MagicMock(return_value=array([[0.5, 0.5], [0.5, 0.5]])),
     ):
         correct_angular_efficiency(
@@ -109,7 +109,7 @@ def test_correct_angular_efficiency_passes_pixel_sizes_to_scattering_angles_only
             0.1,
         )
     with patch(
-        "adcorr.angular_efficiency.scattering_angles",
+        "adcorr.corrections.angular_efficiency.scattering_angles",
         MagicMock(return_value=array([[0.5, 0.5], [0.5, 0.5]])),
     ):
         correct_angular_efficiency(
@@ -133,7 +133,7 @@ def test_correct_angular_efficiency_passes_distance_to_scattering_angles_only():
             0.1,
         )
     with patch(
-        "adcorr.angular_efficiency.scattering_angles",
+        "adcorr.corrections.angular_efficiency.scattering_angles",
         MagicMock(return_value=array([[0.5, 0.5], [0.5, 0.5]])),
     ):
         correct_angular_efficiency(

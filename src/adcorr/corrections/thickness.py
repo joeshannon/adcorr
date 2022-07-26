@@ -1,6 +1,6 @@
 from typing import cast
 
-from .utils.typing import Frames
+from ..utils.typing import Frames
 
 
 def normalize_thickness(

@@ -2,8 +2,8 @@ from typing import Tuple, TypeVar, cast
 
 from numpy import cos, dtype, power
 
-from .utils.geometry import scattering_angles
-from .utils.typing import Frames
+from ..utils.geometry import scattering_angles
+from ..utils.typing import Frames
 
 FrameDType = TypeVar("FrameDType", bound=dtype)
 FramesShape = TypeVar("FramesShape", bound=Tuple[int, int, int])

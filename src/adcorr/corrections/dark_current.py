@@ -2,7 +2,7 @@ from typing import Literal, Tuple, Union
 
 from numpy import atleast_1d, dtype, expand_dims, floating, ndarray
 
-from .utils.typing import Frames, NumFrames
+from ..utils.typing import Frames, NumFrames
 
 
 def correct_dark_current(

@@ -1,4 +1,4 @@
-from .utils.typing import Frame, Frames
+from ..utils.typing import Frame, Frames
 
 
 def subtract_background(foreground_frames: Frames, background_frame: Frame) -> Frames:

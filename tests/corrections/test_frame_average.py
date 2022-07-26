@@ -1,7 +1,7 @@
 from numpy import Inf, array, isclose
 from numpy.ma import masked_where
 
-from adcorr import average_all_frames
+from adcorr.corrections import average_all_frames
 
 
 def test_average_all_frames_typical_2x2():

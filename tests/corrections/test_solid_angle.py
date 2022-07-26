@@ -4,9 +4,9 @@ from numpy import Inf, array, isclose
 from numpy.ma import masked_where
 from pytest import raises
 
-from adcorr import correct_solid_angle
+from adcorr.corrections import correct_solid_angle
 
-from .inaccessable_mock import AccessedError, inaccessable_mock
+from ..inaccessable_mock import AccessedError, inaccessable_mock
 
 
 def test_correct_solid_angle_typical_2x2():
@@ -77,7 +77,7 @@ def test_correct_solid_angle_passes_beam_center_to_scattering_angles_only():
             1.0,
         )
     with patch(
-        "adcorr.solid_angle.scattering_angles",
+        "adcorr.corrections.solid_angle.scattering_angles",
         MagicMock(return_value=array([[0.5, 0.5], [0.5, 0.5]])),
     ):
         correct_solid_angle(
@@ -97,7 +97,7 @@ def test_correct_solid_angle_passes_pixel_sizes_to_scattering_angles_only():
             1.0,
         )
     with patch(
-        "adcorr.solid_angle.scattering_angles",
+        "adcorr.corrections.solid_angle.scattering_angles",
         MagicMock(return_value=array([[0.5, 0.5], [0.5, 0.5]])),
     ):
         correct_solid_angle(
@@ -117,7 +117,7 @@ def test_correct_solid_angle_passes_distance_to_scattering_angles_only():
             inaccessable_mock(float),
         )
     with patch(
-        "adcorr.solid_angle.scattering_angles",
+        "adcorr.corrections.solid_angle.scattering_angles",
         MagicMock(return_value=array([[0.5, 0.5], [0.5, 0.5]])),
     ):
         correct_solid_angle(
