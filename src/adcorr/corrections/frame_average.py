@@ -1,9 +1,9 @@
 from math import prod
 
-from ..utils.typing import Frames
+from ..utils.typing import Frame, Frames
 
 
-def average_all_frames(frames: Frames) -> Frames:
+def average_all_frames(frames: Frames) -> Frame:
     """Average all frames over the leading axis.
 
     Args:
