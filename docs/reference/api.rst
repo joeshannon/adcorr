@@ -95,6 +95,17 @@ API
             ``adcorr.corrections.thickness``
             --------------------------------
 
+    .. automodule:: adcorr.sequences
+
+        ``adcorr.sequences``
+        --------------------
+
+        .. automodule:: adcorr.sequences.pauw
+            :members:
+
+            ``adcorr.sequences.pauw``
+            -------------------------
+
     .. automodule:: adcorr.utils
         
         ``adcorr.utils``
