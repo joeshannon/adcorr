@@ -33,7 +33,7 @@ def correct_angular_efficiency(
         The corrected stack of frames.
     """
     if absorption_coefficient <= 0.0:
-        raise ValueError("Absorption Coefficient must positive.")
+        raise ValueError("Absorption Coefficient must be positive.")
     if thickness <= 0.0:
         raise ValueError("Thickness must be positive.")
 
