@@ -1,9 +1,12 @@
-from typing import cast
+from numpy import dtype, number
 
-from ..utils.typing import Frames
+from ..utils.typing import FrameHeight, Frames, FrameWidth, NumFrames
 
 
-def correct_displaced_volume(frames: Frames, displaced_fraction: float) -> Frames:
+def correct_displaced_volume(
+    frames: Frames[NumFrames, FrameWidth, FrameHeight, dtype[number]],
+    displaced_fraction: float,
+) -> Frames[NumFrames, FrameWidth, FrameHeight, dtype[number]]:
     """Correct for displaced volume of solvent by multiplying signal by retained fraction.
 
     Correct for displaced volume of solvent by multiplying signal by the retained
@@ -21,4 +24,4 @@ def correct_displaced_volume(frames: Frames, displaced_fraction: float) -> Frame
     if displaced_fraction < 0.0 or displaced_fraction > 1.0:
         raise ValueError("Displaced Fraction must be in interval [0, 1].")
 
-    return cast(Frames, frames * (1.0 - displaced_fraction))
+    return frames * (1.0 - displaced_fraction)

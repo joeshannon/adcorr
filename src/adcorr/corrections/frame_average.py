@@ -1,9 +1,13 @@
 from math import prod
 
-from ..utils.typing import Frame, Frames
+from numpy import dtype, number
+
+from ..utils.typing import Frame, FrameHeight, Frames, FrameWidth, NumFrames
 
 
-def average_all_frames(frames: Frames) -> Frame:
+def average_all_frames(
+    frames: Frames[NumFrames, FrameWidth, FrameHeight, dtype[number]]
+) -> Frame[FrameWidth, FrameHeight, dtype[number]]:
     """Average all frames over the leading axis.
 
     Args:

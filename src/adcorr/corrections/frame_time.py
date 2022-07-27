@@ -1,14 +1,12 @@
-from typing import Literal, Tuple, Union
+from numpy import atleast_1d, dtype, expand_dims, floating, ndarray, number
 
-from numpy import atleast_1d, dtype, expand_dims, floating, ndarray
-
-from ..utils.typing import Frames, NumFrames
+from ..utils.typing import FrameHeight, Frames, FrameWidth, NumFrames, VectorOrSingle
 
 
 def normalize_frame_time(
-    frames: Frames,
-    count_times: ndarray[Tuple[Union[NumFrames, Literal[1]]], dtype[floating]],
-) -> Frames:
+    frames: Frames[NumFrames, FrameWidth, FrameHeight, dtype[number]],
+    count_times: ndarray[VectorOrSingle[NumFrames], dtype[floating]],
+) -> Frames[NumFrames, FrameWidth, FrameHeight, dtype[floating]]:
     """Normalize for detector frame rate by scaling photon counts according to count time.
 
     Normalize for detector frame rate by scaling photon counts according to count time,

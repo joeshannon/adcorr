@@ -1,14 +1,13 @@
-from typing import Any
-
-from numpy import bool_, broadcast_to, dtype, ndarray
+from numpy import bool_, broadcast_to, dtype
 from numpy.ma import MaskedArray, masked_where
 
-from ..utils.typing import FrameDType, StackShape
+from ..utils.typing import Frame, FrameDType, FrameHeight, Frames, FrameWidth, NumFrames
 
 
 def mask_frames(
-    frames: ndarray[StackShape, FrameDType], mask: ndarray[Any, dtype[bool_]]
-) -> MaskedArray[StackShape, FrameDType]:
+    frames: Frames[NumFrames, FrameWidth, FrameHeight, FrameDType],
+    mask: Frame[FrameWidth, FrameHeight, dtype[bool_]],
+) -> MaskedArray[tuple[NumFrames, FrameWidth, FrameHeight], FrameDType]:
     """Replaces masked elemenets of frames in a stack with zero.
 
     Args:

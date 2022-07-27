@@ -1,7 +1,12 @@
-from ..utils.typing import Frame, Frames
+from numpy import dtype, number
+
+from ..utils.typing import Frame, FrameHeight, Frames, FrameWidth, NumFrames
 
 
-def subtract_background(foreground_frames: Frames, background_frame: Frame) -> Frames:
+def subtract_background(
+    foreground_frames: Frames[NumFrames, FrameWidth, FrameHeight, dtype[number]],
+    background_frame: Frame[FrameWidth, FrameHeight, dtype[number]],
+) -> Frames[NumFrames, FrameWidth, FrameHeight, dtype[number]]:
     """Subtract a background frame from a sequence of foreground frames.
 
     Subtract a background frame from a sequence of foreground frames, as detailed in

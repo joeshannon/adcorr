@@ -1,19 +1,19 @@
 from typing import Tuple, cast
 
-from numpy import cos, exp
+from numpy import cos, dtype, exp, number
 
 from ..utils.geometry import scattering_angles
-from ..utils.typing import Frames
+from ..utils.typing import FrameHeight, Frames, FrameWidth, NumFrames
 
 
 def correct_angular_efficiency(
-    frames: Frames,
+    frames: Frames[NumFrames, FrameWidth, FrameHeight, dtype[number]],
     beam_center: Tuple[float, float],
     pixel_sizes: Tuple[float, float],
     distance: float,
     absorption_coefficient: float,
     thickness: float,
-) -> Frames:
+) -> Frames[NumFrames, FrameWidth, FrameHeight, dtype[number]]:
     """Corrects for loss due to the angular efficiency of the detector head.
 
     Corrects for loss due to the angular efficiency of the detector head, as described

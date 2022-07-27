@@ -1,4 +1,4 @@
-from typing import Tuple, TypeVar
+from typing import Literal, TypeVar, Union
 
 from numpy import dtype, ndarray
 
@@ -11,12 +11,10 @@ FrameWidth = TypeVar("FrameWidth", bound=int)
 #: The number of pixels spanning the height of a frame.
 FrameHeight = TypeVar("FrameHeight", bound=int)
 
-#: The shape of a frame; Comprising of a width and height.
-FrameShape = Tuple[FrameWidth, FrameHeight]
-#: The shape of a stack of frames; Comprising a count, width and height.
-StackShape = Tuple[NumFrames, FrameWidth, FrameHeight]
+#: An array with the given length, or a singular value
+VectorOrSingle = tuple[Union[NumFrames, Literal[1]]]
 
 #: A frame; Comprising a shape and a data type
-Frame = ndarray[FrameShape, FrameDType]
+Frame = ndarray[tuple[FrameWidth, FrameHeight], FrameDType]
 #: A stack of frames; Comprising a shape and a data type
-Frames = ndarray[StackShape, FrameDType]
+Frames = ndarray[tuple[NumFrames, FrameWidth, FrameHeight], FrameDType]

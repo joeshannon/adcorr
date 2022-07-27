@@ -1,17 +1,25 @@
-from typing import Any, Literal, Tuple, Union, cast
+from typing import Any, cast
 
-from numpy import atleast_1d, complexfloating, dtype, expand_dims, floating, ndarray
+from numpy import (
+    atleast_1d,
+    complexfloating,
+    dtype,
+    expand_dims,
+    floating,
+    ndarray,
+    number,
+)
 from scipy.special import lambertw
 
-from ..utils.typing import Frames, NumFrames
+from ..utils.typing import FrameHeight, Frames, FrameWidth, NumFrames, VectorOrSingle
 
 
 def correct_deadtime(
-    frames: Frames,
-    count_times: ndarray[Tuple[Union[NumFrames, Literal[1]]], dtype[floating]],
+    frames: Frames[NumFrames, FrameWidth, FrameHeight, dtype[number]],
+    count_times: ndarray[VectorOrSingle[NumFrames], dtype[floating]],
     minimum_pulse_separation: float,
     minimum_arrival_separation: float,
-) -> Frames:
+) -> Frames[NumFrames, FrameWidth, FrameHeight, dtype[number]]:
     """Correct for detector deadtime by scaling counts to account for overlapping events.
 
     Correct for detector deadtime by iteratively solving for the number of incident

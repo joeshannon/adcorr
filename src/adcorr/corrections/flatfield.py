@@ -1,11 +1,12 @@
-from numpy import dtype, floating, ndarray
+from numpy import dtype, floating, number
 
-from ..utils.typing import Frames, FrameShape
+from ..utils.typing import Frame, FrameHeight, Frames, FrameWidth, NumFrames
 
 
 def correct_flatfield(
-    frames: Frames, flatfield: ndarray[FrameShape, dtype[floating]]
-) -> Frames:
+    frames: Frames[NumFrames, FrameWidth, FrameHeight, dtype[number]],
+    flatfield: Frame[FrameWidth, FrameHeight, dtype[floating]],
+) -> Frames[NumFrames, FrameWidth, FrameHeight, dtype[number]]:
     """Apply multiplicative flatfield correction, to correct for inter-pixel sensitivity.
 
     Apply multiplicative flatfield correction, to correct for inter-pixel sensitivity,

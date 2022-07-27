@@ -1,12 +1,12 @@
-from typing import cast
+from numpy import dtype, number
 
-from ..utils.typing import Frames
+from ..utils.typing import FrameHeight, Frames, FrameWidth, NumFrames
 
 
 def normalize_thickness(
-    frames: Frames,
+    frames: Frames[NumFrames, FrameWidth, FrameHeight, dtype[number]],
     sample_thickness: float,
-) -> Frames:
+) -> Frames[NumFrames, FrameWidth, FrameHeight, dtype[number]]:
     """Normailizes pixel intensities by dividing by the sample thickness.
 
     Normailizes pixel intensities by dividing by the sample thickness, as detailed in
@@ -23,4 +23,4 @@ def normalize_thickness(
     if sample_thickness <= 0:
         raise ValueError("Sample Thickness must be positive.")
 
-    return cast(Frames, frames / sample_thickness)
+    return frames / sample_thickness

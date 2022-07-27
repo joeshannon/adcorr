@@ -1,9 +1,11 @@
-from numpy import expand_dims, sum
+from numpy import dtype, expand_dims, floating, number, sum
 
-from ..utils.typing import Frames
+from ..utils.typing import FrameHeight, Frames, FrameWidth, NumFrames
 
 
-def normalize_transmitted_flux(frames: Frames) -> Frames:
+def normalize_transmitted_flux(
+    frames: Frames[NumFrames, FrameWidth, FrameHeight, dtype[number]],
+) -> Frames[NumFrames, FrameWidth, FrameHeight, dtype[floating]]:
     """Normalize for incident flux and transmissibility by scaling photon counts.
 
     Normalize for incident flux and transmissibility by scaling photon counts with

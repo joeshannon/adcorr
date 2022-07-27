@@ -9,22 +9,23 @@ from numpy import (
     log,
     logical_and,
     ndarray,
+    number,
     ones_like,
     power,
 )
 
 from ..utils.geometry import scattering_angles
-from ..utils.typing import Frames
+from ..utils.typing import FrameHeight, Frames, FrameWidth, NumFrames
 
 
 def correct_self_absorption(
-    frames: Frames,
+    frames: Frames[NumFrames, FrameWidth, FrameHeight, dtype[number]],
     beam_center: Tuple[float, float],
     pixel_sizes: Tuple[float, float],
     distance: float,
     absorption_coefficient: float,
     thickness: float,
-) -> Frames:
+) -> Frames[NumFrames, FrameWidth, FrameHeight, dtype[number]]:
     """Correct for transmission loss due to differences in observation angle.
 
     Correct for transmission loss due to differences in observation angle, as detailed

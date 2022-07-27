@@ -1,17 +1,15 @@
-from typing import Literal, Tuple, Union
+from numpy import atleast_1d, dtype, expand_dims, floating, ndarray, number
 
-from numpy import atleast_1d, dtype, expand_dims, floating, ndarray
-
-from ..utils.typing import Frames, NumFrames
+from ..utils.typing import FrameHeight, Frames, FrameWidth, NumFrames, VectorOrSingle
 
 
 def correct_dark_current(
-    frames: Frames,
-    count_times: ndarray[Tuple[Union[NumFrames, Literal[1]]], dtype[floating]],
+    frames: Frames[NumFrames, FrameWidth, FrameHeight, dtype[number]],
+    count_times: ndarray[VectorOrSingle[NumFrames], dtype[floating]],
     base_dark_current: float,
     temporal_dark_current: float,
     flux_dependant_dark_current: float,
-) -> Frames:
+) -> Frames[NumFrames, FrameWidth, FrameHeight, dtype[number]]:
     """Correct by subtracting base, temporal and flux-dependant dark currents.
 
     Correct for incident dark current by subtracting a baselike, time dependant and a

@@ -1,18 +1,18 @@
 from typing import Tuple, cast
 
-from numpy import cos, sin, square
+from numpy import cos, dtype, floating, number, sin, square
 
 from ..utils.geometry import azimuthal_angles, scattering_angles
-from ..utils.typing import Frames
+from ..utils.typing import FrameHeight, Frames, FrameWidth, NumFrames
 
 
 def correct_polarization(
-    frames: Frames,
+    frames: Frames[NumFrames, FrameWidth, FrameHeight, dtype[number]],
     beam_center: Tuple[float, float],
     pixel_sizes: Tuple[float, float],
     distance: float,
     horizontal_poarization: float = 0.5,
-) -> Frames:
+) -> Frames[NumFrames, FrameWidth, FrameHeight, dtype[floating]]:
     """Corrects for the effect of polarization of the incident beam.
 
     Corrects for the effect of polarization of the incident beam, as detailed in
