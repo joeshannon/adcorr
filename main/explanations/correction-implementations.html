@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Correction Implementations &mdash; adcorr 0.1.0+14.gb046d41 documentation</title>
+  <title>Correction Implementations &mdash; adcorr 0.1.0+18.g2c0b4a1 documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
@@ -109,7 +109,7 @@ count.</p>
 </tr>
 </thead>
 <tbody>
-<tr class="row-even"><td><p><a class="reference internal" href="../reference/api.html#adcorr.deadtime.correct_deadtime" title="adcorr.deadtime.correct_deadtime"><code class="xref any py py-func docutils literal notranslate"><span class="pre">correct_deadtime</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="../reference/api.html#adcorr.corrections.deadtime.correct_deadtime" title="adcorr.corrections.deadtime.correct_deadtime"><code class="xref any py py-func docutils literal notranslate"><span class="pre">correct_deadtime</span></code></a></p></td>
 <td><div class="math notranslate nohighlight">
 \[\begin{split}I_{j,c} &amp;= \frac{W_0(-I_jT)}{T} \\[8pt]
 T &amp;= \frac{\tau_1+\tau_2}{\delta t}\end{split}\]</div>
@@ -122,7 +122,7 @@ T &amp;= \frac{\tau_1+\tau_2}{\delta t}\end{split}\]</div>
 </td>
 <td><p><a class="reference external" href="https://doi.org/10.1088/0953-8984/25/38/383201">Everything SAXS: small-angle scattering pattern collection and correction</a></p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="../reference/api.html#adcorr.dark_current.correct_dark_current" title="adcorr.dark_current.correct_dark_current"><code class="xref any py py-func docutils literal notranslate"><span class="pre">correct_dark_current</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="../reference/api.html#adcorr.corrections.dark_current.correct_dark_current" title="adcorr.corrections.dark_current.correct_dark_current"><code class="xref any py py-func docutils literal notranslate"><span class="pre">correct_dark_current</span></code></a></p></td>
 <td><div class="math notranslate nohighlight">
 \[I_{j,c} = I_j - D_a - D_b \delta t - D_cI_j\]</div>
 </td>
@@ -135,7 +135,7 @@ T &amp;= \frac{\tau_1+\tau_2}{\delta t}\end{split}\]</div>
 </td>
 <td><p><a class="reference external" href="https://doi.org/10.1088/0953-8984/25/38/383201">Everything SAXS: small-angle scattering pattern collection and correction</a></p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="../reference/api.html#adcorr.frame_time.normalize_frame_time" title="adcorr.frame_time.normalize_frame_time"><code class="xref any py py-func docutils literal notranslate"><span class="pre">normalize_frame_time</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="../reference/api.html#adcorr.corrections.frame_time.normalize_frame_time" title="adcorr.corrections.frame_time.normalize_frame_time"><code class="xref any py py-func docutils literal notranslate"><span class="pre">normalize_frame_time</span></code></a></p></td>
 <td><div class="math notranslate nohighlight">
 \[I_{j,c} = \frac{I_j}{\delta t}\]</div>
 </td>
@@ -145,14 +145,14 @@ T &amp;= \frac{\tau_1+\tau_2}{\delta t}\end{split}\]</div>
 </td>
 <td><p><a class="reference external" href="https://doi.org/10.1088/0953-8984/25/38/383201">Everything SAXS: small-angle scattering pattern collection and correction</a></p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="../reference/api.html#adcorr.flux_and_transmission.normalize_transmitted_flux" title="adcorr.flux_and_transmission.normalize_transmitted_flux"><code class="xref any py py-func docutils literal notranslate"><span class="pre">normalize_transmitted_flux</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="../reference/api.html#adcorr.corrections.flux_and_transmission.normalize_transmitted_flux" title="adcorr.corrections.flux_and_transmission.normalize_transmitted_flux"><code class="xref any py py-func docutils literal notranslate"><span class="pre">normalize_transmitted_flux</span></code></a></p></td>
 <td><div class="math notranslate nohighlight">
 \[I_{j,c} = \frac{I_j}{\unicode{x222F}{I_j}}\]</div>
 </td>
 <td></td>
 <td><p><a class="reference external" href="https://doi.org/10.1107/S1600576717015096">The modular small-angle X-ray scattering data correction sequence</a></p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="../reference/api.html#adcorr.self_absorption.correct_self_absorption" title="adcorr.self_absorption.correct_self_absorption"><code class="xref any py py-func docutils literal notranslate"><span class="pre">correct_self_absorption</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="../reference/api.html#adcorr.corrections.self_absorption.correct_self_absorption" title="adcorr.corrections.self_absorption.correct_self_absorption"><code class="xref any py py-func docutils literal notranslate"><span class="pre">correct_self_absorption</span></code></a></p></td>
 <td><div class="math notranslate nohighlight">
 \[\begin{split}I_{j,c} &amp;= I_j\frac{1-T^{\sec{2\theta}-1}}{\ln{T}(1-\sec{2\theta})} \\[8pt]
 T &amp;= e^{-\mu t} \\[8pt]
@@ -168,7 +168,7 @@ T &amp;= e^{-\mu t} \\[8pt]
 </td>
 <td><p><a class="reference external" href="https://doi.org/10.1088/0953-8984/25/38/383201">Everything SAXS: small-angle scattering pattern collection and correction</a></p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="../reference/api.html#adcorr.frame_average.average_all_frames" title="adcorr.frame_average.average_all_frames"><code class="xref any py py-func docutils literal notranslate"><span class="pre">average_all_frames</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="../reference/api.html#adcorr.corrections.frame_average.average_all_frames" title="adcorr.corrections.frame_average.average_all_frames"><code class="xref any py py-func docutils literal notranslate"><span class="pre">average_all_frames</span></code></a></p></td>
 <td><div class="math notranslate nohighlight">
 \[I_{j,c} = \sum{I_{n,j}}\]</div>
 </td>
@@ -178,7 +178,7 @@ T &amp;= e^{-\mu t} \\[8pt]
 </td>
 <td><p><a class="reference external" href="https://doi.org/10.1107/S1600576717015096">The modular small-angle X-ray scattering data correction sequence</a></p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="../reference/api.html#adcorr.background_subtraction.subtract_background" title="adcorr.background_subtraction.subtract_background"><code class="xref any py py-func docutils literal notranslate"><span class="pre">subtract_background</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="../reference/api.html#adcorr.corrections.background_subtraction.subtract_background" title="adcorr.corrections.background_subtraction.subtract_background"><code class="xref any py py-func docutils literal notranslate"><span class="pre">subtract_background</span></code></a></p></td>
 <td><div class="math notranslate nohighlight">
 \[I_{j,c} = I_j - I_{j,b}\]</div>
 </td>
@@ -188,7 +188,7 @@ T &amp;= e^{-\mu t} \\[8pt]
 </td>
 <td><p><a class="reference external" href="https://doi.org/10.1088/0953-8984/25/38/383201">Everything SAXS: small-angle scattering pattern collection and correction</a></p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="../reference/api.html#adcorr.flatfield.correct_flatfield" title="adcorr.flatfield.correct_flatfield"><code class="xref any py py-func docutils literal notranslate"><span class="pre">correct_flatfield</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="../reference/api.html#adcorr.corrections.flatfield.correct_flatfield" title="adcorr.corrections.flatfield.correct_flatfield"><code class="xref any py py-func docutils literal notranslate"><span class="pre">correct_flatfield</span></code></a></p></td>
 <td><div class="math notranslate nohighlight">
 \[I_{j,c} = I_j F_j\]</div>
 </td>
@@ -198,7 +198,7 @@ T &amp;= e^{-\mu t} \\[8pt]
 </td>
 <td><p><a class="reference external" href="https://doi.org/10.1107/S1600576717015096">The modular small-angle X-ray scattering data correction sequence</a></p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="../reference/api.html#adcorr.angular_efficiency.correct_angular_efficiency" title="adcorr.angular_efficiency.correct_angular_efficiency"><code class="xref any py py-func docutils literal notranslate"><span class="pre">correct_angular_efficiency</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="../reference/api.html#adcorr.corrections.angular_efficiency.correct_angular_efficiency" title="adcorr.corrections.angular_efficiency.correct_angular_efficiency"><code class="xref any py py-func docutils literal notranslate"><span class="pre">correct_angular_efficiency</span></code></a></p></td>
 <td><div class="math notranslate nohighlight">
 \[\begin{split}I_{j,c} &amp;= \frac{I_j}{1-e^{\frac{-\mu t}{\cos{2\theta}}}} \\[8pt]
 {2\theta}_j &amp;= \arctan{\frac{\sqrt{{\delta x}_j^2 + {\delta y}_j^2}}{\Delta z}}\end{split}\]</div>
@@ -213,7 +213,7 @@ T &amp;= e^{-\mu t} \\[8pt]
 </td>
 <td><p><a class="reference external" href="https://doi.org/10.1107/S1600576717015096">The modular small-angle X-ray scattering data correction sequence</a></p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="../reference/api.html#adcorr.solid_angle.correct_solid_angle" title="adcorr.solid_angle.correct_solid_angle"><code class="xref any py py-func docutils literal notranslate"><span class="pre">correct_solid_angle</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="../reference/api.html#adcorr.corrections.solid_angle.correct_solid_angle" title="adcorr.corrections.solid_angle.correct_solid_angle"><code class="xref any py py-func docutils literal notranslate"><span class="pre">correct_solid_angle</span></code></a></p></td>
 <td><div class="math notranslate nohighlight">
 \[\begin{split}I_{j,c} &amp;= \frac{I_j}{\cos{2\theta}^3} \\[8pt]
 {2\theta}_j &amp;= \arctan{\frac{\sqrt{{\delta x}_j^2 + {\delta y}_j^2}}{\Delta z}}\end{split}\]</div>
@@ -226,7 +226,7 @@ T &amp;= e^{-\mu t} \\[8pt]
 </td>
 <td><p><a class="reference external" href="https://doi.org/10.1088/0953-8984/25/38/383201">Everything SAXS: small-angle scattering pattern collection and correction</a></p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="../reference/api.html#adcorr.polarization.correct_polarization" title="adcorr.polarization.correct_polarization"><code class="xref any py py-func docutils literal notranslate"><span class="pre">correct_polarization</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="../reference/api.html#adcorr.corrections.polarization.correct_polarization" title="adcorr.corrections.polarization.correct_polarization"><code class="xref any py py-func docutils literal notranslate"><span class="pre">correct_polarization</span></code></a></p></td>
 <td><div class="math notranslate nohighlight">
 \[\begin{split}I_{j,c} &amp;= I_j[PK_v+(1-P)K_h] \\[8pt]
 K_v &amp;= 1-(\sin{\psi}\sin{2\theta})^2 \\[8pt]
@@ -243,7 +243,7 @@ K_h &amp;= 1-(\cos{\psi}\sin{2\theta})^2 \\[8pt]
 </td>
 <td><p><a class="reference external" href="https://doi.org/10.1088/0953-8984/25/38/383201">Everything SAXS: small-angle scattering pattern collection and correction</a></p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="../reference/api.html#adcorr.thickness.normalize_thickness" title="adcorr.thickness.normalize_thickness"><code class="xref any py py-func docutils literal notranslate"><span class="pre">normalize_thickness</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="../reference/api.html#adcorr.corrections.thickness.normalize_thickness" title="adcorr.corrections.thickness.normalize_thickness"><code class="xref any py py-func docutils literal notranslate"><span class="pre">normalize_thickness</span></code></a></p></td>
 <td><div class="math notranslate nohighlight">
 \[I_{j,c} = \frac{I_j}{t}\]</div>
 </td>
@@ -253,7 +253,7 @@ K_h &amp;= 1-(\cos{\psi}\sin{2\theta})^2 \\[8pt]
 </td>
 <td><p><a class="reference external" href="https://doi.org/10.1088/0953-8984/25/38/383201">Everything SAXS: small-angle scattering pattern collection and correction</a></p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="../reference/api.html#adcorr.displaced_volume.correct_displaced_volume" title="adcorr.displaced_volume.correct_displaced_volume"><code class="xref any py py-func docutils literal notranslate"><span class="pre">correct_displaced_volume</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="../reference/api.html#adcorr.corrections.displaced_volume.correct_displaced_volume" title="adcorr.corrections.displaced_volume.correct_displaced_volume"><code class="xref any py py-func docutils literal notranslate"><span class="pre">correct_displaced_volume</span></code></a></p></td>
 <td><div class="math notranslate nohighlight">
 \[I_{j,c} = I_j (1 - v_d)\]</div>
 </td>

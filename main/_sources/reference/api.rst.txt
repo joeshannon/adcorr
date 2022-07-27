@@ -6,6 +6,95 @@ API
     ``adcorr``
     ----------
 
+    .. automodule:: adcorr.corrections
+
+        ``adcorr.corrections``
+        ----------------------
+
+        .. automodule:: adcorr.corrections.angular_efficiency
+            :members:
+            
+            ``adcorr.corrections.angular_efficiency``
+            -----------------------------------------
+
+        .. automodule:: adcorr.corrections.background_subtraction
+            :members:
+
+            ``adcorr.corrections.background_subtraction``
+            ---------------------------------------------
+
+        .. automodule:: adcorr.corrections.dark_current
+            :members:
+
+            ``adcorr.corrections.dark_current``
+            -----------------------------------
+
+        .. automodule:: adcorr.corrections.deadtime
+            :members:
+
+            ``adcorr.corrections.deadtime``
+            -------------------------------
+
+        .. automodule:: adcorr.corrections.displaced_volume
+            :members:
+
+            ``adcorr.corrections.displaced_volume``
+            ---------------------------------------
+
+        .. automodule:: adcorr.corrections.flatfield
+            :members:
+
+            ``adcorr.corrections.flatfield``
+            --------------------------------
+
+        .. automodule:: adcorr.corrections.flux_and_transmission
+            :members:
+
+            ``adcorr.corrections.flux_and_transmission``
+            --------------------------------------------
+
+        .. automodule:: adcorr.corrections.frame_average
+            :members:
+
+            ``adcorr.corrections.frame_average``
+            ------------------------------------
+
+        .. automodule:: adcorr.corrections.frame_time
+            :members:
+
+            ``adcorr.corrections.frame_time``
+            ---------------------------------
+
+        .. automodule:: adcorr.corrections.masking
+            :members:
+
+            ``adcorr.corrections.masking``
+            ------------------------------
+
+        .. automodule:: adcorr.corrections.polarization
+            :members:
+
+            ``adcorr.corrections.polarization``
+            -----------------------------------
+
+        .. automodule:: adcorr.corrections.self_absorption
+            :members:
+
+            ``adcorr.corrections.self_absorption``
+            --------------------------------------
+
+        .. automodule:: adcorr.corrections.solid_angle
+            :members:
+
+            ``adcorr.corrections.solid_angle``
+            ----------------------------------
+
+        .. automodule:: adcorr.corrections.thickness
+            :members:
+
+            ``adcorr.corrections.thickness``
+            --------------------------------
+
     .. automodule:: adcorr.utils
         
         ``adcorr.utils``
@@ -22,90 +111,6 @@ API
 
             ``adcorr.utils.typing``
             -----------------------
-
-    .. automodule:: adcorr.angular_efficiency
-        :members:
-        
-        ``adcorr.angular_efficiency``
-        -----------------------------
-
-    .. automodule:: adcorr.background_subtraction
-        :members:
-
-        ``adcorr.background_subtraction``
-        ---------------------------------
-
-    .. automodule:: adcorr.dark_current
-        :members:
-
-        ``adcorr.dark_current``
-        -----------------------
-
-    .. automodule:: adcorr.deadtime
-        :members:
-
-        ``adcorr.deadtime``
-        -------------------
-
-    .. automodule:: adcorr.displaced_volume
-        :members:
-
-        ``adcorr.displaced_volume``
-        ---------------------------
-
-    .. automodule:: adcorr.flatfield
-        :members:
-
-        ``adcorr.flatfield``
-        --------------------
-
-    .. automodule:: adcorr.flux_and_transmission
-        :members:
-
-        ``adcorr.flux_and_transmission``
-        --------------------------------
-
-    .. automodule:: adcorr.frame_average
-        :members:
-
-        ``adcorr.frame_average``
-        ------------------------
-
-    .. automodule:: adcorr.frame_time
-        :members:
-
-        ``adcorr.frame_time``
-        ---------------------
-
-    .. automodule:: adcorr.masking
-        :members:
-
-        ``adcorr.masking``
-        ------------------
-
-    .. automodule:: adcorr.polarization
-        :members:
-
-        ``adcorr.polarization``
-        -----------------------
-
-    .. automodule:: adcorr.self_absorption
-        :members:
-
-        ``adcorr.self_absorption``
-        --------------------------
-
-    .. automodule:: adcorr.solid_angle
-        :members:
-
-        ``adcorr.solid_angle``
-        ----------------------
-
-    .. automodule:: adcorr.thickness
-        :members:
-
-        ``adcorr.thickness``
-        --------------------
 
 .. data:: adcorr.__version__
     :type: str
