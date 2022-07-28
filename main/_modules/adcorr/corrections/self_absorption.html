@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>adcorr.corrections.self_absorption &mdash; adcorr 0.1.0+23.gedd8ec5 documentation</title>
+  <title>adcorr.corrections.self_absorption &mdash; adcorr 0.1.0+24.g831127a documentation</title>
       <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../../_static/graphviz.css" type="text/css" />
@@ -83,13 +83,14 @@
            <div itemprop="articleBody">
              
   <h1>Source code for adcorr.corrections.self_absorption</h1><div class="highlight"><pre>
-<span></span><span class="kn">from</span> <span class="nn">math</span> <span class="kn">import</span> <span class="n">exp</span>
-<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Tuple</span><span class="p">,</span> <span class="n">cast</span>
+<span></span><span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Tuple</span><span class="p">,</span> <span class="n">cast</span>
 
 <span class="kn">from</span> <span class="nn">numpy</span> <span class="kn">import</span> <span class="p">(</span>
+    <span class="n">broadcast_to</span><span class="p">,</span>
     <span class="n">cos</span><span class="p">,</span>
     <span class="n">divide</span><span class="p">,</span>
     <span class="n">dtype</span><span class="p">,</span>
+    <span class="n">expand_dims</span><span class="p">,</span>
     <span class="n">floating</span><span class="p">,</span>
     <span class="n">log</span><span class="p">,</span>
     <span class="n">logical_and</span><span class="p">,</span>
@@ -100,16 +101,16 @@
 <span class="p">)</span>
 
 <span class="kn">from</span> <span class="nn">..utils.geometry</span> <span class="kn">import</span> <span class="n">scattering_angles</span>
-<span class="kn">from</span> <span class="nn">..utils.typing</span> <span class="kn">import</span> <span class="n">FrameHeight</span><span class="p">,</span> <span class="n">Frames</span><span class="p">,</span> <span class="n">FrameWidth</span><span class="p">,</span> <span class="n">NumFrames</span>
+<span class="kn">from</span> <span class="nn">..utils.typing</span> <span class="kn">import</span> <span class="n">FrameHeight</span><span class="p">,</span> <span class="n">Frames</span><span class="p">,</span> <span class="n">FrameWidth</span><span class="p">,</span> <span class="n">NumFrames</span><span class="p">,</span> <span class="n">VectorOrSingle</span>
 
 
 <div class="viewcode-block" id="correct_self_absorption"><a class="viewcode-back" href="../../../reference/api.html#adcorr.corrections.self_absorption.correct_self_absorption">[docs]</a><span class="k">def</span> <span class="nf">correct_self_absorption</span><span class="p">(</span>
     <span class="n">frames</span><span class="p">:</span> <span class="n">Frames</span><span class="p">[</span><span class="n">NumFrames</span><span class="p">,</span> <span class="n">FrameWidth</span><span class="p">,</span> <span class="n">FrameHeight</span><span class="p">,</span> <span class="n">dtype</span><span class="p">[</span><span class="n">number</span><span class="p">]],</span>
+    <span class="n">incident_flux</span><span class="p">:</span> <span class="n">ndarray</span><span class="p">[</span><span class="n">VectorOrSingle</span><span class="p">[</span><span class="n">NumFrames</span><span class="p">],</span> <span class="n">dtype</span><span class="p">[</span><span class="n">number</span><span class="p">]],</span>
+    <span class="n">transmitted_flux</span><span class="p">:</span> <span class="n">ndarray</span><span class="p">[</span><span class="n">VectorOrSingle</span><span class="p">[</span><span class="n">NumFrames</span><span class="p">],</span> <span class="n">dtype</span><span class="p">[</span><span class="n">number</span><span class="p">]],</span>
     <span class="n">beam_center</span><span class="p">:</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">],</span>
     <span class="n">pixel_sizes</span><span class="p">:</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">],</span>
     <span class="n">distance</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
-    <span class="n">absorption_coefficient</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
-    <span class="n">thickness</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Frames</span><span class="p">[</span><span class="n">NumFrames</span><span class="p">,</span> <span class="n">FrameWidth</span><span class="p">,</span> <span class="n">FrameHeight</span><span class="p">,</span> <span class="n">dtype</span><span class="p">[</span><span class="n">number</span><span class="p">]]:</span>
     <span class="sd">&quot;&quot;&quot;Correct for transmission loss due to differences in observation angle.</span>
 
@@ -119,31 +120,33 @@
 
 <span class="sd">    Args:</span>
 <span class="sd">        frames: A stack of frames to be corrected.</span>
+<span class="sd">        incident_flux: The flux intensity observed upstream of the sample.</span>
+<span class="sd">        transmitted_flux: The flux intensity observed downstream of the sample.</span>
 <span class="sd">        beam_center: The center position of the beam in pixels.</span>
 <span class="sd">        pixel_sizes: The real space size of a detector pixel.</span>
 <span class="sd">        distance: The distance between the detector and the sample.</span>
-<span class="sd">        absorption_coefficient: The coefficient of absorption for a given</span>
-<span class="sd">            material at a given photon energy.</span>
-<span class="sd">        thickness: The thickness of the sample material.</span>
 
 <span class="sd">    Returns:</span>
 <span class="sd">        The corrected stack of frames.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">if</span> <span class="n">absorption_coefficient</span> <span class="o">&lt;</span> <span class="mf">0.0</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;absorption coefficient must non-negative.&quot;</span><span class="p">)</span>
-    <span class="k">if</span> <span class="n">thickness</span> <span class="o">&lt;</span> <span class="mf">0.0</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Thickness must be non-negative.&quot;</span><span class="p">)</span>
-
     <span class="n">angles</span> <span class="o">=</span> <span class="n">scattering_angles</span><span class="p">(</span>
         <span class="n">cast</span><span class="p">(</span><span class="n">Tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">],</span> <span class="n">frames</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="o">-</span><span class="mi">2</span><span class="p">:]),</span> <span class="n">beam_center</span><span class="p">,</span> <span class="n">pixel_sizes</span><span class="p">,</span> <span class="n">distance</span>
     <span class="p">)</span>
-    <span class="n">transmissibility</span> <span class="o">=</span> <span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">absorption_coefficient</span> <span class="o">*</span> <span class="n">thickness</span><span class="p">)</span>
-    <span class="n">secangle</span><span class="p">:</span> <span class="n">ndarray</span><span class="p">[</span><span class="n">Tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">],</span> <span class="n">dtype</span><span class="p">[</span><span class="n">floating</span><span class="p">]]</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">/</span> <span class="n">cos</span><span class="p">(</span><span class="n">angles</span><span class="p">)</span>
-    <span class="n">correction_factors</span><span class="p">:</span> <span class="n">ndarray</span><span class="p">[</span><span class="n">Tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">],</span> <span class="n">dtype</span><span class="p">[</span><span class="n">floating</span><span class="p">]]</span> <span class="o">=</span> <span class="n">divide</span><span class="p">(</span>
-        <span class="mi">1</span> <span class="o">-</span> <span class="n">power</span><span class="p">(</span><span class="n">transmissibility</span><span class="p">,</span> <span class="n">secangle</span> <span class="o">-</span> <span class="mi">1</span><span class="p">),</span>
-        <span class="n">log</span><span class="p">(</span><span class="n">transmissibility</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">secangle</span><span class="p">),</span>
-        <span class="n">out</span><span class="o">=</span><span class="n">ones_like</span><span class="p">(</span><span class="n">secangle</span><span class="p">),</span>
-        <span class="n">where</span><span class="o">=</span><span class="n">logical_and</span><span class="p">(</span><span class="n">secangle</span> <span class="o">!=</span> <span class="mf">1.0</span><span class="p">,</span> <span class="n">transmissibility</span> <span class="o">!=</span> <span class="mf">1.0</span><span class="p">),</span>
+    <span class="n">transmissibility</span> <span class="o">=</span> <span class="n">transmitted_flux</span> <span class="o">/</span> <span class="n">incident_flux</span>
+    <span class="n">transmissibility</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="n">transmissibility</span>
+        <span class="k">if</span> <span class="n">transmissibility</span><span class="o">.</span><span class="n">shape</span> <span class="o">==</span> <span class="p">(</span><span class="mi">1</span><span class="p">,)</span>
+        <span class="k">else</span> <span class="n">expand_dims</span><span class="p">(</span><span class="n">transmissibility</span><span class="p">,</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
+    <span class="p">)</span>
+
+    <span class="n">secangles</span><span class="p">:</span> <span class="n">ndarray</span><span class="p">[</span><span class="n">Tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">],</span> <span class="n">dtype</span><span class="p">[</span><span class="n">floating</span><span class="p">]]</span> <span class="o">=</span> <span class="n">broadcast_to</span><span class="p">(</span>
+        <span class="mi">1</span> <span class="o">/</span> <span class="n">cos</span><span class="p">(</span><span class="n">angles</span><span class="p">),</span> <span class="n">frames</span><span class="o">.</span><span class="n">shape</span>
+    <span class="p">)</span>
+    <span class="n">correction_factors</span><span class="p">:</span> <span class="n">ndarray</span><span class="p">[</span><span class="n">Tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">],</span> <span class="n">dtype</span><span class="p">[</span><span class="n">floating</span><span class="p">]]</span> <span class="o">=</span> <span class="n">divide</span><span class="p">(</span>
+        <span class="mi">1</span> <span class="o">-</span> <span class="n">power</span><span class="p">(</span><span class="n">transmissibility</span><span class="p">,</span> <span class="n">secangles</span> <span class="o">-</span> <span class="mi">1</span><span class="p">),</span>
+        <span class="n">log</span><span class="p">(</span><span class="n">transmissibility</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">secangles</span><span class="p">),</span>
+        <span class="n">out</span><span class="o">=</span><span class="n">ones_like</span><span class="p">(</span><span class="n">secangles</span><span class="p">),</span>
+        <span class="n">where</span><span class="o">=</span><span class="n">logical_and</span><span class="p">(</span><span class="n">secangles</span> <span class="o">!=</span> <span class="mf">1.0</span><span class="p">,</span> <span class="n">transmissibility</span> <span class="o">!=</span> <span class="mf">1.0</span><span class="p">),</span>
     <span class="p">)</span>
 
     <span class="k">return</span> <span class="n">frames</span> <span class="o">*</span> <span class="n">correction_factors</span></div>
