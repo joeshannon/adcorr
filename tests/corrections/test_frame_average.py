@@ -22,7 +22,7 @@ def test_average_all_frames_typical_3x3():
 
 def test_average_all_frames_typical_2x2x2():
     assert isclose(
-        array([[6.0, 8.0], [10.0, 12.0]]),
+        array([[3.0, 4.0], [5.0, 6.0]]),
         average_all_frames(
             array([[[1.0, 2.0], [3.0, 4.0]], [[5.0, 6.0], [7.0, 8.0]]]),
         ),
@@ -31,7 +31,7 @@ def test_average_all_frames_typical_2x2x2():
 
 def test_average_all_frames_typical_3x2x2():
     assert isclose(
-        array([[15.0, 18.0], [21.0, 24.0]]),
+        array([[5.0, 6.0], [7.0, 8.0]]),
         average_all_frames(
             array(
                 [
@@ -57,7 +57,7 @@ def test_average_all_frames_masked_2x2():
 
 def test_average_all_frames_masked_2x2x2():
     assert isclose(
-        array([[Inf, 8.0], [10.0, Inf]]),
+        array([[Inf, 4.0], [5.0, Inf]]),
         average_all_frames(
             masked_where(
                 array([[[True, False], [False, True]], [[True, False], [False, True]]]),

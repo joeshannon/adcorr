@@ -18,4 +18,4 @@ def average_all_frames(
     """
     return frames.reshape(
         [frames.size // prod(frames.shape[-2:]), *frames.shape[-2:]]
-    ).sum(axis=-3)
+    ).mean(0)
