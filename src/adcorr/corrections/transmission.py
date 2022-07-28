@@ -1,11 +1,12 @@
-from numpy import dtype, expand_dims, floating, number, sum
+from numpy import dtype, expand_dims, ndarray, number
 
-from ..utils.typing import FrameHeight, Frames, FrameWidth, NumFrames
+from ..utils.typing import FrameHeight, Frames, FrameWidth, NumFrames, VectorOrSingle
 
 
 def normalize_transmitted_flux(
     frames: Frames[NumFrames, FrameWidth, FrameHeight, dtype[number]],
-) -> Frames[NumFrames, FrameWidth, FrameHeight, dtype[floating]]:
+    transmitted_flux: ndarray[VectorOrSingle[NumFrames], dtype[number]],
+) -> Frames[NumFrames, FrameWidth, FrameHeight, dtype[number]]:
     """Normalize for incident flux and transmissibility by scaling photon counts.
 
     Normalize for incident flux and transmissibility by scaling photon counts with
@@ -15,9 +16,10 @@ def normalize_transmitted_flux(
 
     Args:
         frames: A stack of frames to be normalized.
+        transmitted_flux: The flux intensity observed downstream of the sample.
 
     Returns:
         The normalized stack of frames.
     """
-    frame_flux = expand_dims(sum(frames, axis=(-1, -2)), (-1, -2))
-    return frames / frame_flux
+
+    return frames / expand_dims(transmitted_flux, (-2, -1))
