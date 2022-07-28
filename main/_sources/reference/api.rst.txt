@@ -47,11 +47,11 @@ API
             ``adcorr.corrections.flatfield``
             --------------------------------
 
-        .. automodule:: adcorr.corrections.flux_and_transmission
+        .. automodule:: adcorr.corrections.transmission
             :members:
 
-            ``adcorr.corrections.flux_and_transmission``
-            --------------------------------------------
+            ``adcorr.corrections.transmission``
+            -----------------------------------
 
         .. automodule:: adcorr.corrections.frame_average
             :members:

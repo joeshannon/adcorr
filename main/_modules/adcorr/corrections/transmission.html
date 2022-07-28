@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>adcorr.corrections.frame_time &mdash; adcorr 0.1.0+23.gedd8ec5 documentation</title>
+  <title>adcorr.corrections.transmission &mdash; adcorr 0.1.0+23.gedd8ec5 documentation</title>
       <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../../_static/graphviz.css" type="text/css" />
@@ -73,7 +73,7 @@
   <ul class="wy-breadcrumbs">
       <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
           <li><a href="../../index.html">Module code</a> &raquo;</li>
-      <li>adcorr.corrections.frame_time</li>
+      <li>adcorr.corrections.transmission</li>
       <li class="wy-breadcrumbs-aside">
       </li>
   </ul>
@@ -82,34 +82,32 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <h1>Source code for adcorr.corrections.frame_time</h1><div class="highlight"><pre>
-<span></span><span class="kn">from</span> <span class="nn">numpy</span> <span class="kn">import</span> <span class="n">atleast_1d</span><span class="p">,</span> <span class="n">dtype</span><span class="p">,</span> <span class="n">expand_dims</span><span class="p">,</span> <span class="n">floating</span><span class="p">,</span> <span class="n">ndarray</span><span class="p">,</span> <span class="n">number</span>
+  <h1>Source code for adcorr.corrections.transmission</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">numpy</span> <span class="kn">import</span> <span class="n">dtype</span><span class="p">,</span> <span class="n">expand_dims</span><span class="p">,</span> <span class="n">ndarray</span><span class="p">,</span> <span class="n">number</span>
 
 <span class="kn">from</span> <span class="nn">..utils.typing</span> <span class="kn">import</span> <span class="n">FrameHeight</span><span class="p">,</span> <span class="n">Frames</span><span class="p">,</span> <span class="n">FrameWidth</span><span class="p">,</span> <span class="n">NumFrames</span><span class="p">,</span> <span class="n">VectorOrSingle</span>
 
 
-<div class="viewcode-block" id="normalize_frame_time"><a class="viewcode-back" href="../../../reference/api.html#adcorr.corrections.frame_time.normalize_frame_time">[docs]</a><span class="k">def</span> <span class="nf">normalize_frame_time</span><span class="p">(</span>
+<div class="viewcode-block" id="normalize_transmitted_flux"><a class="viewcode-back" href="../../../reference/api.html#adcorr.corrections.transmission.normalize_transmitted_flux">[docs]</a><span class="k">def</span> <span class="nf">normalize_transmitted_flux</span><span class="p">(</span>
     <span class="n">frames</span><span class="p">:</span> <span class="n">Frames</span><span class="p">[</span><span class="n">NumFrames</span><span class="p">,</span> <span class="n">FrameWidth</span><span class="p">,</span> <span class="n">FrameHeight</span><span class="p">,</span> <span class="n">dtype</span><span class="p">[</span><span class="n">number</span><span class="p">]],</span>
-    <span class="n">count_times</span><span class="p">:</span> <span class="n">ndarray</span><span class="p">[</span><span class="n">VectorOrSingle</span><span class="p">[</span><span class="n">NumFrames</span><span class="p">],</span> <span class="n">dtype</span><span class="p">[</span><span class="n">floating</span><span class="p">]],</span>
-<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Frames</span><span class="p">[</span><span class="n">NumFrames</span><span class="p">,</span> <span class="n">FrameWidth</span><span class="p">,</span> <span class="n">FrameHeight</span><span class="p">,</span> <span class="n">dtype</span><span class="p">[</span><span class="n">floating</span><span class="p">]]:</span>
-    <span class="sd">&quot;&quot;&quot;Normalize for detector frame rate by scaling photon counts according to count time.</span>
+    <span class="n">transmitted_flux</span><span class="p">:</span> <span class="n">ndarray</span><span class="p">[</span><span class="n">VectorOrSingle</span><span class="p">[</span><span class="n">NumFrames</span><span class="p">],</span> <span class="n">dtype</span><span class="p">[</span><span class="n">number</span><span class="p">]],</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Frames</span><span class="p">[</span><span class="n">NumFrames</span><span class="p">,</span> <span class="n">FrameWidth</span><span class="p">,</span> <span class="n">FrameHeight</span><span class="p">,</span> <span class="n">dtype</span><span class="p">[</span><span class="n">number</span><span class="p">]]:</span>
+    <span class="sd">&quot;&quot;&quot;Normalize for incident flux and transmissibility by scaling photon counts.</span>
 
-<span class="sd">    Normalize for detector frame rate by scaling photon counts according to count time,</span>
-<span class="sd">    as detailed in section 3.4.3 of &#39;Everything SAXS: small-angle scattering pattern</span>
-<span class="sd">    collection and correction&#39; [https://doi.org/10.1088/0953-8984/25/38/383201].</span>
+<span class="sd">    Normalize for incident flux and transmissibility by scaling photon counts with</span>
+<span class="sd">    respect to the total observed flux, as detailed in section 4 of &#39;The modular small-</span>
+<span class="sd">    angle X-ray scattering data correction sequence&#39;</span>
+<span class="sd">    [https://doi.org/10.1107/S1600576717015096].</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">        frames: A stack of frames to be normalized.</span>
-<span class="sd">        count_times: The period over which photons are counted for each frame.</span>
+<span class="sd">        transmitted_flux: The flux intensity observed downstream of the sample.</span>
 
 <span class="sd">    Returns:</span>
 <span class="sd">        The normalized stack of frames.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">if</span> <span class="p">(</span><span class="n">count_times</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">any</span><span class="p">():</span>
-        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Count times must be positive.&quot;</span><span class="p">)</span>
 
-    <span class="n">times</span> <span class="o">=</span> <span class="n">expand_dims</span><span class="p">(</span><span class="n">atleast_1d</span><span class="p">(</span><span class="n">count_times</span><span class="p">),</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
-    <span class="k">return</span> <span class="n">frames</span> <span class="o">/</span> <span class="n">times</span></div>
+    <span class="k">return</span> <span class="n">frames</span> <span class="o">/</span> <span class="n">expand_dims</span><span class="p">(</span><span class="n">transmitted_flux</span><span class="p">,</span> <span class="p">(</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">))</span></div>
 </pre></div>
 
            </div>
