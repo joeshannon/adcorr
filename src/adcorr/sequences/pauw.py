@@ -32,6 +32,8 @@ def pauw_instrumental_background_pipeline(
     frames: Frames[NumFrames, FrameWidth, FrameHeight, dtype[number]],
     mask: Frame[FrameWidth, FrameHeight, dtype[bool_]],
     count_times: ndarray[VectorOrSingle[NumFrames], dtype[floating]],
+    incident_flux: ndarray[VectorOrSingle[NumFrames], dtype[number]],
+    transmitted_flux: ndarray[VectorOrSingle[NumFrames], dtype[number]],
     minimum_pulse_separation: float,
     minimum_arrival_separation: float,
     base_dark_current: float,
@@ -40,8 +42,6 @@ def pauw_instrumental_background_pipeline(
     beam_center_pixels: tuple[float, float],
     pixel_sizes: tuple[float, float],
     sample_detector_separation: float,
-    sample_absorption_coefficient: float,
-    sample_thickness: float,
 ) -> Frames[NumFrames, FrameWidth, FrameHeight, dtype[number]]:
     """Applies an ordered sequence of corrections to correct for instrumental background.
 
@@ -55,6 +55,8 @@ def pauw_instrumental_background_pipeline(
         mask: The boolean mask to apply to each frame.
         count_times: The period over which photons are counted for each frame in the
             sequence, or a single value which is applied to all frames in the sequence.
+        incident_flux: The flux intensity observed upstream of the sample.
+        transmitted_flux: The flux intensity observed downstream of the sample.
         minimum_pulse_separation: The minimum time difference required between a prior
             pulse and the current pulse for the current pulse to be recorded correctly.
         minimum_arrival_separation: The minimum time difference required between the
@@ -66,10 +68,6 @@ def pauw_instrumental_background_pipeline(
             flux.
         beam_center_pixels: The center position of the beam in pixels.
         pixel_sizes: The real space size of a detector pixel.
-        sample_detector_separation: The distance between the detector and the sample.
-        sample_absorption_coefficient: The coefficient of absorption for a given sample
-            material at a given photon energy.
-        sample_thickness: The thickness of the sample material.
 
     Returns:
         The corrected stack of frames.
@@ -86,14 +84,14 @@ def pauw_instrumental_background_pipeline(
         flux_dependant_dark_current,
     )
     frames = normalize_frame_time(frames, count_times)
-    frames = normalize_transmitted_flux(frames)
+    frames = normalize_transmitted_flux(frames, transmitted_flux)
     frames = correct_self_absorption(
         frames,
+        incident_flux,
+        transmitted_flux,
         beam_center_pixels,
         pixel_sizes,
         sample_detector_separation,
-        sample_absorption_coefficient,
-        sample_thickness,
     )
     return frames
 
@@ -109,6 +107,10 @@ def pauw_simple_sample_pipeline(
     flatfield: Frame[FrameWidth, FrameHeight, dtype[floating]],
     frames_count_times: ndarray[VectorOrSingle[NumFrames], dtype[floating]],
     backgrounds_count_times: ndarray[VectorOrSingle[NumBackgrounds], dtype[floating]],
+    frames_incident_flux: ndarray[VectorOrSingle[NumFrames], dtype[number]],
+    frames_transmitted_flux: ndarray[VectorOrSingle[NumFrames], dtype[number]],
+    background_incident_flux: ndarray[VectorOrSingle[NumBackgrounds], dtype[number]],
+    background_transmitted_flux: ndarray[VectorOrSingle[NumBackgrounds], dtype[number]],
     minimum_pulse_separation: float,
     minimum_arrival_separation: float,
     base_dark_current: float,
@@ -117,7 +119,6 @@ def pauw_simple_sample_pipeline(
     beam_center_pixels: tuple[float, float],
     pixel_sizes: tuple[float, float],
     sample_detector_separation: float,
-    sample_absorption_coefficient: float,
     sensor_absorption_coefficient: float,
     sample_thickness: float,
     sensor_thickness: float,
@@ -144,6 +145,14 @@ def pauw_simple_sample_pipeline(
         backgrounds_count_times: The period over which photons are counted for each
             frame in the backgrounds sequence, or a single value which is applied to
             all frames in the sequence.
+        frames_incident_flux: The flux intensity observed upstream of the sample for
+            each frame in the frames sequence.
+        frames_transmitted_flux: The flux intensity observed downstream of the sample
+            for each frame in the frames sequence.
+        background_incident_flux: The flux intensity observed upstream of the sample for
+            each frame in the backgrounds sequence.
+        background_transmitted_flux: The flux intensity observed downstream of the
+            sample for each frame in the backgrounds sequence.
         minimum_pulse_separation: The minimum time difference required between a prior
             pulse and the current pulse for the current pulse to be recorded correctly.
         minimum_arrival_separation: The minimum time difference required between the
@@ -156,8 +165,6 @@ def pauw_simple_sample_pipeline(
         beam_center_pixels: The center position of the beam in pixels.
         pixel_sizes: The real space size of a detector pixel.
         sample_detector_separation: The distance between the detector and the sample.
-        sample_absorption_coefficient: The coefficient of absorption for a given sample
-            material at a given photon energy.
         sensor_absorption_coefficient: The coefficient of absorption for a given
             detector head material at a given photon energy.
         sample_thickness: The thickness of the sample material.
@@ -172,6 +179,8 @@ def pauw_simple_sample_pipeline(
         frames,
         mask,
         frames_count_times,
+        frames_incident_flux,
+        frames_transmitted_flux,
         minimum_pulse_separation,
         minimum_arrival_separation,
         base_dark_current,
@@ -180,13 +189,13 @@ def pauw_simple_sample_pipeline(
         beam_center_pixels,
         pixel_sizes,
         sample_detector_separation,
-        sample_absorption_coefficient,
-        sample_thickness,
     )
     backgrounds = pauw_instrumental_background_pipeline(
         backgrounds,
         mask,
         backgrounds_count_times,
+        background_incident_flux,
+        background_transmitted_flux,
         minimum_pulse_separation,
         minimum_arrival_separation,
         base_dark_current,
@@ -195,8 +204,6 @@ def pauw_simple_sample_pipeline(
         beam_center_pixels,
         pixel_sizes,
         sample_detector_separation,
-        sample_absorption_coefficient,
-        sample_thickness,
     )
     background = average_all_frames(backgrounds)
     frames = subtract_background(frames, background)
@@ -233,9 +240,15 @@ def pauw_dispersed_sample_pipeline(
     backgrounds: Frames[NumBackgrounds, FrameWidth, FrameHeight, dtype[number]],
     mask: Frame[FrameWidth, FrameHeight, dtype[bool_]],
     flatfield: Frame[FrameWidth, FrameHeight, dtype[floating]],
-    frames_count_times: ndarray[VectorOrSingle[NumFrames], dtype[floating]],
-    dispersants_count_times: ndarray[VectorOrSingle[NumDispersants], dtype[floating]],
-    backgrounds_count_times: ndarray[VectorOrSingle[NumBackgrounds], dtype[floating]],
+    frame_count_times: ndarray[VectorOrSingle[NumFrames], dtype[floating]],
+    dispersant_count_times: ndarray[VectorOrSingle[NumDispersants], dtype[floating]],
+    background_count_times: ndarray[VectorOrSingle[NumBackgrounds], dtype[floating]],
+    frames_incident_flux: ndarray[VectorOrSingle[NumFrames], dtype[number]],
+    frames_transmitted_flux: ndarray[VectorOrSingle[NumFrames], dtype[number]],
+    dispersant_incident_flux: ndarray[VectorOrSingle[NumDispersants], dtype[number]],
+    dispersant_transmitted_flux: ndarray[VectorOrSingle[NumDispersants], dtype[number]],
+    background_incident_flux: ndarray[VectorOrSingle[NumBackgrounds], dtype[number]],
+    background_transmitted_flux: ndarray[VectorOrSingle[NumBackgrounds], dtype[number]],
     minimum_pulse_separation: float,
     minimum_arrival_separation: float,
     base_dark_current: float,
@@ -244,8 +257,6 @@ def pauw_dispersed_sample_pipeline(
     beam_center_pixels: tuple[float, float],
     pixel_sizes: tuple[float, float],
     sample_detector_separation: float,
-    solvent_absorption_coefficient: float,
-    analyte_absorption_coefficient: float,
     sensor_absorption_coefficient: float,
     sample_thickness: float,
     sensor_thickness: float,
@@ -270,15 +281,27 @@ def pauw_dispersed_sample_pipeline(
         flatfield: The multiplicative flatfield correction to be applied to detector
             readings. If None, a uniform flatfield of ones is applied, resulting in no
             change to the frame.
-        frames_count_times: The period over which photons are counted for each frame in
+        frame_count_times: The period over which photons are counted for each frame in
             the frames sequence, or a single value which is applied to all frames in
             the sequence.
-        frames_count_times: The period over which photons are counted for each frame in
-            the despersants sequence, or a single value which is applied to all frames
-            in the sequence.
-        backgrounds_count_times: The period over which photons are counted for each
+        dispersant_count_times: The period over which photons are counted for each
+            frame in the despersants sequence, or a single value which is applied to
+            all frames in the sequence.
+        background_count_times: The period over which photons are counted for each
             frame in the backgrounds sequence, or a single value which is applied to
             all frames in the sequence.
+        frames_incident_flux: The flux intensity observed upstream of the sample for
+            each frame in the frames sequence.
+        frames_transmitted_flux: The flux intensity observed downstream of the sample
+            for each frame in the frames sequence.
+        background_incident_flux: The flux intensity observed upstream of the sample for
+            each frame in the backgrounds sequence.
+        background_transmitted_flux: The flux intensity observed downstream of the
+            sample for each frame in the backgrounds sequence.
+        dispersants_incident_flux: The flux intensity observed upstream of the sample
+            for each frame in the dispersants sequence.
+        dispersants_transmitted_flux: The flux intensity observed downstream of the
+            sample for each frame in the dispersants sequence.
         minimum_pulse_separation: The minimum time difference required between a prior
             pulse and the current pulse for the current pulse to be recorded correctly.
         minimum_arrival_separation: The minimum time difference required between the
@@ -291,10 +314,6 @@ def pauw_dispersed_sample_pipeline(
         beam_center_pixels: The center position of the beam in pixels.
         pixel_sizes: The real space size of a detector pixel.
         sample_detector_separation: The distance between the detector and the sample.
-        solvent_absorption_coefficient: The coefficient of absorption of the solvent at
-            a given photon energy.
-        analyte_absorption_coefficient:  The coefficient of absorption of the analyte
-            at a given photon energy.
         sensor_absorption_coefficient: The coefficient of absorption for a given
             detector head material at a given photon energy.
         sample_thickness: The thickness of the sample material.
@@ -311,8 +330,12 @@ def pauw_dispersed_sample_pipeline(
         backgrounds,
         mask,
         flatfield,
-        frames_count_times,
-        backgrounds_count_times,
+        frame_count_times,
+        background_count_times,
+        frames_incident_flux,
+        frames_transmitted_flux,
+        background_incident_flux,
+        background_transmitted_flux,
         minimum_pulse_separation,
         minimum_arrival_separation,
         base_dark_current,
@@ -321,7 +344,6 @@ def pauw_dispersed_sample_pipeline(
         beam_center_pixels,
         pixel_sizes,
         sample_detector_separation,
-        solvent_absorption_coefficient,
         sensor_absorption_coefficient,
         sample_thickness,
         sensor_thickness,
@@ -332,8 +354,12 @@ def pauw_dispersed_sample_pipeline(
         backgrounds,
         mask,
         flatfield,
-        dispersants_count_times,
-        backgrounds_count_times,
+        dispersant_count_times,
+        background_count_times,
+        dispersant_incident_flux,
+        dispersant_transmitted_flux,
+        background_incident_flux,
+        background_transmitted_flux,
         minimum_pulse_separation,
         minimum_arrival_separation,
         base_dark_current,
@@ -342,13 +368,13 @@ def pauw_dispersed_sample_pipeline(
         beam_center_pixels,
         pixel_sizes,
         sample_detector_separation,
-        analyte_absorption_coefficient,
         sensor_absorption_coefficient,
         sample_thickness,
         sensor_thickness,
         beam_polarization,
     )
-    dispersant = average_all_frames(dispersants)
     frames = correct_displaced_volume(frames, displaced_fraction)
+    dispersants = correct_displaced_volume(dispersants, 1 - displaced_fraction)
+    dispersant = average_all_frames(dispersants)
     frames = subtract_background(frames, dispersant)
     return frames
