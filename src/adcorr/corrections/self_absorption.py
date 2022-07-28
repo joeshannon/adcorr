@@ -1,10 +1,11 @@
-from math import exp
 from typing import Tuple, cast
 
 from numpy import (
+    broadcast_to,
     cos,
     divide,
     dtype,
+    expand_dims,
     floating,
     log,
     logical_and,
@@ -15,16 +16,16 @@ from numpy import (
 )
 
 from ..utils.geometry import scattering_angles
-from ..utils.typing import FrameHeight, Frames, FrameWidth, NumFrames
+from ..utils.typing import FrameHeight, Frames, FrameWidth, NumFrames, VectorOrSingle
 
 
 def correct_self_absorption(
     frames: Frames[NumFrames, FrameWidth, FrameHeight, dtype[number]],
+    incident_flux: ndarray[VectorOrSingle[NumFrames], dtype[number]],
+    transmitted_flux: ndarray[VectorOrSingle[NumFrames], dtype[number]],
     beam_center: Tuple[float, float],
     pixel_sizes: Tuple[float, float],
     distance: float,
-    absorption_coefficient: float,
-    thickness: float,
 ) -> Frames[NumFrames, FrameWidth, FrameHeight, dtype[number]]:
     """Correct for transmission loss due to differences in observation angle.
 
@@ -34,31 +35,33 @@ def correct_self_absorption(
 
     Args:
         frames: A stack of frames to be corrected.
+        incident_flux: The flux intensity observed upstream of the sample.
+        transmitted_flux: The flux intensity observed downstream of the sample.
         beam_center: The center position of the beam in pixels.
         pixel_sizes: The real space size of a detector pixel.
         distance: The distance between the detector and the sample.
-        absorption_coefficient: The coefficient of absorption for a given
-            material at a given photon energy.
-        thickness: The thickness of the sample material.
 
     Returns:
         The corrected stack of frames.
     """
-    if absorption_coefficient < 0.0:
-        raise ValueError("absorption coefficient must non-negative.")
-    if thickness < 0.0:
-        raise ValueError("Thickness must be non-negative.")
-
     angles = scattering_angles(
         cast(Tuple[int, int], frames.shape[-2:]), beam_center, pixel_sizes, distance
     )
-    transmissibility = exp(-absorption_coefficient * thickness)
-    secangle: ndarray[Tuple[int, int], dtype[floating]] = 1 / cos(angles)
-    correction_factors: ndarray[Tuple[int, int], dtype[floating]] = divide(
-        1 - power(transmissibility, secangle - 1),
-        log(transmissibility) * (1 - secangle),
-        out=ones_like(secangle),
-        where=logical_and(secangle != 1.0, transmissibility != 1.0),
+    transmissibility = transmitted_flux / incident_flux
+    transmissibility = (
+        transmissibility
+        if transmissibility.shape == (1,)
+        else expand_dims(transmissibility, (1, 2))
+    )
+
+    secangles: ndarray[Tuple[int, int], dtype[floating]] = broadcast_to(
+        1 / cos(angles), frames.shape
+    )
+    correction_factors: ndarray[Tuple[int, int, int], dtype[floating]] = divide(
+        1 - power(transmissibility, secangles - 1),
+        log(transmissibility) * (1 - secangles),
+        out=ones_like(secangles),
+        where=logical_and(secangles != 1.0, transmissibility != 1.0),
     )
 
     return frames * correction_factors
