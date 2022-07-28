@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>adcorr.sequences.pauw &mdash; adcorr 0.1.0+24.g831127a documentation</title>
+  <title>adcorr.sequences.pauw &mdash; adcorr 0.1.0+25.g35f2709 documentation</title>
       <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../../_static/graphviz.css" type="text/css" />
@@ -117,6 +117,8 @@
     <span class="n">frames</span><span class="p">:</span> <span class="n">Frames</span><span class="p">[</span><span class="n">NumFrames</span><span class="p">,</span> <span class="n">FrameWidth</span><span class="p">,</span> <span class="n">FrameHeight</span><span class="p">,</span> <span class="n">dtype</span><span class="p">[</span><span class="n">number</span><span class="p">]],</span>
     <span class="n">mask</span><span class="p">:</span> <span class="n">Frame</span><span class="p">[</span><span class="n">FrameWidth</span><span class="p">,</span> <span class="n">FrameHeight</span><span class="p">,</span> <span class="n">dtype</span><span class="p">[</span><span class="n">bool_</span><span class="p">]],</span>
     <span class="n">count_times</span><span class="p">:</span> <span class="n">ndarray</span><span class="p">[</span><span class="n">VectorOrSingle</span><span class="p">[</span><span class="n">NumFrames</span><span class="p">],</span> <span class="n">dtype</span><span class="p">[</span><span class="n">floating</span><span class="p">]],</span>
+    <span class="n">incident_flux</span><span class="p">:</span> <span class="n">ndarray</span><span class="p">[</span><span class="n">VectorOrSingle</span><span class="p">[</span><span class="n">NumFrames</span><span class="p">],</span> <span class="n">dtype</span><span class="p">[</span><span class="n">number</span><span class="p">]],</span>
+    <span class="n">transmitted_flux</span><span class="p">:</span> <span class="n">ndarray</span><span class="p">[</span><span class="n">VectorOrSingle</span><span class="p">[</span><span class="n">NumFrames</span><span class="p">],</span> <span class="n">dtype</span><span class="p">[</span><span class="n">number</span><span class="p">]],</span>
     <span class="n">minimum_pulse_separation</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
     <span class="n">minimum_arrival_separation</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
     <span class="n">base_dark_current</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
@@ -125,8 +127,6 @@
     <span class="n">beam_center_pixels</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">],</span>
     <span class="n">pixel_sizes</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">],</span>
     <span class="n">sample_detector_separation</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
-    <span class="n">sample_absorption_coefficient</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
-    <span class="n">sample_thickness</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Frames</span><span class="p">[</span><span class="n">NumFrames</span><span class="p">,</span> <span class="n">FrameWidth</span><span class="p">,</span> <span class="n">FrameHeight</span><span class="p">,</span> <span class="n">dtype</span><span class="p">[</span><span class="n">number</span><span class="p">]]:</span>
     <span class="sd">&quot;&quot;&quot;Applies an ordered sequence of corrections to correct for instrumental background.</span>
 
@@ -140,6 +140,8 @@
 <span class="sd">        mask: The boolean mask to apply to each frame.</span>
 <span class="sd">        count_times: The period over which photons are counted for each frame in the</span>
 <span class="sd">            sequence, or a single value which is applied to all frames in the sequence.</span>
+<span class="sd">        incident_flux: The flux intensity observed upstream of the sample.</span>
+<span class="sd">        transmitted_flux: The flux intensity observed downstream of the sample.</span>
 <span class="sd">        minimum_pulse_separation: The minimum time difference required between a prior</span>
 <span class="sd">            pulse and the current pulse for the current pulse to be recorded correctly.</span>
 <span class="sd">        minimum_arrival_separation: The minimum time difference required between the</span>
@@ -151,10 +153,6 @@
 <span class="sd">            flux.</span>
 <span class="sd">        beam_center_pixels: The center position of the beam in pixels.</span>
 <span class="sd">        pixel_sizes: The real space size of a detector pixel.</span>
-<span class="sd">        sample_detector_separation: The distance between the detector and the sample.</span>
-<span class="sd">        sample_absorption_coefficient: The coefficient of absorption for a given sample</span>
-<span class="sd">            material at a given photon energy.</span>
-<span class="sd">        sample_thickness: The thickness of the sample material.</span>
 
 <span class="sd">    Returns:</span>
 <span class="sd">        The corrected stack of frames.</span>
@@ -171,14 +169,14 @@
         <span class="n">flux_dependant_dark_current</span><span class="p">,</span>
     <span class="p">)</span>
     <span class="n">frames</span> <span class="o">=</span> <span class="n">normalize_frame_time</span><span class="p">(</span><span class="n">frames</span><span class="p">,</span> <span class="n">count_times</span><span class="p">)</span>
-    <span class="n">frames</span> <span class="o">=</span> <span class="n">normalize_transmitted_flux</span><span class="p">(</span><span class="n">frames</span><span class="p">)</span>
+    <span class="n">frames</span> <span class="o">=</span> <span class="n">normalize_transmitted_flux</span><span class="p">(</span><span class="n">frames</span><span class="p">,</span> <span class="n">transmitted_flux</span><span class="p">)</span>
     <span class="n">frames</span> <span class="o">=</span> <span class="n">correct_self_absorption</span><span class="p">(</span>
         <span class="n">frames</span><span class="p">,</span>
+        <span class="n">incident_flux</span><span class="p">,</span>
+        <span class="n">transmitted_flux</span><span class="p">,</span>
         <span class="n">beam_center_pixels</span><span class="p">,</span>
         <span class="n">pixel_sizes</span><span class="p">,</span>
         <span class="n">sample_detector_separation</span><span class="p">,</span>
-        <span class="n">sample_absorption_coefficient</span><span class="p">,</span>
-        <span class="n">sample_thickness</span><span class="p">,</span>
     <span class="p">)</span>
     <span class="k">return</span> <span class="n">frames</span></div>
 
@@ -194,6 +192,10 @@
     <span class="n">flatfield</span><span class="p">:</span> <span class="n">Frame</span><span class="p">[</span><span class="n">FrameWidth</span><span class="p">,</span> <span class="n">FrameHeight</span><span class="p">,</span> <span class="n">dtype</span><span class="p">[</span><span class="n">floating</span><span class="p">]],</span>
     <span class="n">frames_count_times</span><span class="p">:</span> <span class="n">ndarray</span><span class="p">[</span><span class="n">VectorOrSingle</span><span class="p">[</span><span class="n">NumFrames</span><span class="p">],</span> <span class="n">dtype</span><span class="p">[</span><span class="n">floating</span><span class="p">]],</span>
     <span class="n">backgrounds_count_times</span><span class="p">:</span> <span class="n">ndarray</span><span class="p">[</span><span class="n">VectorOrSingle</span><span class="p">[</span><span class="n">NumBackgrounds</span><span class="p">],</span> <span class="n">dtype</span><span class="p">[</span><span class="n">floating</span><span class="p">]],</span>
+    <span class="n">frames_incident_flux</span><span class="p">:</span> <span class="n">ndarray</span><span class="p">[</span><span class="n">VectorOrSingle</span><span class="p">[</span><span class="n">NumFrames</span><span class="p">],</span> <span class="n">dtype</span><span class="p">[</span><span class="n">number</span><span class="p">]],</span>
+    <span class="n">frames_transmitted_flux</span><span class="p">:</span> <span class="n">ndarray</span><span class="p">[</span><span class="n">VectorOrSingle</span><span class="p">[</span><span class="n">NumFrames</span><span class="p">],</span> <span class="n">dtype</span><span class="p">[</span><span class="n">number</span><span class="p">]],</span>
+    <span class="n">background_incident_flux</span><span class="p">:</span> <span class="n">ndarray</span><span class="p">[</span><span class="n">VectorOrSingle</span><span class="p">[</span><span class="n">NumBackgrounds</span><span class="p">],</span> <span class="n">dtype</span><span class="p">[</span><span class="n">number</span><span class="p">]],</span>
+    <span class="n">background_transmitted_flux</span><span class="p">:</span> <span class="n">ndarray</span><span class="p">[</span><span class="n">VectorOrSingle</span><span class="p">[</span><span class="n">NumBackgrounds</span><span class="p">],</span> <span class="n">dtype</span><span class="p">[</span><span class="n">number</span><span class="p">]],</span>
     <span class="n">minimum_pulse_separation</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
     <span class="n">minimum_arrival_separation</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
     <span class="n">base_dark_current</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
@@ -202,7 +204,6 @@
     <span class="n">beam_center_pixels</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">],</span>
     <span class="n">pixel_sizes</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">],</span>
     <span class="n">sample_detector_separation</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
-    <span class="n">sample_absorption_coefficient</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
     <span class="n">sensor_absorption_coefficient</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
     <span class="n">sample_thickness</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
     <span class="n">sensor_thickness</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
@@ -229,6 +230,14 @@
 <span class="sd">        backgrounds_count_times: The period over which photons are counted for each</span>
 <span class="sd">            frame in the backgrounds sequence, or a single value which is applied to</span>
 <span class="sd">            all frames in the sequence.</span>
+<span class="sd">        frames_incident_flux: The flux intensity observed upstream of the sample for</span>
+<span class="sd">            each frame in the frames sequence.</span>
+<span class="sd">        frames_transmitted_flux: The flux intensity observed downstream of the sample</span>
+<span class="sd">            for each frame in the frames sequence.</span>
+<span class="sd">        background_incident_flux: The flux intensity observed upstream of the sample for</span>
+<span class="sd">            each frame in the backgrounds sequence.</span>
+<span class="sd">        background_transmitted_flux: The flux intensity observed downstream of the</span>
+<span class="sd">            sample for each frame in the backgrounds sequence.</span>
 <span class="sd">        minimum_pulse_separation: The minimum time difference required between a prior</span>
 <span class="sd">            pulse and the current pulse for the current pulse to be recorded correctly.</span>
 <span class="sd">        minimum_arrival_separation: The minimum time difference required between the</span>
@@ -241,8 +250,6 @@
 <span class="sd">        beam_center_pixels: The center position of the beam in pixels.</span>
 <span class="sd">        pixel_sizes: The real space size of a detector pixel.</span>
 <span class="sd">        sample_detector_separation: The distance between the detector and the sample.</span>
-<span class="sd">        sample_absorption_coefficient: The coefficient of absorption for a given sample</span>
-<span class="sd">            material at a given photon energy.</span>
 <span class="sd">        sensor_absorption_coefficient: The coefficient of absorption for a given</span>
 <span class="sd">            detector head material at a given photon energy.</span>
 <span class="sd">        sample_thickness: The thickness of the sample material.</span>
@@ -257,6 +264,8 @@
         <span class="n">frames</span><span class="p">,</span>
         <span class="n">mask</span><span class="p">,</span>
         <span class="n">frames_count_times</span><span class="p">,</span>
+        <span class="n">frames_incident_flux</span><span class="p">,</span>
+        <span class="n">frames_transmitted_flux</span><span class="p">,</span>
         <span class="n">minimum_pulse_separation</span><span class="p">,</span>
         <span class="n">minimum_arrival_separation</span><span class="p">,</span>
         <span class="n">base_dark_current</span><span class="p">,</span>
@@ -265,13 +274,13 @@
         <span class="n">beam_center_pixels</span><span class="p">,</span>
         <span class="n">pixel_sizes</span><span class="p">,</span>
         <span class="n">sample_detector_separation</span><span class="p">,</span>
-        <span class="n">sample_absorption_coefficient</span><span class="p">,</span>
-        <span class="n">sample_thickness</span><span class="p">,</span>
     <span class="p">)</span>
     <span class="n">backgrounds</span> <span class="o">=</span> <span class="n">pauw_instrumental_background_pipeline</span><span class="p">(</span>
         <span class="n">backgrounds</span><span class="p">,</span>
         <span class="n">mask</span><span class="p">,</span>
         <span class="n">backgrounds_count_times</span><span class="p">,</span>
+        <span class="n">background_incident_flux</span><span class="p">,</span>
+        <span class="n">background_transmitted_flux</span><span class="p">,</span>
         <span class="n">minimum_pulse_separation</span><span class="p">,</span>
         <span class="n">minimum_arrival_separation</span><span class="p">,</span>
         <span class="n">base_dark_current</span><span class="p">,</span>
@@ -280,8 +289,6 @@
         <span class="n">beam_center_pixels</span><span class="p">,</span>
         <span class="n">pixel_sizes</span><span class="p">,</span>
         <span class="n">sample_detector_separation</span><span class="p">,</span>
-        <span class="n">sample_absorption_coefficient</span><span class="p">,</span>
-        <span class="n">sample_thickness</span><span class="p">,</span>
     <span class="p">)</span>
     <span class="n">background</span> <span class="o">=</span> <span class="n">average_all_frames</span><span class="p">(</span><span class="n">backgrounds</span><span class="p">)</span>
     <span class="n">frames</span> <span class="o">=</span> <span class="n">subtract_background</span><span class="p">(</span><span class="n">frames</span><span class="p">,</span> <span class="n">background</span><span class="p">)</span>
@@ -305,6 +312,7 @@
         <span class="n">beam_polarization</span><span class="p">,</span>
     <span class="p">)</span>
     <span class="n">frames</span> <span class="o">=</span> <span class="n">normalize_thickness</span><span class="p">(</span><span class="n">frames</span><span class="p">,</span> <span class="n">sample_thickness</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">frames</span><span class="o">.</span><span class="n">mean</span><span class="p">())</span>
     <span class="k">return</span> <span class="n">frames</span></div>
 
 
@@ -318,9 +326,15 @@
     <span class="n">backgrounds</span><span class="p">:</span> <span class="n">Frames</span><span class="p">[</span><span class="n">NumBackgrounds</span><span class="p">,</span> <span class="n">FrameWidth</span><span class="p">,</span> <span class="n">FrameHeight</span><span class="p">,</span> <span class="n">dtype</span><span class="p">[</span><span class="n">number</span><span class="p">]],</span>
     <span class="n">mask</span><span class="p">:</span> <span class="n">Frame</span><span class="p">[</span><span class="n">FrameWidth</span><span class="p">,</span> <span class="n">FrameHeight</span><span class="p">,</span> <span class="n">dtype</span><span class="p">[</span><span class="n">bool_</span><span class="p">]],</span>
     <span class="n">flatfield</span><span class="p">:</span> <span class="n">Frame</span><span class="p">[</span><span class="n">FrameWidth</span><span class="p">,</span> <span class="n">FrameHeight</span><span class="p">,</span> <span class="n">dtype</span><span class="p">[</span><span class="n">floating</span><span class="p">]],</span>
-    <span class="n">frames_count_times</span><span class="p">:</span> <span class="n">ndarray</span><span class="p">[</span><span class="n">VectorOrSingle</span><span class="p">[</span><span class="n">NumFrames</span><span class="p">],</span> <span class="n">dtype</span><span class="p">[</span><span class="n">floating</span><span class="p">]],</span>
-    <span class="n">dispersants_count_times</span><span class="p">:</span> <span class="n">ndarray</span><span class="p">[</span><span class="n">VectorOrSingle</span><span class="p">[</span><span class="n">NumDispersants</span><span class="p">],</span> <span class="n">dtype</span><span class="p">[</span><span class="n">floating</span><span class="p">]],</span>
-    <span class="n">backgrounds_count_times</span><span class="p">:</span> <span class="n">ndarray</span><span class="p">[</span><span class="n">VectorOrSingle</span><span class="p">[</span><span class="n">NumBackgrounds</span><span class="p">],</span> <span class="n">dtype</span><span class="p">[</span><span class="n">floating</span><span class="p">]],</span>
+    <span class="n">frame_count_times</span><span class="p">:</span> <span class="n">ndarray</span><span class="p">[</span><span class="n">VectorOrSingle</span><span class="p">[</span><span class="n">NumFrames</span><span class="p">],</span> <span class="n">dtype</span><span class="p">[</span><span class="n">floating</span><span class="p">]],</span>
+    <span class="n">dispersant_count_times</span><span class="p">:</span> <span class="n">ndarray</span><span class="p">[</span><span class="n">VectorOrSingle</span><span class="p">[</span><span class="n">NumDispersants</span><span class="p">],</span> <span class="n">dtype</span><span class="p">[</span><span class="n">floating</span><span class="p">]],</span>
+    <span class="n">background_count_times</span><span class="p">:</span> <span class="n">ndarray</span><span class="p">[</span><span class="n">VectorOrSingle</span><span class="p">[</span><span class="n">NumBackgrounds</span><span class="p">],</span> <span class="n">dtype</span><span class="p">[</span><span class="n">floating</span><span class="p">]],</span>
+    <span class="n">frames_incident_flux</span><span class="p">:</span> <span class="n">ndarray</span><span class="p">[</span><span class="n">VectorOrSingle</span><span class="p">[</span><span class="n">NumFrames</span><span class="p">],</span> <span class="n">dtype</span><span class="p">[</span><span class="n">number</span><span class="p">]],</span>
+    <span class="n">frames_transmitted_flux</span><span class="p">:</span> <span class="n">ndarray</span><span class="p">[</span><span class="n">VectorOrSingle</span><span class="p">[</span><span class="n">NumFrames</span><span class="p">],</span> <span class="n">dtype</span><span class="p">[</span><span class="n">number</span><span class="p">]],</span>
+    <span class="n">dispersant_incident_flux</span><span class="p">:</span> <span class="n">ndarray</span><span class="p">[</span><span class="n">VectorOrSingle</span><span class="p">[</span><span class="n">NumDispersants</span><span class="p">],</span> <span class="n">dtype</span><span class="p">[</span><span class="n">number</span><span class="p">]],</span>
+    <span class="n">dispersant_transmitted_flux</span><span class="p">:</span> <span class="n">ndarray</span><span class="p">[</span><span class="n">VectorOrSingle</span><span class="p">[</span><span class="n">NumDispersants</span><span class="p">],</span> <span class="n">dtype</span><span class="p">[</span><span class="n">number</span><span class="p">]],</span>
+    <span class="n">background_incident_flux</span><span class="p">:</span> <span class="n">ndarray</span><span class="p">[</span><span class="n">VectorOrSingle</span><span class="p">[</span><span class="n">NumBackgrounds</span><span class="p">],</span> <span class="n">dtype</span><span class="p">[</span><span class="n">number</span><span class="p">]],</span>
+    <span class="n">background_transmitted_flux</span><span class="p">:</span> <span class="n">ndarray</span><span class="p">[</span><span class="n">VectorOrSingle</span><span class="p">[</span><span class="n">NumBackgrounds</span><span class="p">],</span> <span class="n">dtype</span><span class="p">[</span><span class="n">number</span><span class="p">]],</span>
     <span class="n">minimum_pulse_separation</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
     <span class="n">minimum_arrival_separation</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
     <span class="n">base_dark_current</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
@@ -329,8 +343,6 @@
     <span class="n">beam_center_pixels</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">],</span>
     <span class="n">pixel_sizes</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">],</span>
     <span class="n">sample_detector_separation</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
-    <span class="n">solvent_absorption_coefficient</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
-    <span class="n">analyte_absorption_coefficient</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
     <span class="n">sensor_absorption_coefficient</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
     <span class="n">sample_thickness</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
     <span class="n">sensor_thickness</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
@@ -355,15 +367,27 @@
 <span class="sd">        flatfield: The multiplicative flatfield correction to be applied to detector</span>
 <span class="sd">            readings. If None, a uniform flatfield of ones is applied, resulting in no</span>
 <span class="sd">            change to the frame.</span>
-<span class="sd">        frames_count_times: The period over which photons are counted for each frame in</span>
+<span class="sd">        frame_count_times: The period over which photons are counted for each frame in</span>
 <span class="sd">            the frames sequence, or a single value which is applied to all frames in</span>
 <span class="sd">            the sequence.</span>
-<span class="sd">        frames_count_times: The period over which photons are counted for each frame in</span>
-<span class="sd">            the despersants sequence, or a single value which is applied to all frames</span>
-<span class="sd">            in the sequence.</span>
-<span class="sd">        backgrounds_count_times: The period over which photons are counted for each</span>
+<span class="sd">        dispersant_count_times: The period over which photons are counted for each</span>
+<span class="sd">            frame in the despersants sequence, or a single value which is applied to</span>
+<span class="sd">            all frames in the sequence.</span>
+<span class="sd">        background_count_times: The period over which photons are counted for each</span>
 <span class="sd">            frame in the backgrounds sequence, or a single value which is applied to</span>
 <span class="sd">            all frames in the sequence.</span>
+<span class="sd">        frames_incident_flux: The flux intensity observed upstream of the sample for</span>
+<span class="sd">            each frame in the frames sequence.</span>
+<span class="sd">        frames_transmitted_flux: The flux intensity observed downstream of the sample</span>
+<span class="sd">            for each frame in the frames sequence.</span>
+<span class="sd">        background_incident_flux: The flux intensity observed upstream of the sample for</span>
+<span class="sd">            each frame in the backgrounds sequence.</span>
+<span class="sd">        background_transmitted_flux: The flux intensity observed downstream of the</span>
+<span class="sd">            sample for each frame in the backgrounds sequence.</span>
+<span class="sd">        dispersants_incident_flux: The flux intensity observed upstream of the sample</span>
+<span class="sd">            for each frame in the dispersants sequence.</span>
+<span class="sd">        dispersants_transmitted_flux: The flux intensity observed downstream of the</span>
+<span class="sd">            sample for each frame in the dispersants sequence.</span>
 <span class="sd">        minimum_pulse_separation: The minimum time difference required between a prior</span>
 <span class="sd">            pulse and the current pulse for the current pulse to be recorded correctly.</span>
 <span class="sd">        minimum_arrival_separation: The minimum time difference required between the</span>
@@ -376,10 +400,6 @@
 <span class="sd">        beam_center_pixels: The center position of the beam in pixels.</span>
 <span class="sd">        pixel_sizes: The real space size of a detector pixel.</span>
 <span class="sd">        sample_detector_separation: The distance between the detector and the sample.</span>
-<span class="sd">        solvent_absorption_coefficient: The coefficient of absorption of the solvent at</span>
-<span class="sd">            a given photon energy.</span>
-<span class="sd">        analyte_absorption_coefficient:  The coefficient of absorption of the analyte</span>
-<span class="sd">            at a given photon energy.</span>
 <span class="sd">        sensor_absorption_coefficient: The coefficient of absorption for a given</span>
 <span class="sd">            detector head material at a given photon energy.</span>
 <span class="sd">        sample_thickness: The thickness of the sample material.</span>
@@ -396,8 +416,12 @@
         <span class="n">backgrounds</span><span class="p">,</span>
         <span class="n">mask</span><span class="p">,</span>
         <span class="n">flatfield</span><span class="p">,</span>
-        <span class="n">frames_count_times</span><span class="p">,</span>
-        <span class="n">backgrounds_count_times</span><span class="p">,</span>
+        <span class="n">frame_count_times</span><span class="p">,</span>
+        <span class="n">background_count_times</span><span class="p">,</span>
+        <span class="n">frames_incident_flux</span><span class="p">,</span>
+        <span class="n">frames_transmitted_flux</span><span class="p">,</span>
+        <span class="n">background_incident_flux</span><span class="p">,</span>
+        <span class="n">background_transmitted_flux</span><span class="p">,</span>
         <span class="n">minimum_pulse_separation</span><span class="p">,</span>
         <span class="n">minimum_arrival_separation</span><span class="p">,</span>
         <span class="n">base_dark_current</span><span class="p">,</span>
@@ -406,7 +430,6 @@
         <span class="n">beam_center_pixels</span><span class="p">,</span>
         <span class="n">pixel_sizes</span><span class="p">,</span>
         <span class="n">sample_detector_separation</span><span class="p">,</span>
-        <span class="n">solvent_absorption_coefficient</span><span class="p">,</span>
         <span class="n">sensor_absorption_coefficient</span><span class="p">,</span>
         <span class="n">sample_thickness</span><span class="p">,</span>
         <span class="n">sensor_thickness</span><span class="p">,</span>
@@ -417,8 +440,12 @@
         <span class="n">backgrounds</span><span class="p">,</span>
         <span class="n">mask</span><span class="p">,</span>
         <span class="n">flatfield</span><span class="p">,</span>
-        <span class="n">dispersants_count_times</span><span class="p">,</span>
-        <span class="n">backgrounds_count_times</span><span class="p">,</span>
+        <span class="n">dispersant_count_times</span><span class="p">,</span>
+        <span class="n">background_count_times</span><span class="p">,</span>
+        <span class="n">dispersant_incident_flux</span><span class="p">,</span>
+        <span class="n">dispersant_transmitted_flux</span><span class="p">,</span>
+        <span class="n">background_incident_flux</span><span class="p">,</span>
+        <span class="n">background_transmitted_flux</span><span class="p">,</span>
         <span class="n">minimum_pulse_separation</span><span class="p">,</span>
         <span class="n">minimum_arrival_separation</span><span class="p">,</span>
         <span class="n">base_dark_current</span><span class="p">,</span>
@@ -427,14 +454,14 @@
         <span class="n">beam_center_pixels</span><span class="p">,</span>
         <span class="n">pixel_sizes</span><span class="p">,</span>
         <span class="n">sample_detector_separation</span><span class="p">,</span>
-        <span class="n">analyte_absorption_coefficient</span><span class="p">,</span>
         <span class="n">sensor_absorption_coefficient</span><span class="p">,</span>
         <span class="n">sample_thickness</span><span class="p">,</span>
         <span class="n">sensor_thickness</span><span class="p">,</span>
         <span class="n">beam_polarization</span><span class="p">,</span>
     <span class="p">)</span>
-    <span class="n">dispersant</span> <span class="o">=</span> <span class="n">average_all_frames</span><span class="p">(</span><span class="n">dispersants</span><span class="p">)</span>
     <span class="n">frames</span> <span class="o">=</span> <span class="n">correct_displaced_volume</span><span class="p">(</span><span class="n">frames</span><span class="p">,</span> <span class="n">displaced_fraction</span><span class="p">)</span>
+    <span class="n">dispersants</span> <span class="o">=</span> <span class="n">correct_displaced_volume</span><span class="p">(</span><span class="n">dispersants</span><span class="p">,</span> <span class="mi">1</span> <span class="o">-</span> <span class="n">displaced_fraction</span><span class="p">)</span>
+    <span class="n">dispersant</span> <span class="o">=</span> <span class="n">average_all_frames</span><span class="p">(</span><span class="n">dispersants</span><span class="p">)</span>
     <span class="n">frames</span> <span class="o">=</span> <span class="n">subtract_background</span><span class="p">(</span><span class="n">frames</span><span class="p">,</span> <span class="n">dispersant</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">frames</span></div>
 </pre></div>
