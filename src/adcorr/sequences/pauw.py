@@ -373,8 +373,7 @@ def pauw_dispersed_sample_pipeline(
         sensor_thickness,
         beam_polarization,
     )
-    frames = correct_displaced_volume(frames, displaced_fraction)
-    dispersants = correct_displaced_volume(dispersants, 1 - displaced_fraction)
+    dispersants = correct_displaced_volume(dispersants, displaced_fraction)
     dispersant = average_all_frames(dispersants)
     frames = subtract_background(frames, dispersant)
     return frames
