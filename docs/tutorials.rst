@@ -9,3 +9,4 @@ Tutorials for installation, library and commandline usage. New users start here.
     :caption: Tutorials
 
     tutorials/installation
+    tutorials/i22_corrections.ipynb
