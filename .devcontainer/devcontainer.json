@@ -4,7 +4,7 @@
 		"dockerfile": "Dockerfile",
 		"context": "..",
 		"args": {
-			"VARIANT": "3.10-bullseye",
+			"VARIANT": "3.10-bullseye"
 		}
 	},
 	"remoteEnv": {
@@ -36,5 +36,5 @@
 	},
 	"workspaceMount": "source=${localWorkspaceFolder},target=/workspace,type=bind,Z",
 	"workspaceFolder": "/workspace",
-	"postCreateCommand": "pip install -e .[dev]"
+	"postCreateCommand": "pip install -e .[dev,docs]"
 }
