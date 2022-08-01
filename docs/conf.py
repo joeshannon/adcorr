@@ -33,6 +33,8 @@ extensions = [
     "sphinx.ext.viewcode",
     # Adds the inheritance-diagram generation directive
     "sphinx.ext.inheritance_diagram",
+    # Create pages from jupyter notebooks
+    "nbsphinx",
 ]
 
 # If true, Sphinx will warn about all references where the target cannot
