@@ -1,5 +1,5 @@
 alabaster==0.7.12
-attrs==21.4.0
+attrs==22.1.0
 Babel==2.10.3
 black==22.6.0
 certifi==2022.6.15
