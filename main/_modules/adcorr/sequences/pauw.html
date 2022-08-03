@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>adcorr.sequences.pauw &mdash; adcorr 0.1.0+36.g58c6950 documentation</title>
+  <title>adcorr.sequences.pauw &mdash; adcorr 0.1.0+37.g9b88e3f documentation</title>
       <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../../_static/graphviz.css" type="text/css" />
@@ -116,7 +116,7 @@
 <span class="p">)</span>
 
 
-<div class="viewcode-block" id="pauw_instrumental_background_pipeline"><a class="viewcode-back" href="../../../reference/api.html#adcorr.sequences.pauw.pauw_instrumental_background_pipeline">[docs]</a><span class="k">def</span> <span class="nf">pauw_instrumental_background_pipeline</span><span class="p">(</span>
+<div class="viewcode-block" id="pauw_instrumental_background_sequence"><a class="viewcode-back" href="../../../reference/api.html#adcorr.sequences.pauw.pauw_instrumental_background_sequence">[docs]</a><span class="k">def</span> <span class="nf">pauw_instrumental_background_sequence</span><span class="p">(</span>
     <span class="n">frames</span><span class="p">:</span> <span class="n">Frames</span><span class="p">[</span><span class="n">NumFrames</span><span class="p">,</span> <span class="n">FrameWidth</span><span class="p">,</span> <span class="n">FrameHeight</span><span class="p">,</span> <span class="n">dtype</span><span class="p">[</span><span class="n">number</span><span class="p">]],</span>
     <span class="n">mask</span><span class="p">:</span> <span class="n">Frame</span><span class="p">[</span><span class="n">FrameWidth</span><span class="p">,</span> <span class="n">FrameHeight</span><span class="p">,</span> <span class="n">dtype</span><span class="p">[</span><span class="n">bool_</span><span class="p">]],</span>
     <span class="n">count_times</span><span class="p">:</span> <span class="n">ndarray</span><span class="p">[</span><span class="n">VectorOrSingle</span><span class="p">[</span><span class="n">NumFrames</span><span class="p">],</span> <span class="n">dtype</span><span class="p">[</span><span class="n">floating</span><span class="p">]],</span>
@@ -188,7 +188,7 @@
 <span class="n">NumBackgrounds</span> <span class="o">=</span> <span class="n">TypeVar</span><span class="p">(</span><span class="s2">&quot;NumBackgrounds&quot;</span><span class="p">,</span> <span class="n">bound</span><span class="o">=</span><span class="nb">int</span><span class="p">)</span>
 
 
-<div class="viewcode-block" id="pauw_simple_sample_pipeline"><a class="viewcode-back" href="../../../reference/api.html#adcorr.sequences.pauw.pauw_simple_sample_pipeline">[docs]</a><span class="k">def</span> <span class="nf">pauw_simple_sample_pipeline</span><span class="p">(</span>
+<div class="viewcode-block" id="pauw_simple_sample_sequence"><a class="viewcode-back" href="../../../reference/api.html#adcorr.sequences.pauw.pauw_simple_sample_sequence">[docs]</a><span class="k">def</span> <span class="nf">pauw_simple_sample_sequence</span><span class="p">(</span>
     <span class="n">frames</span><span class="p">:</span> <span class="n">Frames</span><span class="p">[</span><span class="n">NumFrames</span><span class="p">,</span> <span class="n">FrameWidth</span><span class="p">,</span> <span class="n">FrameHeight</span><span class="p">,</span> <span class="n">dtype</span><span class="p">[</span><span class="n">number</span><span class="p">]],</span>
     <span class="n">backgrounds</span><span class="p">:</span> <span class="n">Frames</span><span class="p">[</span><span class="n">NumBackgrounds</span><span class="p">,</span> <span class="n">FrameWidth</span><span class="p">,</span> <span class="n">FrameHeight</span><span class="p">,</span> <span class="n">dtype</span><span class="p">[</span><span class="n">number</span><span class="p">]],</span>
     <span class="n">mask</span><span class="p">:</span> <span class="n">Frame</span><span class="p">[</span><span class="n">FrameWidth</span><span class="p">,</span> <span class="n">FrameHeight</span><span class="p">,</span> <span class="n">dtype</span><span class="p">[</span><span class="n">bool_</span><span class="p">]],</span>
@@ -263,7 +263,7 @@
 <span class="sd">    Returns:</span>
 <span class="sd">        The corrected stack of frames.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">frames</span> <span class="o">=</span> <span class="n">pauw_instrumental_background_pipeline</span><span class="p">(</span>
+    <span class="n">frames</span> <span class="o">=</span> <span class="n">pauw_instrumental_background_sequence</span><span class="p">(</span>
         <span class="n">frames</span><span class="p">,</span>
         <span class="n">mask</span><span class="p">,</span>
         <span class="n">frames_count_times</span><span class="p">,</span>
@@ -278,7 +278,7 @@
         <span class="n">pixel_sizes</span><span class="p">,</span>
         <span class="n">sample_detector_separation</span><span class="p">,</span>
     <span class="p">)</span>
-    <span class="n">backgrounds</span> <span class="o">=</span> <span class="n">pauw_instrumental_background_pipeline</span><span class="p">(</span>
+    <span class="n">backgrounds</span> <span class="o">=</span> <span class="n">pauw_instrumental_background_sequence</span><span class="p">(</span>
         <span class="n">backgrounds</span><span class="p">,</span>
         <span class="n">mask</span><span class="p">,</span>
         <span class="n">backgrounds_count_times</span><span class="p">,</span>
@@ -322,7 +322,7 @@
 <span class="n">NumDispersants</span> <span class="o">=</span> <span class="n">TypeVar</span><span class="p">(</span><span class="s2">&quot;NumDispersants&quot;</span><span class="p">,</span> <span class="n">bound</span><span class="o">=</span><span class="nb">int</span><span class="p">)</span>
 
 
-<div class="viewcode-block" id="pauw_dispersed_sample_pipeline"><a class="viewcode-back" href="../../../reference/api.html#adcorr.sequences.pauw.pauw_dispersed_sample_pipeline">[docs]</a><span class="k">def</span> <span class="nf">pauw_dispersed_sample_pipeline</span><span class="p">(</span>
+<div class="viewcode-block" id="pauw_dispersed_sample_sequence"><a class="viewcode-back" href="../../../reference/api.html#adcorr.sequences.pauw.pauw_dispersed_sample_sequence">[docs]</a><span class="k">def</span> <span class="nf">pauw_dispersed_sample_sequence</span><span class="p">(</span>
     <span class="n">frames</span><span class="p">:</span> <span class="n">Frames</span><span class="p">[</span><span class="n">NumFrames</span><span class="p">,</span> <span class="n">FrameWidth</span><span class="p">,</span> <span class="n">FrameHeight</span><span class="p">,</span> <span class="n">dtype</span><span class="p">[</span><span class="n">number</span><span class="p">]],</span>
     <span class="n">dispersants</span><span class="p">:</span> <span class="n">Frames</span><span class="p">[</span><span class="n">NumDispersants</span><span class="p">,</span> <span class="n">FrameWidth</span><span class="p">,</span> <span class="n">FrameHeight</span><span class="p">,</span> <span class="n">dtype</span><span class="p">[</span><span class="n">number</span><span class="p">]],</span>
     <span class="n">backgrounds</span><span class="p">:</span> <span class="n">Frames</span><span class="p">[</span><span class="n">NumBackgrounds</span><span class="p">,</span> <span class="n">FrameWidth</span><span class="p">,</span> <span class="n">FrameHeight</span><span class="p">,</span> <span class="n">dtype</span><span class="p">[</span><span class="n">number</span><span class="p">]],</span>
@@ -413,7 +413,7 @@
 <span class="sd">    Returns:</span>
 <span class="sd">        The corrected stack of frames.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">frames</span> <span class="o">=</span> <span class="n">pauw_simple_sample_pipeline</span><span class="p">(</span>
+    <span class="n">frames</span> <span class="o">=</span> <span class="n">pauw_simple_sample_sequence</span><span class="p">(</span>
         <span class="n">frames</span><span class="p">,</span>
         <span class="n">backgrounds</span><span class="p">,</span>
         <span class="n">mask</span><span class="p">,</span>
@@ -437,7 +437,7 @@
         <span class="n">sensor_thickness</span><span class="p">,</span>
         <span class="n">beam_polarization</span><span class="p">,</span>
     <span class="p">)</span>
-    <span class="n">dispersants</span> <span class="o">=</span> <span class="n">pauw_simple_sample_pipeline</span><span class="p">(</span>
+    <span class="n">dispersants</span> <span class="o">=</span> <span class="n">pauw_simple_sample_sequence</span><span class="p">(</span>
         <span class="n">dispersants</span><span class="p">,</span>
         <span class="n">backgrounds</span><span class="p">,</span>
         <span class="n">mask</span><span class="p">,</span>

@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>i22 Corrections &mdash; adcorr 0.1.0+36.g58c6950 documentation</title>
+  <title>i22 Corrections &mdash; adcorr 0.1.0+37.g9b88e3f documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
@@ -62,7 +62,7 @@
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#Visualize-raw-data">Visualize raw data</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#Correct-data-using-Pauw-dispersed-sample-pipeline">Correct data using Pauw dispersed sample pipeline</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#Correct-data-using-Pauw-dispersed-sample-sequence">Correct data using Pauw dispersed sample sequence</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="#Visualize-corrected-data">Visualize corrected data</a></li>
@@ -387,7 +387,7 @@ pip install -e .<span class="o">[</span>dev,docs<span class="o">]</span> -r requ
 <span class="kn">from</span> <span class="nn">numpy</span> <span class="kn">import</span> <span class="n">array</span><span class="p">,</span> <span class="n">ones</span>
 
 <span class="kn">from</span> <span class="nn">adcorr.corrections</span> <span class="kn">import</span> <span class="n">mask_frames</span>
-<span class="kn">from</span> <span class="nn">adcorr.sequences</span> <span class="kn">import</span> <span class="n">pauw_dispersed_sample_pipeline</span>
+<span class="kn">from</span> <span class="nn">adcorr.sequences</span> <span class="kn">import</span> <span class="n">pauw_dispersed_sample_sequence</span>
 
 <span class="kn">from</span> <span class="nn">matplotlib.pyplot</span> <span class="kn">import</span> <span class="n">imshow</span><span class="p">,</span> <span class="n">subplots</span>
 <span class="kn">from</span> <span class="nn">matplotlib.colors</span> <span class="kn">import</span> <span class="n">LogNorm</span>
@@ -615,14 +615,14 @@ Retrieving background from b&#39;Empty capillary tube&#39;
 </div>
 </div>
 </section>
-<section id="Correct-data-using-Pauw-dispersed-sample-pipeline">
-<h2>Correct data using Pauw dispersed sample pipeline<a class="headerlink" href="#Correct-data-using-Pauw-dispersed-sample-pipeline" title="Permalink to this heading"></a></h2>
-<p>We will now apply the dispersed sample data correction pipeline described by Pauw et al. (2017) [<a class="reference external" href="https://doi.org/10.1107/S1600576717015096">https://doi.org/10.1107/S1600576717015096</a>] by calling the <code class="docutils literal notranslate"><span class="pre">pauw_dispersed_sample_pipeline</span></code> with all requisite parameters. The resultant corrected images will be stored in the <code class="docutils literal notranslate"><span class="pre">corrected_frames</span></code> variable for subsequent visualization.</p>
+<section id="Correct-data-using-Pauw-dispersed-sample-sequence">
+<h2>Correct data using Pauw dispersed sample sequence<a class="headerlink" href="#Correct-data-using-Pauw-dispersed-sample-sequence" title="Permalink to this heading"></a></h2>
+<p>We will now apply the dispersed sample data correction sequence described by Pauw et al. (2017) [<a class="reference external" href="https://doi.org/10.1107/S1600576717015096">https://doi.org/10.1107/S1600576717015096</a>] by calling the <code class="docutils literal notranslate"><span class="pre">pauw_dispersed_sample_sequence</span></code> with all requisite parameters. The resultant corrected images will be stored in the <code class="docutils literal notranslate"><span class="pre">corrected_frames</span></code> variable for subsequent visualization.</p>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">corrected_frames</span> <span class="o">=</span> <span class="n">pauw_dispersed_sample_pipeline</span><span class="p">(</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">corrected_frames</span> <span class="o">=</span> <span class="n">pauw_dispersed_sample_sequence</span><span class="p">(</span>
     <span class="n">frames</span><span class="p">,</span>
     <span class="n">dispersants</span><span class="p">,</span>
     <span class="n">backgrounds</span><span class="p">,</span>
