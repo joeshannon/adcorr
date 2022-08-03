@@ -28,7 +28,7 @@ from ..utils.typing import (
 )
 
 
-def pauw_instrumental_background_pipeline(
+def pauw_instrumental_background_sequence(
     frames: Frames[NumFrames, FrameWidth, FrameHeight, dtype[number]],
     mask: Frame[FrameWidth, FrameHeight, dtype[bool_]],
     count_times: ndarray[VectorOrSingle[NumFrames], dtype[floating]],
@@ -100,7 +100,7 @@ def pauw_instrumental_background_pipeline(
 NumBackgrounds = TypeVar("NumBackgrounds", bound=int)
 
 
-def pauw_simple_sample_pipeline(
+def pauw_simple_sample_sequence(
     frames: Frames[NumFrames, FrameWidth, FrameHeight, dtype[number]],
     backgrounds: Frames[NumBackgrounds, FrameWidth, FrameHeight, dtype[number]],
     mask: Frame[FrameWidth, FrameHeight, dtype[bool_]],
@@ -175,7 +175,7 @@ def pauw_simple_sample_pipeline(
     Returns:
         The corrected stack of frames.
     """
-    frames = pauw_instrumental_background_pipeline(
+    frames = pauw_instrumental_background_sequence(
         frames,
         mask,
         frames_count_times,
@@ -190,7 +190,7 @@ def pauw_simple_sample_pipeline(
         pixel_sizes,
         sample_detector_separation,
     )
-    backgrounds = pauw_instrumental_background_pipeline(
+    backgrounds = pauw_instrumental_background_sequence(
         backgrounds,
         mask,
         backgrounds_count_times,
@@ -234,7 +234,7 @@ def pauw_simple_sample_pipeline(
 NumDispersants = TypeVar("NumDispersants", bound=int)
 
 
-def pauw_dispersed_sample_pipeline(
+def pauw_dispersed_sample_sequence(
     frames: Frames[NumFrames, FrameWidth, FrameHeight, dtype[number]],
     dispersants: Frames[NumDispersants, FrameWidth, FrameHeight, dtype[number]],
     backgrounds: Frames[NumBackgrounds, FrameWidth, FrameHeight, dtype[number]],
@@ -325,7 +325,7 @@ def pauw_dispersed_sample_pipeline(
     Returns:
         The corrected stack of frames.
     """
-    frames = pauw_simple_sample_pipeline(
+    frames = pauw_simple_sample_sequence(
         frames,
         backgrounds,
         mask,
@@ -349,7 +349,7 @@ def pauw_dispersed_sample_pipeline(
         sensor_thickness,
         beam_polarization,
     )
-    dispersants = pauw_simple_sample_pipeline(
+    dispersants = pauw_simple_sample_sequence(
         dispersants,
         backgrounds,
         mask,
