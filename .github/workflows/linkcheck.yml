@@ -19,6 +19,9 @@ jobs:
         with:
           fetch-depth: 0
 
+      - name: Install Pandoc
+        run: sudo apt-get install pandoc
+
       - name: Setup python
         uses: actions/setup-python@v4
         with:
