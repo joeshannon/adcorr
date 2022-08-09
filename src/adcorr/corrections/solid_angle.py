@@ -12,7 +12,7 @@ def correct_solid_angle(
     pixel_sizes: Tuple[float, float],
     distance: float,
 ) -> Frames[NumFrames, FrameWidth, FrameHeight, dtype[floating]]:
-    """Corrects for the solid angle by scaling by the inverse of area subtended by a pixel.
+    """Corrects for the solid angle by scaling by the inverse of subtended area.
 
     Corrects for the solid angle by scaling by the inverse of area subtended by each
     pixel, as detailed in section 3.4.6 of 'Everything SAXS: small-angle scattering

@@ -43,7 +43,7 @@ def pauw_instrumental_background_sequence(
     pixel_sizes: tuple[float, float],
     sample_detector_separation: float,
 ) -> Frames[NumFrames, FrameWidth, FrameHeight, dtype[number]]:
-    """Applies an ordered sequence of corrections to correct for instrumental background.
+    """Applies a sequence of corrections to correct for instrumental background.
 
     Applies an ordered sequence of corrections to correct for instrumental background,
     as detailed as Process A in section 2 of 'The modular small-angle X-ray scattering
@@ -126,9 +126,10 @@ def pauw_simple_sample_sequence(
 ) -> Frames[NumFrames, FrameWidth, FrameHeight, dtype[number]]:
     """Applies an ordered sequence of corrections to frames containing a simple sample.
 
-    Applies an ordered sequence of corrections to correct for instrumental background,
-    as detailed as Process B in section 2 of 'The modular small-angle X-ray scattering
-    data correction sequence' [https://doi.org/10.1107/S1600576717015096].
+    Applies an ordered sequence of corrections to correct for instrumental and
+    experiment backgrounds as detailed as Process B in section 2 of 'The modular small-
+    angle X-ray scattering data correction sequence
+    [https://doi.org/10.1107/S1600576717015096].
 
     Args:
         frames: A sequence of frames, on which the series of corrections should be
@@ -263,7 +264,7 @@ def pauw_dispersed_sample_sequence(
     beam_polarization: float,
     displaced_fraction: float,
 ) -> Frames[NumFrames, FrameWidth, FrameHeight, dtype[number]]:
-    """Applies an ordered sequence of corrections to frames containing a dispersed sample.
+    """Applies a sequence of corrections to frames containing a dispersed sample.
 
     Applies an ordered sequence of corrections to correct for instrumental background,
     as detailed as Process C in section 2 of 'The modular small-angle X-ray scattering

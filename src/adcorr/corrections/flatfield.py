@@ -7,7 +7,7 @@ def correct_flatfield(
     frames: Frames[NumFrames, FrameWidth, FrameHeight, dtype[number]],
     flatfield: Frame[FrameWidth, FrameHeight, dtype[floating]],
 ) -> Frames[NumFrames, FrameWidth, FrameHeight, dtype[number]]:
-    """Apply multiplicative flatfield correction, to correct for inter-pixel sensitivity.
+    """Corrects for inter-pixel sensitivity with a multiplicative flatfield.
 
     Apply multiplicative flatfield correction, to correct for inter-pixel sensitivity,
     as described in section 3.xii of 'The modular small-angle X-ray scattering data

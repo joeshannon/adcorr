@@ -7,9 +7,9 @@ def correct_displaced_volume(
     frames: Frames[NumFrames, FrameWidth, FrameHeight, dtype[number]],
     displaced_fraction: float,
 ) -> Frames[NumFrames, FrameWidth, FrameHeight, dtype[number]]:
-    """Correct for displaced volume of solvent by multiplying signal by retained fraction.
+    """Corrects for the volume of solvent displaced by the solute.
 
-    Correct for displaced volume of solvent by multiplying signal by the retained
+    Corrects for displaced volume of solvent by multiplying signal by the retained
     fraction, as detailed in section 3.xviii and appendix B of 'The modular small-angle
     X-ray scattering data correction sequence'
     [https://doi.org/10.1107/S1600576717015096].

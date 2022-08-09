@@ -7,7 +7,7 @@ def normalize_frame_time(
     frames: Frames[NumFrames, FrameWidth, FrameHeight, dtype[number]],
     count_times: ndarray[VectorOrSingle[NumFrames], dtype[floating]],
 ) -> Frames[NumFrames, FrameWidth, FrameHeight, dtype[floating]]:
-    """Normalize for detector frame rate by scaling photon counts according to count time.
+    """Normalize for detector frame rate by scaling with respect to to count time.
 
     Normalize for detector frame rate by scaling photon counts according to count time,
     as detailed in section 3.4.3 of 'Everything SAXS: small-angle scattering pattern

@@ -20,7 +20,7 @@ def correct_deadtime(
     minimum_pulse_separation: float,
     minimum_arrival_separation: float,
 ) -> Frames[NumFrames, FrameWidth, FrameHeight, dtype[number]]:
-    """Correct for detector deadtime by scaling counts to account for overlapping events.
+    """Correct for detector deadtime by accounting for overlapping events.
 
     Correct for detector deadtime by iteratively solving for the number of incident
     photons required to produce the observed value in a given time period subject to
