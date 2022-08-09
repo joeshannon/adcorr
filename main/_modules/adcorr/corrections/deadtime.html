@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>adcorr.corrections.deadtime &mdash; adcorr 0.2.0+3.g9bba3e6 documentation</title>
+  <title>adcorr.corrections.deadtime &mdash; adcorr 0.2.0+9.gac32b51 documentation</title>
       <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../../_static/graphviz.css" type="text/css" />
@@ -108,7 +108,7 @@
     <span class="n">minimum_pulse_separation</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
     <span class="n">minimum_arrival_separation</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Frames</span><span class="p">[</span><span class="n">NumFrames</span><span class="p">,</span> <span class="n">FrameWidth</span><span class="p">,</span> <span class="n">FrameHeight</span><span class="p">,</span> <span class="n">dtype</span><span class="p">[</span><span class="n">number</span><span class="p">]]:</span>
-    <span class="sd">&quot;&quot;&quot;Correct for detector deadtime by scaling counts to account for overlapping events.</span>
+    <span class="sd">&quot;&quot;&quot;Correct for detector deadtime by accounting for overlapping events.</span>
 
 <span class="sd">    Correct for detector deadtime by iteratively solving for the number of incident</span>
 <span class="sd">    photons required to produce the observed value in a given time period subject to</span>

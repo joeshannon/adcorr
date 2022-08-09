@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>adcorr.sequences.pauw &mdash; adcorr 0.2.0+3.g9bba3e6 documentation</title>
+  <title>adcorr.sequences.pauw &mdash; adcorr 0.2.0+9.gac32b51 documentation</title>
       <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../../_static/graphviz.css" type="text/css" />
@@ -131,7 +131,7 @@
     <span class="n">pixel_sizes</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">],</span>
     <span class="n">sample_detector_separation</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Frames</span><span class="p">[</span><span class="n">NumFrames</span><span class="p">,</span> <span class="n">FrameWidth</span><span class="p">,</span> <span class="n">FrameHeight</span><span class="p">,</span> <span class="n">dtype</span><span class="p">[</span><span class="n">number</span><span class="p">]]:</span>
-    <span class="sd">&quot;&quot;&quot;Applies an ordered sequence of corrections to correct for instrumental background.</span>
+    <span class="sd">&quot;&quot;&quot;Applies a sequence of corrections to correct for instrumental background.</span>
 
 <span class="sd">    Applies an ordered sequence of corrections to correct for instrumental background,</span>
 <span class="sd">    as detailed as Process A in section 2 of &#39;The modular small-angle X-ray scattering</span>
@@ -214,9 +214,10 @@
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Frames</span><span class="p">[</span><span class="n">NumFrames</span><span class="p">,</span> <span class="n">FrameWidth</span><span class="p">,</span> <span class="n">FrameHeight</span><span class="p">,</span> <span class="n">dtype</span><span class="p">[</span><span class="n">number</span><span class="p">]]:</span>
     <span class="sd">&quot;&quot;&quot;Applies an ordered sequence of corrections to frames containing a simple sample.</span>
 
-<span class="sd">    Applies an ordered sequence of corrections to correct for instrumental background,</span>
-<span class="sd">    as detailed as Process B in section 2 of &#39;The modular small-angle X-ray scattering</span>
-<span class="sd">    data correction sequence&#39; [https://doi.org/10.1107/S1600576717015096].</span>
+<span class="sd">    Applies an ordered sequence of corrections to correct for instrumental and</span>
+<span class="sd">    experiment backgrounds as detailed as Process B in section 2 of &#39;The modular small-</span>
+<span class="sd">    angle X-ray scattering data correction sequence</span>
+<span class="sd">    [https://doi.org/10.1107/S1600576717015096].</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">        frames: A sequence of frames, on which the series of corrections should be</span>
@@ -351,7 +352,7 @@
     <span class="n">beam_polarization</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
     <span class="n">displaced_fraction</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Frames</span><span class="p">[</span><span class="n">NumFrames</span><span class="p">,</span> <span class="n">FrameWidth</span><span class="p">,</span> <span class="n">FrameHeight</span><span class="p">,</span> <span class="n">dtype</span><span class="p">[</span><span class="n">number</span><span class="p">]]:</span>
-    <span class="sd">&quot;&quot;&quot;Applies an ordered sequence of corrections to frames containing a dispersed sample.</span>
+    <span class="sd">&quot;&quot;&quot;Applies a sequence of corrections to frames containing a dispersed sample.</span>
 
 <span class="sd">    Applies an ordered sequence of corrections to correct for instrumental background,</span>
 <span class="sd">    as detailed as Process C in section 2 of &#39;The modular small-angle X-ray scattering</span>
