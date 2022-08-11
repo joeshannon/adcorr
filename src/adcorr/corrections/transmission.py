@@ -21,5 +21,4 @@ def normalize_transmitted_flux(
     Returns:
         The normalized stack of frames.
     """
-
     return frames / expand_dims(transmitted_flux, (-2, -1))
