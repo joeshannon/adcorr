@@ -24,7 +24,7 @@ filelock==3.8.0
 flake8==5.0.4
 flake8-isort==4.2.0
 flake8-pyi==22.8.1
-fonttools==4.35.0
+fonttools==4.36.0
 h5py==3.7.0
 identify==2.5.3
 idna==3.3
