@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Reference &mdash; adcorr 0.2.0+71.g1bbd60f documentation</title>
+  <title>Reference &mdash; adcorr 0.2.0+73.gd9a2b9d documentation</title>
       <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="_static/graphviz.css" type="text/css" />
@@ -19,6 +19,7 @@
         <script src="_static/underscore.js"></script>
         <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="_static/doctools.js"></script>
+        <script src="_static/sphinx_highlight.js"></script>
         <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
@@ -95,33 +96,96 @@
 <li class="toctree-l1"><a class="reference internal" href="reference/api.html">API</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="reference/api.html#module-adcorr.corrections"><code class="docutils literal notranslate"><span class="pre">adcorr</span></code></a><ul>
 <li class="toctree-l3"><a class="reference internal" href="reference/api.html#module-adcorr.corrections.angular_efficiency"><code class="docutils literal notranslate"><span class="pre">adcorr.corrections</span></code></a><ul>
-<li class="toctree-l4"><a class="reference internal" href="reference/api.html#adcorr-corrections-angular-efficiency"><code class="docutils literal notranslate"><span class="pre">adcorr.corrections.angular_efficiency</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="reference/api.html#adcorr-corrections-background-subtraction"><code class="docutils literal notranslate"><span class="pre">adcorr.corrections.background_subtraction</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="reference/api.html#adcorr-corrections-dark-current"><code class="docutils literal notranslate"><span class="pre">adcorr.corrections.dark_current</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="reference/api.html#adcorr-corrections-deadtime"><code class="docutils literal notranslate"><span class="pre">adcorr.corrections.deadtime</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="reference/api.html#adcorr-corrections-displaced-volume"><code class="docutils literal notranslate"><span class="pre">adcorr.corrections.displaced_volume</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="reference/api.html#adcorr-corrections-flatfield"><code class="docutils literal notranslate"><span class="pre">adcorr.corrections.flatfield</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="reference/api.html#adcorr-corrections-transmission"><code class="docutils literal notranslate"><span class="pre">adcorr.corrections.transmission</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="reference/api.html#adcorr-corrections-frame-average"><code class="docutils literal notranslate"><span class="pre">adcorr.corrections.frame_average</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="reference/api.html#adcorr-corrections-frame-time"><code class="docutils literal notranslate"><span class="pre">adcorr.corrections.frame_time</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="reference/api.html#adcorr-corrections-masking"><code class="docutils literal notranslate"><span class="pre">adcorr.corrections.masking</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="reference/api.html#adcorr-corrections-polarization"><code class="docutils literal notranslate"><span class="pre">adcorr.corrections.polarization</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="reference/api.html#adcorr-corrections-self-absorption"><code class="docutils literal notranslate"><span class="pre">adcorr.corrections.self_absorption</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="reference/api.html#adcorr-corrections-solid-angle"><code class="docutils literal notranslate"><span class="pre">adcorr.corrections.solid_angle</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="reference/api.html#adcorr-corrections-thickness"><code class="docutils literal notranslate"><span class="pre">adcorr.corrections.thickness</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="reference/api.html#adcorr-corrections-angular-efficiency"><code class="docutils literal notranslate"><span class="pre">adcorr.corrections.angular_efficiency</span></code></a><ul>
+<li class="toctree-l5"><a class="reference internal" href="reference/api.html#adcorr.corrections.angular_efficiency.correct_angular_efficiency"><code class="docutils literal notranslate"><span class="pre">correct_angular_efficiency()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="reference/api.html#adcorr-corrections-background-subtraction"><code class="docutils literal notranslate"><span class="pre">adcorr.corrections.background_subtraction</span></code></a><ul>
+<li class="toctree-l5"><a class="reference internal" href="reference/api.html#adcorr.corrections.background_subtraction.subtract_background"><code class="docutils literal notranslate"><span class="pre">subtract_background()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="reference/api.html#adcorr-corrections-dark-current"><code class="docutils literal notranslate"><span class="pre">adcorr.corrections.dark_current</span></code></a><ul>
+<li class="toctree-l5"><a class="reference internal" href="reference/api.html#adcorr.corrections.dark_current.correct_dark_current"><code class="docutils literal notranslate"><span class="pre">correct_dark_current()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="reference/api.html#adcorr-corrections-deadtime"><code class="docutils literal notranslate"><span class="pre">adcorr.corrections.deadtime</span></code></a><ul>
+<li class="toctree-l5"><a class="reference internal" href="reference/api.html#adcorr.corrections.deadtime.correct_deadtime"><code class="docutils literal notranslate"><span class="pre">correct_deadtime()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="reference/api.html#adcorr-corrections-displaced-volume"><code class="docutils literal notranslate"><span class="pre">adcorr.corrections.displaced_volume</span></code></a><ul>
+<li class="toctree-l5"><a class="reference internal" href="reference/api.html#adcorr.corrections.displaced_volume.correct_displaced_volume"><code class="docutils literal notranslate"><span class="pre">correct_displaced_volume()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="reference/api.html#adcorr-corrections-flatfield"><code class="docutils literal notranslate"><span class="pre">adcorr.corrections.flatfield</span></code></a><ul>
+<li class="toctree-l5"><a class="reference internal" href="reference/api.html#adcorr.corrections.flatfield.correct_flatfield"><code class="docutils literal notranslate"><span class="pre">correct_flatfield()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="reference/api.html#adcorr-corrections-transmission"><code class="docutils literal notranslate"><span class="pre">adcorr.corrections.transmission</span></code></a><ul>
+<li class="toctree-l5"><a class="reference internal" href="reference/api.html#adcorr.corrections.transmission.normalize_transmitted_flux"><code class="docutils literal notranslate"><span class="pre">normalize_transmitted_flux()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="reference/api.html#adcorr-corrections-frame-average"><code class="docutils literal notranslate"><span class="pre">adcorr.corrections.frame_average</span></code></a><ul>
+<li class="toctree-l5"><a class="reference internal" href="reference/api.html#adcorr.corrections.frame_average.average_all_frames"><code class="docutils literal notranslate"><span class="pre">average_all_frames()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="reference/api.html#adcorr-corrections-frame-time"><code class="docutils literal notranslate"><span class="pre">adcorr.corrections.frame_time</span></code></a><ul>
+<li class="toctree-l5"><a class="reference internal" href="reference/api.html#adcorr.corrections.frame_time.normalize_frame_time"><code class="docutils literal notranslate"><span class="pre">normalize_frame_time()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="reference/api.html#adcorr-corrections-masking"><code class="docutils literal notranslate"><span class="pre">adcorr.corrections.masking</span></code></a><ul>
+<li class="toctree-l5"><a class="reference internal" href="reference/api.html#adcorr.corrections.masking.mask_frames"><code class="docutils literal notranslate"><span class="pre">mask_frames()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="reference/api.html#adcorr-corrections-polarization"><code class="docutils literal notranslate"><span class="pre">adcorr.corrections.polarization</span></code></a><ul>
+<li class="toctree-l5"><a class="reference internal" href="reference/api.html#adcorr.corrections.polarization.correct_polarization"><code class="docutils literal notranslate"><span class="pre">correct_polarization()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="reference/api.html#adcorr-corrections-self-absorption"><code class="docutils literal notranslate"><span class="pre">adcorr.corrections.self_absorption</span></code></a><ul>
+<li class="toctree-l5"><a class="reference internal" href="reference/api.html#adcorr.corrections.self_absorption.correct_self_absorption"><code class="docutils literal notranslate"><span class="pre">correct_self_absorption()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="reference/api.html#adcorr-corrections-solid-angle"><code class="docutils literal notranslate"><span class="pre">adcorr.corrections.solid_angle</span></code></a><ul>
+<li class="toctree-l5"><a class="reference internal" href="reference/api.html#adcorr.corrections.solid_angle.correct_solid_angle"><code class="docutils literal notranslate"><span class="pre">correct_solid_angle()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="reference/api.html#adcorr-corrections-thickness"><code class="docutils literal notranslate"><span class="pre">adcorr.corrections.thickness</span></code></a><ul>
+<li class="toctree-l5"><a class="reference internal" href="reference/api.html#adcorr.corrections.thickness.normalize_thickness"><code class="docutils literal notranslate"><span class="pre">normalize_thickness()</span></code></a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="reference/api.html#module-adcorr.sequences.pauw"><code class="docutils literal notranslate"><span class="pre">adcorr.sequences</span></code></a><ul>
-<li class="toctree-l4"><a class="reference internal" href="reference/api.html#adcorr-sequences-pauw"><code class="docutils literal notranslate"><span class="pre">adcorr.sequences.pauw</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="reference/api.html#adcorr-sequences-pauw"><code class="docutils literal notranslate"><span class="pre">adcorr.sequences.pauw</span></code></a><ul>
+<li class="toctree-l5"><a class="reference internal" href="reference/api.html#adcorr.sequences.pauw.pauw_instrumental_background_sequence"><code class="docutils literal notranslate"><span class="pre">pauw_instrumental_background_sequence()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="reference/api.html#adcorr.sequences.pauw.NumBackgrounds"><code class="docutils literal notranslate"><span class="pre">NumBackgrounds</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="reference/api.html#adcorr.sequences.pauw.pauw_simple_sample_sequence"><code class="docutils literal notranslate"><span class="pre">pauw_simple_sample_sequence()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="reference/api.html#adcorr.sequences.pauw.NumDispersants"><code class="docutils literal notranslate"><span class="pre">NumDispersants</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="reference/api.html#adcorr.sequences.pauw.pauw_dispersed_sample_sequence"><code class="docutils literal notranslate"><span class="pre">pauw_dispersed_sample_sequence()</span></code></a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="reference/api.html#module-adcorr.utils.geometry"><code class="docutils literal notranslate"><span class="pre">adcorr.utils</span></code></a><ul>
-<li class="toctree-l4"><a class="reference internal" href="reference/api.html#adcorr-utils-geometry"><code class="docutils literal notranslate"><span class="pre">adcorr.utils.geometry</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="reference/api.html#adcorr-utils-typing"><code class="docutils literal notranslate"><span class="pre">adcorr.utils.typing</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="reference/api.html#adcorr-utils-geometry"><code class="docutils literal notranslate"><span class="pre">adcorr.utils.geometry</span></code></a><ul>
+<li class="toctree-l5"><a class="reference internal" href="reference/api.html#adcorr.utils.geometry.scattering_angles"><code class="docutils literal notranslate"><span class="pre">scattering_angles()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="reference/api.html#adcorr.utils.geometry.azimuthal_angles"><code class="docutils literal notranslate"><span class="pre">azimuthal_angles()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="reference/api.html#adcorr-utils-typing"><code class="docutils literal notranslate"><span class="pre">adcorr.utils.typing</span></code></a><ul>
+<li class="toctree-l5"><a class="reference internal" href="reference/api.html#adcorr.utils.typing.FrameDType"><code class="docutils literal notranslate"><span class="pre">FrameDType</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="reference/api.html#adcorr.utils.typing.NumFrames"><code class="docutils literal notranslate"><span class="pre">NumFrames</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="reference/api.html#adcorr.utils.typing.FrameWidth"><code class="docutils literal notranslate"><span class="pre">FrameWidth</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="reference/api.html#adcorr.utils.typing.FrameHeight"><code class="docutils literal notranslate"><span class="pre">FrameHeight</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="reference/api.html#adcorr.utils.typing.VectorOrSingle"><code class="docutils literal notranslate"><span class="pre">VectorOrSingle</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="reference/api.html#adcorr.utils.typing.Frame"><code class="docutils literal notranslate"><span class="pre">Frame</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="reference/api.html#adcorr.utils.typing.Frames"><code class="docutils literal notranslate"><span class="pre">Frames</span></code></a></li>
 </ul>
 </li>
 </ul>
 </li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="reference/api.html#adcorr.utils.typing.adcorr.__version__"><code class="docutils literal notranslate"><span class="pre">adcorr.__version__</span></code></a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="reference/contributing.html">Contributing</a><ul>
