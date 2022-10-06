@@ -1,4 +1,7 @@
+from importlib.metadata import version
+
 from . import corrections, utils
-from ._version_git import __version__
+
+__version__ = version("adcorr")
 
 __all__ = ["__version__", "utils", "corrections"]
