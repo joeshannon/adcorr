@@ -7,9 +7,6 @@
 			"VARIANT": "3.10-bullseye"
 		}
 	},
-	"remoteEnv": {
-		"DISPLAY": "${localEnv:DISPLAY}"
-	},
 	"settings": {
 		"python.defaultInterpreterPath": "/usr/local/bin/python",
 		"python.linting.enabled": true,
@@ -34,7 +31,10 @@
 	"features": {
 		"git": "os-provided"
 	},
-	"workspaceMount": "source=${localWorkspaceFolder},target=/workspace,type=bind,Z",
+	"runArgs": [
+		"--pid=host"
+	],
+	"workspaceMount": "source=${localWorkspaceFolder},target=/workspace,type=bind",
 	"workspaceFolder": "/workspace",
 	"postCreateCommand": "pip install -e .[dev,docs]"
 }
