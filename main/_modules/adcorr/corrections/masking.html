@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>adcorr.corrections.masking &mdash; adcorr 0.2.1.dev82+g310b2c2 documentation</title>
+  <title>adcorr.corrections.masking &mdash; adcorr 0.2.1.dev83+g51134fc documentation</title>
       <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../../_static/graphviz.css" type="text/css" />
@@ -97,7 +97,11 @@
     <span class="n">frames</span><span class="p">:</span> <span class="n">Frames</span><span class="p">[</span><span class="n">NumFrames</span><span class="p">,</span> <span class="n">FrameWidth</span><span class="p">,</span> <span class="n">FrameHeight</span><span class="p">,</span> <span class="n">FrameDType</span><span class="p">],</span>
     <span class="n">mask</span><span class="p">:</span> <span class="n">Frame</span><span class="p">[</span><span class="n">FrameWidth</span><span class="p">,</span> <span class="n">FrameHeight</span><span class="p">,</span> <span class="n">dtype</span><span class="p">[</span><span class="n">bool_</span><span class="p">]],</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">MaskedArray</span><span class="p">[</span><span class="nb">tuple</span><span class="p">[</span><span class="n">NumFrames</span><span class="p">,</span> <span class="n">FrameWidth</span><span class="p">,</span> <span class="n">FrameHeight</span><span class="p">],</span> <span class="n">FrameDType</span><span class="p">]:</span>
-    <span class="sd">&quot;&quot;&quot;Replaces masked elemenets of frames in a stack with zero.</span>
+    <span class="sd">&quot;&quot;&quot;Constructs a numpy masked array from a stack of frames and a mask.</span>
+
+<span class="sd">    Constructs a numpy masked array from a stack of frames and a mask. Restricting</span>
+<span class="sd">    computation to regions which remain unmasked and allowing infill of masked regions</span>
+<span class="sd">    with a given value.</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">        frames: A stack of frames to be masked.</span>
