@@ -8,7 +8,11 @@ def mask_frames(
     frames: Frames[NumFrames, FrameWidth, FrameHeight, FrameDType],
     mask: Frame[FrameWidth, FrameHeight, dtype[bool_]],
 ) -> MaskedArray[tuple[NumFrames, FrameWidth, FrameHeight], FrameDType]:
-    """Replaces masked elemenets of frames in a stack with zero.
+    """Constructs a numpy masked array from a stack of frames and a mask.
+
+    Constructs a numpy masked array from a stack of frames and a mask. Restricting
+    computation to regions which remain unmasked and allowing infill of masked regions
+    with a given value.
 
     Args:
         frames: A stack of frames to be masked.
