@@ -1,3 +1,4 @@
+import pytest
 from numpy import Inf, allclose, array
 from numpy.ma import masked_where
 
@@ -77,3 +78,34 @@ def test_average_all_frames_masked_diag_2x2x2():
             )
         ).filled(Inf),
     )
+
+
+# Skipped awaiting support for numpy.mean in numcertain
+# https://github.com/DiamondLightSource/numcertain/issues/84
+@pytest.mark.skip
+@pytest.mark.numcertain
+def test_average_all_frames_numcertain():
+    from numcertain import nominal, uncertain, uncertainty
+
+    expected = array(
+        [
+            [uncertain(3.0, 0.50990195135), uncertain(4.0, 0.63245553203)],
+            [uncertain(5.0, 0.76157731058), uncertain(6.0, 0.894427191)],
+        ]
+    )
+    computed = average_all_frames(
+        array(
+            [
+                [
+                    [uncertain(1.0, 0.1), uncertain(2.0, 0.2)],
+                    [uncertain(3.0, 0.3), uncertain(4.0, 0.4)],
+                ],
+                [
+                    [uncertain(5.0, 0.5), uncertain(6.0, 0.6)],
+                    [uncertain(7.0, 0.7), uncertain(8.0, 0.8)],
+                ],
+            ]
+        ),
+    )
+    assert allclose(nominal(expected), nominal(computed))
+    assert allclose(uncertainty(expected), uncertainty(computed))

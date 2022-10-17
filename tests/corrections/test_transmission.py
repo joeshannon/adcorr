@@ -1,3 +1,4 @@
+import pytest
 from numpy import Inf, allclose, array
 from numpy.ma import masked_where
 
@@ -41,3 +42,28 @@ def test_normalize_transmitted_flux_masked_2x2():
             array([1.0]),
         ).filled(Inf),
     )
+
+
+@pytest.mark.numcertain
+def test_normalize_transmitted_flux_numcertain():
+    from numcertain import nominal, uncertain, uncertainty
+
+    expected = array(
+        [
+            [uncertain(0.1, 0.01), uncertain(0.2, 0.02)],
+            [uncertain(0.3, 0.03), uncertain(0.4, 0.04)],
+        ]
+    )
+    computed = (
+        normalize_transmitted_flux(
+            array(
+                [
+                    [uncertain(1.0, 0.1), uncertain(2.0, 0.2)],
+                    [uncertain(3.0, 0.3), uncertain(4.0, 0.4)],
+                ]
+            ),
+            array([10.0]),
+        ),
+    )
+    assert allclose(nominal(expected), nominal(computed))
+    assert allclose(uncertainty(expected), uncertainty(computed))

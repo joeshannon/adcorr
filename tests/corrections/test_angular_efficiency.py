@@ -1,11 +1,13 @@
 from unittest.mock import MagicMock, patch
 
+import pytest
 from numpy import Inf, allclose, array
 from numpy.ma import masked_where
 from pytest import raises
 
 from adcorr.corrections import correct_angular_efficiency
 
+from ..compat import numcertain
 from ..inaccessable_mock import AccessedError, inaccessable_mock
 
 
@@ -172,3 +174,40 @@ def test_correct_angular_efficiency_thickness_negative():
         correct_angular_efficiency(
             array([[1.0, 2.0], [3.0, 4.0]]), (1.0, 1.0), (0.1, 0.1), 1.0, 0.1, -0.5
         )
+
+
+@pytest.mark.usefixtures(numcertain.__name__)
+def test_correct_angular_efficiency_numcertain(numcertain):
+    expected = array(
+        [
+            [
+                numcertain.uncertain(100.2517, 10.0251769),
+                numcertain.uncertain(200.5035, 20.0503538),
+            ],
+            [
+                numcertain.uncertain(300.7553, 30.07553071),
+                numcertain.uncertain(401.0071, 40.10070761),
+            ],
+        ]
+    )
+    computed = correct_angular_efficiency(
+        array(
+            [
+                [
+                    numcertain.uncertain(1.0, 0.1),
+                    numcertain.uncertain(2.0, 0.2),
+                ],
+                [
+                    numcertain.uncertain(3.0, 0.3),
+                    numcertain.uncertain(4.0, 0.4),
+                ],
+            ]
+        ),
+        (1.0, 1.0),
+        (0.1, 0.1),
+        1.0,
+        0.1,
+        0.1,
+    )
+    assert allclose(numcertain.nominal(expected), numcertain.nominal(computed))
+    assert allclose(numcertain.uncertainty(expected), numcertain.uncertainty(computed))

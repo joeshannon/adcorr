@@ -1,3 +1,4 @@
+import pytest
 from numpy import Inf, allclose, array
 from numpy.ma import masked_where
 from pytest import raises
@@ -183,3 +184,33 @@ def test_correct_deadtime_minimum_separations_zero():
         array([[1.0, 2.0], [3.0, 4.0]]),
         correct_deadtime(array([[1.0, 2.0], [3.0, 4.0]]), array([0.1]), 0.0, 0.0),
     )
+
+
+# Skipped awaiting support for scipy.special.lambertw in numcertain
+# https://github.com/DiamondLightSource/numcertain/issues/84
+@pytest.mark.skip
+@pytest.mark.numcertain
+def test_correct_deadtime_numcertain():
+    from numcertain import nominal, uncertain, uncertainty
+
+    expected = array(
+        [
+            [uncertain(1.00005, 0.100005), uncertain(2.00020, 0.200020)],
+            [uncertain(3.00045, 0.300045), uncertain(4.00080, 0.400080)],
+        ]
+    )
+    computed = (
+        correct_deadtime(
+            array(
+                [
+                    [uncertain(1.0, 0.1), uncertain(2.0, 0.2)],
+                    [uncertain(3.0, 0.3), uncertain(4.0, 0.4)],
+                ]
+            ),
+            array([0.1]),
+            3e-6,
+            2e-6,
+        ),
+    )
+    assert allclose(nominal(expected), nominal(computed))
+    assert allclose(uncertainty(expected), uncertainty(computed))

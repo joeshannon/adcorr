@@ -1,3 +1,4 @@
+import pytest
 from numpy import Inf, allclose, array
 from numpy.ma import masked_where
 
@@ -56,3 +57,33 @@ def test_correct_flatfield_masked_2x2():
             array([[1.0, 2.0], [3.0, 4.0]]),
         ).filled(Inf),
     )
+
+
+@pytest.mark.numcertain
+def test_correct_flatfield_numcertain():
+    from numcertain import nominal, uncertain, uncertainty
+
+    expected = array(
+        [
+            [uncertain(1.0, 0.14142136), uncertain(4.0, 0.56568542494)],
+            [uncertain(9.0, 1.27279220614), uncertain(16.0, 2.2627416998)],
+        ]
+    )
+    computed = (
+        correct_flatfield(
+            array(
+                [
+                    [uncertain(1.0, 0.1), uncertain(2.0, 0.2)],
+                    [uncertain(3.0, 0.3), uncertain(4.0, 0.4)],
+                ]
+            ),
+            array(
+                [
+                    [uncertain(1.0, 0.1), uncertain(2.0, 0.2)],
+                    [uncertain(3.0, 0.3), uncertain(4.0, 0.4)],
+                ]
+            ),
+        ),
+    )
+    assert allclose(nominal(expected), nominal(computed))
+    assert allclose(uncertainty(expected), uncertainty(computed))

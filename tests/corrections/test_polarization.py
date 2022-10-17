@@ -1,5 +1,6 @@
 from unittest.mock import MagicMock, patch
 
+import pytest
 from numpy import Inf, allclose, array, pi
 from numpy.ma import masked_where
 from pytest import raises
@@ -215,3 +216,31 @@ def test_correct_polarization_horizontal_polarization_half():
             0.5,
         ),
     )
+
+
+@pytest.mark.numcertain
+def test_correct_polarization_numcertain():
+    from numcertain import nominal, uncertain, uncertainty
+
+    expected = array(
+        [
+            [uncertain(0.997512, 0.0997512), uncertain(1.99502, 0.199502)],
+            [uncertain(2.99254, 0.299254), uncertain(3.99005, 0.399005)],
+        ]
+    )
+    computed = (
+        correct_polarization(
+            array(
+                [
+                    [uncertain(1.0, 0.1), uncertain(2.0, 0.2)],
+                    [uncertain(3.0, 0.3), uncertain(4.0, 0.4)],
+                ]
+            ),
+            (1.0, 1.0),
+            (0.1, 0.1),
+            1.0,
+            0.25,
+        ),
+    )
+    assert allclose(nominal(expected), nominal(computed))
+    assert allclose(uncertainty(expected), uncertainty(computed))

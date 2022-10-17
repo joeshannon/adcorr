@@ -1,7 +1,10 @@
+import pytest
 from numpy import Inf, allclose, array
 from numpy.ma import masked_where
 
 from adcorr.corrections import subtract_background
+
+from ..compat import numcertain
 
 
 def test_background_subtraction_typical_2x2():
@@ -48,3 +51,35 @@ def test_correct_deadtime_masked_2x2():
             array([[0.1, 0.2], [0.3, 0.4]]),
         ).filled(Inf),
     )
+
+
+@pytest.mark.usefixtures(numcertain.__name__)
+def test_background_subtraction_numcertain(numcertain):
+    expected = array(
+        [
+            [
+                numcertain.uncertain(0.9, 0.10049875621),
+                numcertain.uncertain(1.8, 0.20099751242),
+            ],
+            [
+                numcertain.uncertain(2.7, 0.30149626863),
+                numcertain.uncertain(3.6, 0.40199502484),
+            ],
+        ]
+    )
+    computed = subtract_background(
+        array(
+            [
+                [numcertain.uncertain(1.0, 0.1), numcertain.uncertain(2.0, 0.2)],
+                [numcertain.uncertain(3.0, 0.3), numcertain.uncertain(4.0, 0.4)],
+            ]
+        ),
+        array(
+            [
+                [numcertain.uncertain(0.1, 0.01), numcertain.uncertain(0.2, 0.02)],
+                [numcertain.uncertain(0.3, 0.03), numcertain.uncertain(0.4, 0.04)],
+            ]
+        ),
+    )
+    assert allclose(numcertain.nominal(expected), numcertain.nominal(computed))
+    assert allclose(numcertain.uncertainty(expected), numcertain.uncertainty(computed))

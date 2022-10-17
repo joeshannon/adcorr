@@ -1,8 +1,11 @@
+import pytest
 from numpy import Inf, allclose, array
 from numpy.ma import masked_where
 from pytest import raises
 
 from adcorr.corrections import correct_dark_current
+
+from ..compat import numcertain
 
 
 def test_correct_dark_current_typical_2x2():
@@ -325,3 +328,40 @@ def test_correct_dark_current_flux_dependant_dark_current_negative():
             0.1,
             -0.001,
         )
+
+
+@pytest.mark.usefixtures(numcertain.__name__)
+def test_correct_dark_current_numcertain(numcertain):
+    expected = array(
+        [
+            [
+                numcertain.uncertain(0.88, 0.1),
+                numcertain.uncertain(1.88, 0.2),
+            ],
+            [
+                numcertain.uncertain(2.88, 0.3),
+                numcertain.uncertain(3.88, 0.4),
+            ],
+        ]
+    )
+    computed = correct_dark_current(
+        array(
+            [
+                [
+                    numcertain.uncertain(1.0, 0.1),
+                    numcertain.uncertain(2.0, 0.2),
+                ],
+                [
+                    numcertain.uncertain(3.0, 0.3),
+                    numcertain.uncertain(4.0, 0.4),
+                ],
+            ]
+        ),
+        array([0.1]),
+        array([10.0]),
+        0.1,
+        0.1,
+        0.001,
+    )
+    assert allclose(numcertain.nominal(expected), numcertain.nominal(computed))
+    assert allclose(numcertain.uncertainty(expected), numcertain.uncertainty(computed))
