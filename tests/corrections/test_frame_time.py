@@ -1,3 +1,4 @@
+import pytest
 from numpy import Inf, allclose, array
 from numpy.ma import masked_where
 from pytest import raises
@@ -125,3 +126,26 @@ def test_normalize_frame_time_count_times_negative():
             array([[[1.0, 2.0], [3.0, 4.0]], [[5.0, 6.0], [7.0, 8.0]]]),
             array([0.1, -0.1]),
         )
+
+
+@pytest.mark.numcertain
+def test_normalize_frame_time_numcertain():
+    from numcertain import nominal, uncertain, uncertainty
+
+    expected = array(
+        [
+            [uncertain(10.0, 1.0), uncertain(20.0, 2.0)],
+            [uncertain(30.0, 3.0), uncertain(40.0, 4.0)],
+        ]
+    )
+    computed = normalize_frame_time(
+        array(
+            [
+                [uncertain(1.0, 0.1), uncertain(2.0, 0.2)],
+                [uncertain(3.0, 0.3), uncertain(4.0, 0.4)],
+            ]
+        ),
+        array([0.1]),
+    )
+    assert allclose(nominal(expected), nominal(computed))
+    assert allclose(uncertainty(expected), uncertainty(computed))

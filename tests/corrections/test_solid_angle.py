@@ -1,5 +1,6 @@
 from unittest.mock import MagicMock, patch
 
+import pytest
 from numpy import Inf, allclose, array
 from numpy.ma import masked_where
 from pytest import raises
@@ -126,3 +127,30 @@ def test_correct_solid_angle_passes_distance_to_scattering_angles_only():
             (0.1, 0.1),
             inaccessable_mock(float),
         )
+
+
+@pytest.mark.numcertain
+def test_correct_solid_angle_numcertain():
+    from numcertain import nominal, uncertain, uncertainty
+
+    expected = array(
+        [
+            [uncertain(1.0075, 0.10075), uncertain(2.0150, 0.20150)],
+            [uncertain(3.0225, 0.30225), uncertain(4.0300, 0.40300)],
+        ]
+    )
+    computed = (
+        correct_solid_angle(
+            array(
+                [
+                    [uncertain(1.0, 0.1), uncertain(2.0, 0.2)],
+                    [uncertain(3.0, 0.3), uncertain(4.0, 0.4)],
+                ]
+            ),
+            (1.0, 1.0),
+            (0.1, 0.1),
+            1.0,
+        ),
+    )
+    assert allclose(nominal(expected), nominal(computed))
+    assert allclose(uncertainty(expected), uncertainty(computed))

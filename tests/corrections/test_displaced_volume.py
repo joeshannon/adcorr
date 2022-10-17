@@ -1,3 +1,4 @@
+import pytest
 from numpy import Inf, allclose, array
 from numpy.ma import masked_where
 from pytest import raises
@@ -79,3 +80,26 @@ def test_correct_displaced_volume_thickess_large():
         array([[0.0001, 0.0002], [0.0003, 0.0004]]),
         correct_displaced_volume(array([[1.0, 2.0], [3.0, 4.0]]), 0.9999),
     )
+
+
+@pytest.mark.numcertain
+def test_correct_displaced_volume_numcertain():
+    from numcertain import nominal, uncertain, uncertainty
+
+    expected = array(
+        [
+            [uncertain(0.5, 0.05), uncertain(1.0, 0.10)],
+            [uncertain(1.5, 0.15), uncertain(2.0, 0.20)],
+        ]
+    )
+    computed = correct_displaced_volume(
+        array(
+            [
+                [uncertain(1.0, 0.1), uncertain(2.0, 0.2)],
+                [uncertain(3.0, 0.3), uncertain(4.0, 0.4)],
+            ]
+        ),
+        0.5,
+    )
+    assert allclose(nominal(expected), nominal(computed))
+    assert allclose(uncertainty(expected), uncertainty(computed))

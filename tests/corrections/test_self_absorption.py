@@ -1,5 +1,6 @@
 from unittest.mock import MagicMock, patch
 
+import pytest
 from numpy import Inf, allclose, array
 from numpy.ma import masked_where
 from pytest import raises
@@ -149,3 +150,34 @@ def test_correct_self_absorption_passes_distance_to_scattering_angles_only():
             (0.1, 0.1),
             inaccessable_mock(float),
         )
+
+
+@pytest.mark.numcertain
+def test_correct_self_absorption_numcertain():
+    from numcertain import nominal, uncertain, uncertainty
+
+    expected = (
+        array(
+            [
+                [uncertain(0.999135, 0.0999135), uncertain(1.99827, 0.199827)],
+                [uncertain(2.99741, 0.299741), uncertain(3.99654, 0.399654)],
+            ]
+        ),
+    )
+    computed = (
+        correct_self_absorption(
+            array(
+                [
+                    [uncertain(1.0, 0.1), uncertain(2.0, 0.2)],
+                    [uncertain(3.0, 0.3), uncertain(4.0, 0.4)],
+                ]
+            ),
+            array([1.0]),
+            array([0.5]),
+            (1.0, 1.0),
+            (0.1, 0.1),
+            1.0,
+        ),
+    )
+    assert allclose(nominal(expected), nominal(computed))
+    assert allclose(uncertainty(expected), uncertainty(computed))
