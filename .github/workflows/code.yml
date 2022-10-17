@@ -40,7 +40,7 @@ jobs:
           pip install .[dev,dev-compat] -c requirements.txt
 
       - name: Check requirements.txt constrains all
-        run: diff -q requirements.txt <(pip freeze | grep -vE "^-e")
+        run: diff requirements.txt <(pip freeze | grep -vE "^-e")
 
   lint:
     strategy:
