@@ -15,7 +15,7 @@ on:
     - cron: "0 8 * * MON"
 
 jobs:
-  check_lock_complete:
+  exhausive_lock:
     strategy:
       fail-fast: false
       matrix:
