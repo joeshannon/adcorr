@@ -122,7 +122,7 @@ jobs:
           files: cov.xml
 
   sdist_wheel:
-    needs: [check_lock_complete, lint, test]
+    needs: [exhausive_lock, lint, test]
     strategy:
       fail-fast: false
       matrix:
