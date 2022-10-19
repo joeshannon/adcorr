@@ -1,6 +1,6 @@
 from unittest.mock import MagicMock, patch
 
-from numpy import Inf, array, isclose
+from numpy import Inf, allclose, array
 from numpy.ma import masked_where
 from pytest import raises
 
@@ -10,16 +10,16 @@ from ..inaccessable_mock import AccessedError, inaccessable_mock
 
 
 def test_correct_solid_angle_typical_2x2():
-    assert isclose(
+    assert allclose(
         array([[1.0075, 2.0150], [3.0225, 4.0300]]),
         correct_solid_angle(
             array([[1.0, 2.0], [3.0, 4.0]]), (1.0, 1.0), (0.1, 0.1), 1.0
         ),
-    ).all()
+    )
 
 
 def test_correct_solid_angle_typical_3x3():
-    assert isclose(
+    assert allclose(
         array(
             [
                 [1.03015, 2.03007, 3.09045],
@@ -33,11 +33,11 @@ def test_correct_solid_angle_typical_3x3():
             (0.1, 0.1),
             1.0,
         ),
-    ).all()
+    )
 
 
 def test_correct_solid_angle_typical_2x2x2():
-    assert isclose(
+    assert allclose(
         array(
             [
                 [[1.0075, 2.0150], [3.0225, 4.0300]],
@@ -50,11 +50,11 @@ def test_correct_solid_angle_typical_2x2x2():
             (0.1, 0.1),
             1.0,
         ),
-    ).all()
+    )
 
 
 def test_correct_solid_angle_masked_2x2():
-    assert isclose(
+    assert allclose(
         array([[Inf, 2.0150], [3.0225, Inf]]),
         correct_solid_angle(
             masked_where(
@@ -65,7 +65,7 @@ def test_correct_solid_angle_masked_2x2():
             (0.1, 0.1),
             1.0,
         ).filled(Inf),
-    ).all()
+    )
 
 
 def test_correct_solid_angle_passes_beam_center_to_scattering_angles_only():

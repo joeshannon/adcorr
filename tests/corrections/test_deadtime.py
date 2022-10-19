@@ -1,4 +1,4 @@
-from numpy import Inf, array, isclose
+from numpy import Inf, allclose, array
 from numpy.ma import masked_where
 from pytest import raises
 
@@ -6,7 +6,7 @@ from adcorr.corrections import correct_deadtime
 
 
 def test_correct_deadtime_typical_2x2():
-    assert isclose(
+    assert allclose(
         array(
             [
                 [1.00005, 2.00020],
@@ -14,11 +14,11 @@ def test_correct_deadtime_typical_2x2():
             ]
         ),
         correct_deadtime(array([[1.0, 2.0], [3.0, 4.0]]), array([0.1]), 3e-6, 2e-6),
-    ).all()
+    )
 
 
 def test_correct_deadtime_typical_3x3():
-    assert isclose(
+    assert allclose(
         array(
             [
                 [1.00005, 2.00020, 3.00045],
@@ -32,11 +32,11 @@ def test_correct_deadtime_typical_3x3():
             3e-6,
             2e-6,
         ),
-    ).all()
+    )
 
 
 def test_correct_deadtime_typical_2x2x2():
-    assert isclose(
+    assert allclose(
         array(
             [
                 [
@@ -55,11 +55,11 @@ def test_correct_deadtime_typical_2x2x2():
             3e-6,
             2e-6,
         ),
-    ).all()
+    )
 
 
 def test_correct_deadtime_masked_2x2():
-    assert isclose(
+    assert allclose(
         array(
             [
                 [Inf, 2.00020],
@@ -75,11 +75,11 @@ def test_correct_deadtime_masked_2x2():
             3e-6,
             2e-6,
         ).filled(Inf),
-    ).all()
+    )
 
 
 def test_correct_deadtime_count_times_singular():
-    assert isclose(
+    assert allclose(
         array(
             [
                 [
@@ -98,11 +98,11 @@ def test_correct_deadtime_count_times_singular():
             3e-6,
             2e-6,
         ),
-    ).all()
+    )
 
 
 def test_correct_deadtime_count_times_vector():
-    assert isclose(
+    assert allclose(
         array(
             [
                 [
@@ -121,7 +121,7 @@ def test_correct_deadtime_count_times_vector():
             3e-6,
             2e-6,
         ),
-    ).all()
+    )
 
 
 def test_correct_deadtime_count_times_zero():
@@ -145,7 +145,7 @@ def test_correct_deadtime_count_times_negative():
 
 
 def test_correct_deadtime_minimum_pulse_separation_zero():
-    assert isclose(
+    assert allclose(
         array(
             [
                 [1.00002, 2.00008],
@@ -153,7 +153,7 @@ def test_correct_deadtime_minimum_pulse_separation_zero():
             ]
         ),
         correct_deadtime(array([[1.0, 2.0], [3.0, 4.0]]), array([0.1]), 0.0, 2e-6),
-    ).all()
+    )
 
 
 def test_correct_deadtime_minimum_pulse_separation_negative():
@@ -162,7 +162,7 @@ def test_correct_deadtime_minimum_pulse_separation_negative():
 
 
 def test_correct_deadtime_minimum_arrival_separation_zero():
-    assert isclose(
+    assert allclose(
         array(
             [
                 [1.00002, 2.00008],
@@ -170,7 +170,7 @@ def test_correct_deadtime_minimum_arrival_separation_zero():
             ]
         ),
         correct_deadtime(array([[1.0, 2.0], [3.0, 4.0]]), array([0.1]), 2e-6, 0.0),
-    ).all()
+    )
 
 
 def test_correct_deadtime_minimum_arrival_separation_negative():
@@ -179,7 +179,7 @@ def test_correct_deadtime_minimum_arrival_separation_negative():
 
 
 def test_correct_deadtime_minimum_separations_zero():
-    assert isclose(
+    assert allclose(
         array([[1.0, 2.0], [3.0, 4.0]]),
         correct_deadtime(array([[1.0, 2.0], [3.0, 4.0]]), array([0.1]), 0.0, 0.0),
-    ).all()
+    )

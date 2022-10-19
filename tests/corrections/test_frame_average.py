@@ -1,36 +1,36 @@
-from numpy import Inf, array, isclose
+from numpy import Inf, allclose, array
 from numpy.ma import masked_where
 
 from adcorr.corrections import average_all_frames
 
 
 def test_average_all_frames_typical_2x2():
-    assert isclose(
+    assert allclose(
         array([[1.0, 2.0], [3.0, 4.0]]),
         average_all_frames(array([[1.0, 2.0], [3.0, 4.0]])),
-    ).all()
+    )
 
 
 def test_average_all_frames_typical_3x3():
-    assert isclose(
+    assert allclose(
         array([[1.0, 2.0, 3.0], [4.0, 5.0, 6.0], [7.0, 8.0, 9.0]]),
         average_all_frames(
             array([[1.0, 2.0, 3.0], [4.0, 5.0, 6.0], [7.0, 8.0, 9.0]]),
         ),
-    ).all()
+    )
 
 
 def test_average_all_frames_typical_2x2x2():
-    assert isclose(
+    assert allclose(
         array([[3.0, 4.0], [5.0, 6.0]]),
         average_all_frames(
             array([[[1.0, 2.0], [3.0, 4.0]], [[5.0, 6.0], [7.0, 8.0]]]),
         ),
-    ).all()
+    )
 
 
 def test_average_all_frames_typical_3x2x2():
-    assert isclose(
+    assert allclose(
         array([[5.0, 6.0], [7.0, 8.0]]),
         average_all_frames(
             array(
@@ -41,22 +41,22 @@ def test_average_all_frames_typical_3x2x2():
                 ]
             ),
         ),
-    ).all()
+    )
 
 
 def test_average_all_frames_masked_2x2():
-    assert isclose(
+    assert allclose(
         array([[Inf, 2.0], [3.0, Inf]]),
         average_all_frames(
             masked_where(
                 array([[True, False], [False, True]]), array([[1.0, 2.0], [3.0, 4.0]])
             )
         ),
-    ).all()
+    )
 
 
 def test_average_all_frames_masked_2x2x2():
-    assert isclose(
+    assert allclose(
         array([[Inf, 4.0], [5.0, Inf]]),
         average_all_frames(
             masked_where(
@@ -64,11 +64,11 @@ def test_average_all_frames_masked_2x2x2():
                 array([[[1.0, 2.0], [3.0, 4.0]], [[5.0, 6.0], [7.0, 8.0]]]),
             )
         ).filled(Inf),
-    ).all()
+    )
 
 
 def test_average_all_frames_masked_diag_2x2x2():
-    assert isclose(
+    assert allclose(
         array([[5.0, 2.0], [3.0, 8.0]]),
         average_all_frames(
             masked_where(
@@ -76,4 +76,4 @@ def test_average_all_frames_masked_diag_2x2x2():
                 array([[[1.0, 2.0], [3.0, 4.0]], [[5.0, 6.0], [7.0, 8.0]]]),
             )
         ).filled(Inf),
-    ).all()
+    )

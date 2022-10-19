@@ -1,6 +1,6 @@
 from unittest.mock import MagicMock, patch
 
-from numpy import Inf, array, isclose
+from numpy import Inf, allclose, array
 from numpy.ma import masked_where
 from pytest import raises
 
@@ -10,16 +10,16 @@ from ..inaccessable_mock import AccessedError, inaccessable_mock
 
 
 def test_correct_angular_efficiency_typical_2x2():
-    assert isclose(
+    assert allclose(
         array([[100.2517, 200.5035], [300.7553, 401.0071]]),
         correct_angular_efficiency(
             array([[1.0, 2.0], [3.0, 4.0]]), (1.0, 1.0), (0.1, 0.1), 1.0, 0.1, 0.1
         ),
-    ).all()
+    )
 
 
 def test_correct_angular_efficiency_typical_3x3():
-    assert isclose(
+    assert allclose(
         array(
             [
                 [99.5156, 200.0091, 298.5468],
@@ -35,11 +35,11 @@ def test_correct_angular_efficiency_typical_3x3():
             0.1,
             0.1,
         ),
-    ).all()
+    )
 
 
 def test_correct_angular_efficiency_typical_2x2x2():
-    assert isclose(
+    assert allclose(
         array(
             [
                 [[100.2517, 200.5035], [300.7553, 401.0071]],
@@ -54,11 +54,11 @@ def test_correct_angular_efficiency_typical_2x2x2():
             0.1,
             0.1,
         ),
-    ).all()
+    )
 
 
 def test_correct_angular_efficiency_masked_2x2():
-    assert isclose(
+    assert allclose(
         array([[Inf, 200.5035], [300.7553, Inf]]),
         correct_angular_efficiency(
             masked_where(
@@ -71,7 +71,7 @@ def test_correct_angular_efficiency_masked_2x2():
             0.1,
             0.1,
         ).filled(Inf),
-    ).all()
+    )
 
 
 def test_correct_angular_efficiency_passes_beam_center_to_scattering_angles_only():

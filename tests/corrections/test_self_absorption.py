@@ -1,6 +1,6 @@
 from unittest.mock import MagicMock, patch
 
-from numpy import Inf, array, isclose
+from numpy import Inf, allclose, array
 from numpy.ma import masked_where
 from pytest import raises
 
@@ -10,7 +10,7 @@ from ..inaccessable_mock import AccessedError, inaccessable_mock
 
 
 def test_correct_self_absorption_typical_2x2():
-    assert isclose(
+    assert allclose(
         array([[0.999135, 1.99827], [2.99741, 3.99654]]),
         correct_self_absorption(
             array([[1.0, 2.0], [3.0, 4.0]]),
@@ -20,11 +20,11 @@ def test_correct_self_absorption_typical_2x2():
             (0.1, 0.1),
             1.0,
         ),
-    ).all()
+    )
 
 
 def test_correct_self_absorption_typical_3x3():
-    assert isclose(
+    assert allclose(
         array(
             [
                 [0.996559, 1.99655, 2.98968],
@@ -40,11 +40,11 @@ def test_correct_self_absorption_typical_3x3():
             (0.1, 0.1),
             1.0,
         ),
-    ).all()
+    )
 
 
 def test_correct_self_absorption_typical_2x2x2():
-    assert isclose(
+    assert allclose(
         array(
             [
                 [[0.999135, 1.99827], [2.99741, 3.99654]],
@@ -59,11 +59,11 @@ def test_correct_self_absorption_typical_2x2x2():
             (0.1, 0.1),
             1.0,
         ),
-    ).all()
+    )
 
 
 def test_correct_self_absorption_masked_2x2():
-    assert isclose(
+    assert allclose(
         array([[Inf, 1.99827], [2.99741, Inf]]),
         correct_self_absorption(
             masked_where(
@@ -76,7 +76,7 @@ def test_correct_self_absorption_masked_2x2():
             (0.1, 0.1),
             1.0,
         ).filled(Inf),
-    ).all()
+    )
 
 
 def test_correct_self_absorption_passes_beam_center_to_scattering_angles_only():
