@@ -1,4 +1,4 @@
-from numpy import Inf, array, isclose
+from numpy import Inf, allclose, array
 from numpy.ma import masked_where
 from pytest import raises
 
@@ -6,7 +6,7 @@ from adcorr.corrections import normalize_frame_time
 
 
 def test_normalize_frame_time_typical_2x2():
-    assert isclose(
+    assert allclose(
         array(
             [
                 [10.0, 20.0],
@@ -14,11 +14,11 @@ def test_normalize_frame_time_typical_2x2():
             ]
         ),
         normalize_frame_time(array([[1.0, 2.0], [3.0, 4.0]]), array([0.1])),
-    ).all()
+    )
 
 
 def test_normalize_frame_time_typical_3x3():
-    assert isclose(
+    assert allclose(
         array(
             [
                 [10.0, 20.0, 30.0],
@@ -29,11 +29,11 @@ def test_normalize_frame_time_typical_3x3():
         normalize_frame_time(
             array([[1.0, 2.0, 3.0], [4.0, 5.0, 6.0], [7.0, 8.0, 9.0]]), array([0.1])
         ),
-    ).all()
+    )
 
 
 def test_normalize_frame_time_typical_2x2x2():
-    assert isclose(
+    assert allclose(
         array(
             [
                 [
@@ -50,11 +50,11 @@ def test_normalize_frame_time_typical_2x2x2():
             array([[[1.0, 2.0], [3.0, 4.0]], [[5.0, 6.0], [7.0, 8.0]]]),
             array([0.1, 0.1]),
         ),
-    ).all()
+    )
 
 
 def test_normalize_frame_time_masked_2x2():
-    assert isclose(
+    assert allclose(
         array(
             [
                 [Inf, 20.0],
@@ -68,11 +68,11 @@ def test_normalize_frame_time_masked_2x2():
             ),
             array([0.1]),
         ).filled(Inf),
-    ).all()
+    )
 
 
 def test_normalize_frame_time_count_times_singular():
-    assert isclose(
+    assert allclose(
         array(
             [
                 [
@@ -88,11 +88,11 @@ def test_normalize_frame_time_count_times_singular():
         normalize_frame_time(
             array([[[1.0, 2.0], [3.0, 4.0]], [[5.0, 6.0], [7.0, 8.0]]]), array([0.1])
         ),
-    ).all()
+    )
 
 
 def test_normalize_frame_time_count_times_vector():
-    assert isclose(
+    assert allclose(
         array(
             [
                 [
@@ -109,7 +109,7 @@ def test_normalize_frame_time_count_times_vector():
             array([[[1.0, 2.0], [3.0, 4.0]], [[5.0, 6.0], [7.0, 8.0]]]),
             array([0.1, 0.2]),
         ),
-    ).all()
+    )
 
 
 def test_normalize_frame_time_count_times_zero():

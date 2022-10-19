@@ -1,4 +1,4 @@
-from numpy import Inf, array, isclose
+from numpy import Inf, allclose, array
 from numpy.ma import masked_where
 from pytest import raises
 
@@ -6,7 +6,7 @@ from adcorr.corrections import correct_dark_current
 
 
 def test_correct_dark_current_typical_2x2():
-    assert isclose(
+    assert allclose(
         array(
             [
                 [0.88, 1.88],
@@ -21,11 +21,11 @@ def test_correct_dark_current_typical_2x2():
             0.1,
             0.001,
         ),
-    ).all()
+    )
 
 
 def test_correct_dark_current_typical_3x3():
-    assert isclose(
+    assert allclose(
         array(
             [
                 [0.88, 1.88, 2.88],
@@ -41,11 +41,11 @@ def test_correct_dark_current_typical_3x3():
             0.1,
             0.0001,
         ),
-    ).all()
+    )
 
 
 def test_correct_dark_current_typical_2x2x2():
-    assert isclose(
+    assert allclose(
         array(
             [
                 [
@@ -66,11 +66,11 @@ def test_correct_dark_current_typical_2x2x2():
             0.1,
             0.002,
         ),
-    ).all()
+    )
 
 
 def test_correct_dark_current_masked_2x2():
-    assert isclose(
+    assert allclose(
         array(
             [
                 [Inf, 1.88],
@@ -88,11 +88,11 @@ def test_correct_dark_current_masked_2x2():
             0.1,
             0.001,
         ).filled(Inf),
-    ).all()
+    )
 
 
 def test_correct_dark_current_count_times_singular():
-    assert isclose(
+    assert allclose(
         array(
             [
                 [
@@ -113,11 +113,11 @@ def test_correct_dark_current_count_times_singular():
             0.1,
             0.001,
         ),
-    ).all()
+    )
 
 
 def test_correct_dark_current_count_times_vector():
-    assert isclose(
+    assert allclose(
         array(
             [
                 [
@@ -138,7 +138,7 @@ def test_correct_dark_current_count_times_vector():
             0.1,
             0.001,
         ),
-    ).all()
+    )
 
 
 def test_correct_dark_current_count_times_zero():
@@ -166,7 +166,7 @@ def test_correct_dark_current_count_times_negative():
 
 
 def test_correct_dark_current_transmitted_flux_singular():
-    assert isclose(
+    assert allclose(
         array(
             [
                 [
@@ -187,11 +187,11 @@ def test_correct_dark_current_transmitted_flux_singular():
             0.1,
             0.001,
         ),
-    ).all()
+    )
 
 
 def test_correct_dark_current_transmitted_flux_vector():
-    assert isclose(
+    assert allclose(
         array(
             [
                 [
@@ -212,7 +212,7 @@ def test_correct_dark_current_transmitted_flux_vector():
             0.1,
             0.001,
         ),
-    ).all()
+    )
 
 
 def test_correct_dark_current_transmitted_flux_zero():
@@ -240,7 +240,7 @@ def test_correct_dark_current_transmitted_flux_negative():
 
 
 def test_correct_dark_current_base_dark_current_zero():
-    assert isclose(
+    assert allclose(
         array(
             [
                 [0.98, 1.98],
@@ -255,7 +255,7 @@ def test_correct_dark_current_base_dark_current_zero():
             0.1,
             0.001,
         ),
-    ).all()
+    )
 
 
 def test_correct_dark_current_base_dark_current_negative():
@@ -271,7 +271,7 @@ def test_correct_dark_current_base_dark_current_negative():
 
 
 def test_correct_dark_current_temporal_dark_current_zero():
-    assert isclose(
+    assert allclose(
         array(
             [
                 [0.89, 1.89],
@@ -286,7 +286,7 @@ def test_correct_dark_current_temporal_dark_current_zero():
             0.0,
             0.001,
         ),
-    ).all()
+    )
 
 
 def test_correct_dark_current_temporal_dark_current_negative():
@@ -302,7 +302,7 @@ def test_correct_dark_current_temporal_dark_current_negative():
 
 
 def test_correct_dark_current_flux_dependant_dark_current_zero():
-    assert isclose(
+    assert allclose(
         array(
             [
                 [0.89, 1.89],
@@ -312,7 +312,7 @@ def test_correct_dark_current_flux_dependant_dark_current_zero():
         correct_dark_current(
             array([[1.0, 2.0], [3.0, 4.0]]), array([0.1]), array([10.0]), 0.1, 0.1, 0.0
         ),
-    ).all()
+    )
 
 
 def test_correct_dark_current_flux_dependant_dark_current_negative():

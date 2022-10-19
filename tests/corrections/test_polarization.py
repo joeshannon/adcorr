@@ -1,6 +1,6 @@
 from unittest.mock import MagicMock, patch
 
-from numpy import Inf, array, isclose, pi
+from numpy import Inf, allclose, array, pi
 from numpy.ma import masked_where
 from pytest import raises
 
@@ -10,16 +10,16 @@ from ..inaccessable_mock import AccessedError, inaccessable_mock
 
 
 def test_correct_polarization_typical_2x2():
-    assert isclose(
+    assert allclose(
         array([[0.997512, 1.99502], [2.99254, 3.99005]]),
         correct_polarization(
             array([[1.0, 2.0], [3.0, 4.0]]), (1.0, 1.0), (0.1, 0.1), 1.0, 0.25
         ),
-    ).all()
+    )
 
 
 def test_correct_polarization_typical_3x3():
-    assert isclose(
+    assert allclose(
         array(
             [
                 [0.990196, 1.99505, 2.97059],
@@ -34,11 +34,11 @@ def test_correct_polarization_typical_3x3():
             1.0,
             0.25,
         ),
-    ).all()
+    )
 
 
 def test_correct_polarization_typical_2x2x2():
-    assert isclose(
+    assert allclose(
         array(
             [
                 [[0.997512, 1.99502], [2.99254, 3.99005]],
@@ -52,11 +52,11 @@ def test_correct_polarization_typical_2x2x2():
             1.0,
             0.25,
         ),
-    ).all()
+    )
 
 
 def test_correct_polarization_masked_2x2():
-    assert isclose(
+    assert allclose(
         array([[Inf, 1.99502], [2.99254, Inf]]),
         correct_polarization(
             masked_where(
@@ -68,7 +68,7 @@ def test_correct_polarization_masked_2x2():
             1.0,
             0.25,
         ).filled(Inf),
-    ).all()
+    )
 
 
 def test_correct_polarization_passes_beam_center_to_scattering_angles_only():
@@ -147,7 +147,7 @@ def test_correct_polarization_passes_distance_to_geometry_utils_only():
 
 
 def test_correct_polarization_horizontal_polarization_zero():
-    assert isclose(
+    assert allclose(
         array(
             [
                 [0.990196, 2.0, 2.97059],
@@ -162,11 +162,11 @@ def test_correct_polarization_horizontal_polarization_zero():
             1.0,
             0.0,
         ),
-    ).all()
+    )
 
 
 def test_correct_polarization_horizontal_polarization_one():
-    assert isclose(
+    assert allclose(
         array(
             [
                 [0.990196, 1.9802, 2.97059],
@@ -181,7 +181,7 @@ def test_correct_polarization_horizontal_polarization_one():
             1.0,
             1.0,
         ),
-    ).all()
+    )
 
 
 def test_correct_polarization_horizontal_polarization_negative():
@@ -199,7 +199,7 @@ def test_correct_polarization_horizontal_polarization_exceeds_one():
 
 
 def test_correct_polarization_horizontal_polarization_half():
-    assert isclose(
+    assert allclose(
         array(
             [
                 [0.990196, 1.9901, 2.97059],
@@ -214,4 +214,4 @@ def test_correct_polarization_horizontal_polarization_half():
             1.0,
             0.5,
         ),
-    ).all()
+    )
