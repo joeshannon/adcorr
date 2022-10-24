@@ -6,12 +6,24 @@ adcorr
 This package provides a set of pure python functions for performing corrections on area
 detector data.
 
+Install via PyPI with:
+
+.. code:: bash 
+
+    pip install adcorr
+
+Useful Links
+------------
+
 ============== ==============================================
-PyPI           ``pip install adcorr``
+PyPI           https://pypi.org/project/adcorr/
 Source code    https://github.com/DiamondLightSource/adcorr
 Documentation  https://DiamondLightSource.github.io/adcorr
 Releases       https://github.com/DiamondLightSource/adcorr/releases
 ============== ==============================================
+
+Brief Example
+-------------
 
 A brief example of performing corrections using the library is presented below:
 
@@ -37,6 +49,15 @@ A brief example of performing corrections using the library is presented below:
     )
     ...
 
+Library Compatibility
+---------------------
+
+========== ================================================ ============================
+Library    Link                                             Coverage
+---------- ------------------------------------------------ ----------------------------
+numcertain https://github.com/DiamondLightSource/numcertain |numcertain_compat_coverage|
+========== ================================================ ============================
+
 .. |code_ci| image:: https://github.com/DiamondLightSource/adcorr/workflows/Code%20CI/badge.svg?branch=main
     :target: https://github.com/DiamondLightSource/adcorr/actions?query=workflow%3A%22Code+CI%22
     :alt: Code CI
@@ -45,9 +66,13 @@ A brief example of performing corrections using the library is presented below:
     :target: https://github.com/DiamondLightSource/adcorr/actions?query=workflow%3A%22Docs+CI%22
     :alt: Docs CI
 
-.. |coverage| image:: https://codecov.io/gh/DiamondLightSource/adcorr/branch/main/graph/badge.svg
+.. |coverage| image:: https://codecov.io/gh/DiamondLightSource/adcorr/branch/main/graph/badge.svg?flag=unmarked
     :target: https://codecov.io/gh/DiamondLightSource/adcorr
     :alt: Test Coverage
+
+.. |numcertain_compat_coverage| image:: https://codecov.io/gh/DiamondLightSource/adcorr/branch/main/graph/badge.svg?flag=numcertain
+    :target: https://codecov.io/gh/DiamondLightSource/adcorr
+    :alt: Numcertain Compatibility Test Coverage
 
 .. |pypi_version| image:: https://img.shields.io/pypi/v/adcorr.svg
     :target: https://pypi.org/project/adcorr
