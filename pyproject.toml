@@ -86,7 +86,7 @@ addopts = """\
     --cov=adcorr --cov-report term --cov-report xml:cov.xml\
     """
 filterwarnings = "error"
-markers = ["unmarked", "numcertain"]
+markers = ["core", "numcertain"]
 testpaths = "src tests"
 
 [tool.coverage.run]
