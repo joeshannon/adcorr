@@ -66,7 +66,7 @@ numcertain https://github.com/DiamondLightSource/numcertain |numcertain_compat_c
     :target: https://github.com/DiamondLightSource/adcorr/actions?query=workflow%3A%22Docs+CI%22
     :alt: Docs CI
 
-.. |coverage| image:: https://codecov.io/gh/DiamondLightSource/adcorr/branch/main/graph/badge.svg?flag=unmarked
+.. |coverage| image:: https://codecov.io/gh/DiamondLightSource/adcorr/branch/main/graph/badge.svg?flag=core
     :target: https://codecov.io/gh/DiamondLightSource/adcorr
     :alt: Test Coverage
 

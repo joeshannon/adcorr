@@ -64,14 +64,14 @@ jobs:
       matrix:
         os: ["ubuntu-latest"]
         python: ["3.9", "3.10"]
-        marker: ["unmarked", "numcertain"]
+        marker: ["core", "numcertain"]
         deploy: [false]
 
         include:
           # Add an extra Python3.9 runner to use the lockfile
           - os: "ubuntu-latest"
             python: "3.9"
-            marker: unmarked
+            marker: core
             deploy: true
 
     runs-on: ${{ matrix.os }}

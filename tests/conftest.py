@@ -2,7 +2,7 @@ from pytest import Config, Function
 
 
 def pytest_collection_modifyitems(items: list[Function], config: Config) -> None:
-    """Adds the marker 'unmarked' to all tests which do not have a marker.
+    """Adds the marker 'core' to all tests which do not have a marker.
 
     Args:
         items: A list of test functions.
@@ -10,4 +10,4 @@ def pytest_collection_modifyitems(items: list[Function], config: Config) -> None
     """
     for item in items:
         if not any(item.iter_markers()):
-            item.add_marker("unmarked")
+            item.add_marker("core")
