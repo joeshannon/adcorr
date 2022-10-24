@@ -4,8 +4,6 @@ from pytest import raises
 
 from adcorr.corrections.masking import mask_frames
 
-from ..compat import numcertain
-
 
 def test_masking_typical_3x3():
     assert (
@@ -34,34 +32,24 @@ def test_masking_non_broadcastable_mask_raises():
         )
 
 
-@pytest.mark.usefixtures(numcertain.__name__)
-def test_masking_numcertain(numcertain):
+@pytest.mark.numcertain
+def test_masking_numcertain():
+    from numcertain import uncertain
+
     assert (
         array(
             [
-                [
-                    numcertain.uncertain(Inf, 0.0),
-                    numcertain.uncertain(2.0, 0.1),
-                ],
-                [
-                    numcertain.uncertain(3.0, 0.1),
-                    numcertain.uncertain(Inf, 0.0),
-                ],
+                [uncertain(Inf, 0.0), uncertain(2.0, 0.1)],
+                [uncertain(3.0, 0.1), uncertain(Inf, 0.0)],
             ]
         )
         == mask_frames(
             array(
                 [
-                    [
-                        numcertain.uncertain(1.0, 0.1),
-                        numcertain.uncertain(2.0, 0.1),
-                    ],
-                    [
-                        numcertain.uncertain(3.0, 0.1),
-                        numcertain.uncertain(4.0, 0.1),
-                    ],
+                    [uncertain(1.0, 0.1), uncertain(2.0, 0.1)],
+                    [uncertain(3.0, 0.1), uncertain(4.0, 0.1)],
                 ]
             ),
             array([[True, False], [False, True]]),
-        ).filled(numcertain.uncertain(Inf, 0.0))
+        ).filled(uncertain(Inf, 0.0))
     ).all()
