@@ -79,6 +79,7 @@ def pauw_instrumental_background_sequence(
     frames = correct_dark_current(
         frames,
         count_times,
+        transmitted_flux,
         base_dark_current,
         temporal_dark_current,
         flux_dependant_dark_current,

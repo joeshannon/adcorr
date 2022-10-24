@@ -1,11 +1,12 @@
-from numpy import atleast_1d, dtype, expand_dims, floating, ndarray, number
+from numpy import atleast_1d, dtype, expand_dims, ndarray, number
 
 from ..utils.typing import FrameHeight, Frames, FrameWidth, NumFrames, VectorOrSingle
 
 
 def correct_dark_current(
     frames: Frames[NumFrames, FrameWidth, FrameHeight, dtype[number]],
-    count_times: ndarray[VectorOrSingle[NumFrames], dtype[floating]],
+    count_times: ndarray[VectorOrSingle[NumFrames], dtype[number]],
+    transmitted_flux: ndarray[VectorOrSingle[NumFrames], dtype[number]],
     base_dark_current: float,
     temporal_dark_current: float,
     flux_dependant_dark_current: float,
@@ -20,6 +21,8 @@ def correct_dark_current(
     Args:
         frames: A stack of frames to be corrected.
         count_times: The period over which photons are counted for each frame.
+        transmitted_flux: The flux intensity observed downstream of the sample
+            for each frame.
         base_dark_current: The dark current flux, irrespective of time.
         temporal_dark_current: The dark current flux, as a factor of time.
         flux_dependant_dark_current: The dark current flux, as a factor of incident
@@ -30,6 +33,8 @@ def correct_dark_current(
     """
     if (count_times <= 0).any():
         raise ValueError("Count times must be positive.")
+    if (transmitted_flux <= 0).any():
+        raise ValueError("Transmitted flux must be positive.")
     if base_dark_current < 0:
         raise ValueError("Base Dark Current must be non-negative.")
     if temporal_dark_current < 0:
@@ -38,5 +43,7 @@ def correct_dark_current(
         raise ValueError("Flux Dependant Dark Current must be non-negative.")
 
     temporal = temporal_dark_current * expand_dims(atleast_1d(count_times), (1, 2))
-    flux_dependant = flux_dependant_dark_current * frames
+    flux_dependant = flux_dependant_dark_current * expand_dims(
+        atleast_1d(transmitted_flux), (1, 2)
+    )
     return frames - base_dark_current - temporal - flux_dependant
