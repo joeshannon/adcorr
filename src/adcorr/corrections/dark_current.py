@@ -1,12 +1,12 @@
-from numpy import atleast_1d, dtype, expand_dims, floating, ndarray, number
+from numpy import atleast_1d, dtype, expand_dims, ndarray, number
 
 from ..utils.typing import FrameHeight, Frames, FrameWidth, NumFrames, VectorOrSingle
 
 
 def correct_dark_current(
     frames: Frames[NumFrames, FrameWidth, FrameHeight, dtype[number]],
-    count_times: ndarray[VectorOrSingle[NumFrames], dtype[floating]],
-    transmitted_flux: ndarray[VectorOrSingle[NumFrames], dtype[floating]],
+    count_times: ndarray[VectorOrSingle[NumFrames], dtype[number]],
+    transmitted_flux: ndarray[VectorOrSingle[NumFrames], dtype[number]],
     base_dark_current: float,
     temporal_dark_current: float,
     flux_dependant_dark_current: float,
