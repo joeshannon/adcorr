@@ -5,8 +5,6 @@ from pytest import raises
 
 from adcorr.corrections import correct_dark_current
 
-from ..compat import numcertain
-
 
 def test_correct_dark_current_typical_2x2():
     assert allclose(
@@ -330,31 +328,21 @@ def test_correct_dark_current_flux_dependant_dark_current_negative():
         )
 
 
-@pytest.mark.usefixtures(numcertain.__name__)
-def test_correct_dark_current_numcertain(numcertain):
+@pytest.mark.numcertain
+def test_correct_dark_current_numcertain():
+    from numcertain import nominal, uncertain, uncertainty
+
     expected = array(
         [
-            [
-                numcertain.uncertain(0.88, 0.1),
-                numcertain.uncertain(1.88, 0.2),
-            ],
-            [
-                numcertain.uncertain(2.88, 0.3),
-                numcertain.uncertain(3.88, 0.4),
-            ],
+            [uncertain(0.88, 0.1), uncertain(1.88, 0.2)],
+            [uncertain(2.88, 0.3), uncertain(3.88, 0.4)],
         ]
     )
     computed = correct_dark_current(
         array(
             [
-                [
-                    numcertain.uncertain(1.0, 0.1),
-                    numcertain.uncertain(2.0, 0.2),
-                ],
-                [
-                    numcertain.uncertain(3.0, 0.3),
-                    numcertain.uncertain(4.0, 0.4),
-                ],
+                [uncertain(1.0, 0.1), uncertain(2.0, 0.2)],
+                [uncertain(3.0, 0.3), uncertain(4.0, 0.4)],
             ]
         ),
         array([0.1]),
@@ -363,5 +351,5 @@ def test_correct_dark_current_numcertain(numcertain):
         0.1,
         0.001,
     )
-    assert allclose(numcertain.nominal(expected), numcertain.nominal(computed))
-    assert allclose(numcertain.uncertainty(expected), numcertain.uncertainty(computed))
+    assert allclose(nominal(expected), nominal(computed))
+    assert allclose(uncertainty(expected), uncertainty(computed))

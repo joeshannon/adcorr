@@ -7,7 +7,6 @@ from pytest import raises
 
 from adcorr.corrections import correct_angular_efficiency
 
-from ..compat import numcertain
 from ..inaccessable_mock import AccessedError, inaccessable_mock
 
 
@@ -176,31 +175,21 @@ def test_correct_angular_efficiency_thickness_negative():
         )
 
 
-@pytest.mark.usefixtures(numcertain.__name__)
-def test_correct_angular_efficiency_numcertain(numcertain):
+@pytest.mark.numcertain
+def test_correct_angular_efficiency_numcertain():
+    from numcertain import nominal, uncertain, uncertainty
+
     expected = array(
         [
-            [
-                numcertain.uncertain(100.2517, 10.0251769),
-                numcertain.uncertain(200.5035, 20.0503538),
-            ],
-            [
-                numcertain.uncertain(300.7553, 30.07553071),
-                numcertain.uncertain(401.0071, 40.10070761),
-            ],
+            [uncertain(100.2517, 10.0251769), uncertain(200.5035, 20.0503538)],
+            [uncertain(300.7553, 30.07553071), uncertain(401.0071, 40.10070761)],
         ]
     )
     computed = correct_angular_efficiency(
         array(
             [
-                [
-                    numcertain.uncertain(1.0, 0.1),
-                    numcertain.uncertain(2.0, 0.2),
-                ],
-                [
-                    numcertain.uncertain(3.0, 0.3),
-                    numcertain.uncertain(4.0, 0.4),
-                ],
+                [uncertain(1.0, 0.1), uncertain(2.0, 0.2)],
+                [uncertain(3.0, 0.3), uncertain(4.0, 0.4)],
             ]
         ),
         (1.0, 1.0),
@@ -209,5 +198,5 @@ def test_correct_angular_efficiency_numcertain(numcertain):
         0.1,
         0.1,
     )
-    assert allclose(numcertain.nominal(expected), numcertain.nominal(computed))
-    assert allclose(numcertain.uncertainty(expected), numcertain.uncertainty(computed))
+    assert allclose(nominal(expected), nominal(computed))
+    assert allclose(uncertainty(expected), uncertainty(computed))

@@ -4,8 +4,6 @@ from numpy.ma import masked_where
 
 from adcorr.corrections import subtract_background
 
-from ..compat import numcertain
-
 
 def test_background_subtraction_typical_2x2():
     assert allclose(
@@ -53,33 +51,29 @@ def test_correct_deadtime_masked_2x2():
     )
 
 
-@pytest.mark.usefixtures(numcertain.__name__)
-def test_background_subtraction_numcertain(numcertain):
+@pytest.mark.numcertain
+def test_background_subtraction_numcertain():
+    from numcertain import nominal, uncertain, uncertainty
+
     expected = array(
         [
-            [
-                numcertain.uncertain(0.9, 0.10049875621),
-                numcertain.uncertain(1.8, 0.20099751242),
-            ],
-            [
-                numcertain.uncertain(2.7, 0.30149626863),
-                numcertain.uncertain(3.6, 0.40199502484),
-            ],
+            [uncertain(0.9, 0.10049875621), uncertain(1.8, 0.20099751242)],
+            [uncertain(2.7, 0.30149626863), uncertain(3.6, 0.40199502484)],
         ]
     )
     computed = subtract_background(
         array(
             [
-                [numcertain.uncertain(1.0, 0.1), numcertain.uncertain(2.0, 0.2)],
-                [numcertain.uncertain(3.0, 0.3), numcertain.uncertain(4.0, 0.4)],
+                [uncertain(1.0, 0.1), uncertain(2.0, 0.2)],
+                [uncertain(3.0, 0.3), uncertain(4.0, 0.4)],
             ]
         ),
         array(
             [
-                [numcertain.uncertain(0.1, 0.01), numcertain.uncertain(0.2, 0.02)],
-                [numcertain.uncertain(0.3, 0.03), numcertain.uncertain(0.4, 0.04)],
+                [uncertain(0.1, 0.01), uncertain(0.2, 0.02)],
+                [uncertain(0.3, 0.03), uncertain(0.4, 0.04)],
             ]
         ),
     )
-    assert allclose(numcertain.nominal(expected), numcertain.nominal(computed))
-    assert allclose(numcertain.uncertainty(expected), numcertain.uncertainty(computed))
+    assert allclose(nominal(expected), nominal(computed))
+    assert allclose(uncertainty(expected), uncertainty(computed))
