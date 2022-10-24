@@ -43,6 +43,7 @@ dev = [
     "Flake8-pyproject",
     "pydocstyle[toml]",
     "pre-commit",
+    "numcertain",
 ]
 docs = [
     "sphinx-rtd-theme-github-versions",
