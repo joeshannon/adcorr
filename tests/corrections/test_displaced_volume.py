@@ -103,3 +103,15 @@ def test_correct_displaced_volume_numcertain():
     )
     assert allclose(nominal(expected), nominal(computed))
     assert allclose(uncertainty(expected), uncertainty(computed))
+
+
+@pytest.mark.pint
+def test_correct_displaced_volume_pint():
+    from pint import UnitRegistry
+
+    ureg = UnitRegistry(cache_folder=":auto:")
+
+    assert allclose(
+        array([[0.5, 1.0], [1.5, 2.0]]) * ureg.count,
+        correct_displaced_volume(array([[1.0, 2.0], [3.0, 4.0]]) * ureg.count, 0.5),
+    )

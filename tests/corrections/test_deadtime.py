@@ -214,3 +214,29 @@ def test_correct_deadtime_numcertain():
     )
     assert allclose(nominal(expected), nominal(computed))
     assert allclose(uncertainty(expected), uncertainty(computed))
+
+
+# Skipped awaiting support for scipy.special.lambertw in pint
+# https://github.com/hgrecco/pint/issues/114
+@pytest.mark.skip
+@pytest.mark.pint
+def test_correct_deadtime_pint():
+    from pint import UnitRegistry
+
+    ureg = UnitRegistry(cache_folder=":auto:")
+
+    assert allclose(
+        array(
+            [
+                [1.00005, 2.00020],
+                [3.00045, 4.00080],
+            ]
+        )
+        * ureg.count,
+        correct_deadtime(
+            array([[1.0, 2.0], [3.0, 4.0]]) * ureg.count,
+            array([0.1]) * ureg.second,
+            3.0 * ureg.microsecond,
+            2.0 * ureg.microsecond,
+        ),
+    )

@@ -200,3 +200,22 @@ def test_correct_angular_efficiency_numcertain():
     )
     assert allclose(nominal(expected), nominal(computed))
     assert allclose(uncertainty(expected), uncertainty(computed))
+
+
+@pytest.mark.pint
+def test_correct_angular_efficiency_pint():
+    from pint import UnitRegistry
+
+    ureg = UnitRegistry(cache_folder=":auto:")
+
+    assert allclose(
+        (array([[100.2517, 200.5035], [300.7553, 401.0071]]) * ureg.count),
+        correct_angular_efficiency(
+            array([[1.0, 2.0], [3.0, 4.0]]) * ureg.count,
+            (1.0, 1.0),
+            (0.1 * ureg.meter, 0.1 * ureg.meter),
+            1.0 * ureg.meter,
+            0.1 * ureg.count / ureg.meter,
+            0.1 * ureg.meter,
+        ),
+    )

@@ -149,3 +149,24 @@ def test_normalize_frame_time_numcertain():
     )
     assert allclose(nominal(expected), nominal(computed))
     assert allclose(uncertainty(expected), uncertainty(computed))
+
+
+@pytest.mark.pint
+def test_normalize_frame_time_pint():
+    from pint import UnitRegistry
+
+    ureg = UnitRegistry(cache_folder=":auto:")
+
+    assert allclose(
+        array(
+            [
+                [10.0, 20.0],
+                [30.0, 40.0],
+            ]
+        )
+        * ureg.count
+        / ureg.second,
+        normalize_frame_time(
+            array([[1.0, 2.0], [3.0, 4.0]]) * ureg.count, array([0.1]) * ureg.second
+        ),
+    )

@@ -244,3 +244,21 @@ def test_correct_polarization_numcertain():
     )
     assert allclose(nominal(expected), nominal(computed))
     assert allclose(uncertainty(expected), uncertainty(computed))
+
+
+@pytest.mark.pint
+def test_correct_polarization_pint():
+    from pint import UnitRegistry
+
+    ureg = UnitRegistry(cache_folder=":auto:")
+
+    assert allclose(
+        array([[0.997512, 1.99502], [2.99254, 3.99005]]) * ureg.count,
+        correct_polarization(
+            array([[1.0, 2.0], [3.0, 4.0]]) * ureg.count,
+            (1.0, 1.0),
+            (0.1 * ureg.meter, 0.1 * ureg.meter),
+            1.0 * ureg.meter,
+            0.25,
+        ),
+    )

@@ -67,3 +67,18 @@ def test_normalize_transmitted_flux_numcertain():
     )
     assert allclose(nominal(expected), nominal(computed))
     assert allclose(uncertainty(expected), uncertainty(computed))
+
+
+@pytest.mark.pint
+def test_normalize_transmitted_flux_pint():
+    from pint import UnitRegistry
+
+    ureg = UnitRegistry(cache_folder=":auto:")
+
+    assert allclose(
+        array([[0.1, 0.2], [0.3, 0.4]]),
+        normalize_transmitted_flux(
+            array([[1.0, 2.0], [3.0, 4.0]]) * ureg.count / ureg.second,
+            array([10.0]) * ureg.count / ureg.second,
+        ),
+    )

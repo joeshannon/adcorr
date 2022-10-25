@@ -87,3 +87,18 @@ def test_correct_flatfield_numcertain():
     )
     assert allclose(nominal(expected), nominal(computed))
     assert allclose(uncertainty(expected), uncertainty(computed))
+
+
+@pytest.mark.pint
+def test_correct_flatfield_pint():
+    from pint import UnitRegistry
+
+    ureg = UnitRegistry(cache_folder=":auto:")
+
+    assert allclose(
+        array([[1.0, 4.0], [9.0, 16.0]]) * ureg.count,
+        correct_flatfield(
+            array([[1.0, 2.0], [3.0, 4.0]]) * ureg.count,
+            array([[1.0, 2.0], [3.0, 4.0]]) * ureg.count,
+        ),
+    )

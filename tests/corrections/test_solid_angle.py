@@ -154,3 +154,20 @@ def test_correct_solid_angle_numcertain():
     )
     assert allclose(nominal(expected), nominal(computed))
     assert allclose(uncertainty(expected), uncertainty(computed))
+
+
+@pytest.mark.pint
+def test_correct_solid_angle_pint():
+    from pint import UnitRegistry
+
+    ureg = UnitRegistry(cache_folder=":auto:")
+
+    assert allclose(
+        array([[1.0075, 2.0150], [3.0225, 4.0300]]) * ureg.count,
+        correct_solid_angle(
+            array([[1.0, 2.0], [3.0, 4.0]]) * ureg.count,
+            (1.0, 1.0),
+            (0.1 * ureg.meter, 0.1 * ureg.meter),
+            1.0 * ureg.meter,
+        ),
+    )
