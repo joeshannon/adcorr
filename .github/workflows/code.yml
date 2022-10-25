@@ -58,61 +58,59 @@ jobs:
         run: |
           pre-commit run --all-files --show-diff-on-failure --color=always -v
 
-  test:
+  test_core:
     strategy:
       fail-fast: false
       matrix:
         os: ["ubuntu-latest"]
         python: ["3.9", "3.10"]
-        marker: ["core", "numcertain", "pint"]
         deploy: [false]
+        marker: ["core"]
 
         include:
           # Add an extra Python3.9 runner to use the lockfile
           - os: "ubuntu-latest"
             python: "3.9"
-            marker: core
             deploy: true
+            marker: "core"
 
     runs-on: ${{ matrix.os }}
-    env:
-      # https://github.com/pytest-dev/pytest/issues/2042
-      PY_IGNORE_IMPORTMISMATCH: "1"
-
     steps:
       - uses: actions/checkout@v3
         with:
           fetch-depth: 0
 
-      - name: Setup python
-        uses: actions/setup-python@v4
+      - uses: ./.github/actions/do_tests
         with:
-          python-version: ${{ matrix.python }}
+          prefix: ${{ matrix.os }}
+          deploy: ${{ matrix.deploy }}
+          marker: ${{ matrix.marker }}
+          python: ${{ matrix.python }}
 
-      - name: Install dependancies
-        if: ${{ !matrix.deploy }}
-        run: |
-          python -m pip install --upgrade pip
-          pip install .[dev]
+  test_compat:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: ["ubuntu-latest"]
+        python: ["3.9", "3.10"]
+        deploy: [false]
+        marker: ["numcertain", "pint"]
 
-      - name: Install dependancies (deploy)
-        if: ${{ matrix.deploy }}
-        run: |
-          python -m pip install --upgrade pip
-          pip install .[dev] -r requirements.txt
-
-      - name: Run tests with Pytest
-        run: pytest -m ${{ matrix.marker }}
-
-      - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v3
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v3
         with:
-          name: ${{ matrix.python }}/${{ matrix.os }}/${{ matrix.deploy }}
-          flags: ${{ matrix.marker }}
-          files: cov.xml
+          fetch-depth: 0
+
+      - uses: ./.github/actions/do_tests
+        with:
+          prefix: ${{ matrix.os }}
+          deploy: ${{ matrix.deploy }}
+          marker: ${{ matrix.marker }}
+          python: ${{ matrix.python }}
 
   sdist_wheel:
-    needs: [exhausive_lock, lint, test]
+    needs: [exhausive_lock, lint, test_core]
 
     runs-on: "ubuntu-latest"
     steps:

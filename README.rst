@@ -71,11 +71,19 @@ Pint       https://pint.readthedocs.io/en/stable/           |pint_compat_coverag
     :target: https://codecov.io/gh/DiamondLightSource/adcorr
     :alt: Test Coverage
 
-.. |numcertain_compat_coverage| image:: https://codecov.io/gh/DiamondLightSource/adcorr/branch/main/graph/badge.svg?flag=numcertain
+.. |tests_numcertain| image:: https://raw.githubusercontent.com/DiamondLightSource/adcorr/gh-badges/badges/main/ubuntu-latest_3.9_false_numcertain_outcome.svg
+    :target: https://github.com/DiamondLightSource/adcorr/actions?query=workflow%3A%22Code+CI%22
+    :alt: Numcertain Compatibility Test Outcome
+
+.. |coverage_numcertain| image:: https://codecov.io/gh/DiamondLightSource/adcorr/branch/main/graph/badge.svg?flag=numcertain
     :target: https://codecov.io/gh/DiamondLightSource/adcorr
     :alt: Numcertain Compatibility Test Coverage
 
-.. |pint_compat_coverage| image:: https://codecov.io/gh/DiamondLightSource/adcorr/branch/main/graph/badge.svg?flag=pint
+.. |tests_pint| image:: https://raw.githubusercontent.com/DiamondLightSource/adcorr/gh-badges/badges/main/ubuntu-latest_3.9_false_pint_outcome.svg
+    :target: https://github.com/DiamondLightSource/adcorr/actions?query=workflow%3A%22Code+CI%22
+    :alt: Pint Compatibility Test Outcome
+
+.. |coverage_pint| image:: https://codecov.io/gh/DiamondLightSource/adcorr/branch/main/graph/badge.svg?flag=pint
     :target: https://codecov.io/gh/DiamondLightSource/adcorr
     :alt: Pint Compatibility Test Coverage
 
