@@ -64,7 +64,7 @@ jobs:
       matrix:
         os: ["ubuntu-latest"]
         python: ["3.9", "3.10"]
-        marker: ["core", "numcertain"]
+        marker: ["core", "numcertain", "pint"]
         deploy: [false]
 
         include:
