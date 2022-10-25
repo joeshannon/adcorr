@@ -53,3 +53,18 @@ def test_masking_numcertain():
             array([[True, False], [False, True]]),
         ).filled(uncertain(Inf, 0.0))
     ).all()
+
+
+@pytest.mark.pint
+def test_masking_pint():
+    from pint import UnitRegistry
+
+    ureg = UnitRegistry(cache_folder=":auto:")
+
+    assert (
+        array([[Inf, 2.0], [3.0, Inf]]) * ureg.count
+        == mask_frames(
+            array([[1.0, 2.0], [3.0, 4.0]]), array([[True, False], [False, True]])
+        ).filled(Inf)
+        * ureg.count
+    ).all()

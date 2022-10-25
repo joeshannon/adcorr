@@ -181,3 +181,22 @@ def test_correct_self_absorption_numcertain():
     )
     assert allclose(nominal(expected), nominal(computed))
     assert allclose(uncertainty(expected), uncertainty(computed))
+
+
+@pytest.mark.pint
+def test_correct_self_absorption_pint():
+    from pint import UnitRegistry
+
+    ureg = UnitRegistry(cache_folder=":auto:")
+
+    assert allclose(
+        array([[0.999135, 1.99827], [2.99741, 3.99654]]) * ureg.count,
+        correct_self_absorption(
+            array([[1.0, 2.0], [3.0, 4.0]]) * ureg.count,
+            array([1.0]) * ureg.count / ureg.second,
+            array([0.5]) * ureg.count / ureg.second,
+            (1.0, 1.0),
+            (0.1 * ureg.meter, 0.1 * ureg.meter),
+            1.0 * ureg.meter,
+        ),
+    )

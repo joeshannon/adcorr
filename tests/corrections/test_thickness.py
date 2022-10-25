@@ -91,3 +91,18 @@ def test_normalize_thickness_numcertain():
     )
     assert allclose(nominal(expected), nominal(computed))
     assert allclose(uncertainty(expected), uncertainty(computed))
+
+
+@pytest.mark.pint
+def test_normalize_thickness_pint():
+
+    from pint import UnitRegistry
+
+    ureg = UnitRegistry(cache_folder=":auto:")
+
+    assert allclose(
+        array([[0.5, 1.0], [1.5, 2.0]]) * ureg.count / ureg.meter,
+        normalize_thickness(
+            array([[1.0, 2.0], [3.0, 4.0]]) * ureg.count, 2.0 * ureg.meter
+        ),
+    )

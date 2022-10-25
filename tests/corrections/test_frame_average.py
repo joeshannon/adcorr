@@ -109,3 +109,15 @@ def test_average_all_frames_numcertain():
     )
     assert allclose(nominal(expected), nominal(computed))
     assert allclose(uncertainty(expected), uncertainty(computed))
+
+
+@pytest.mark.pint
+def test_average_all_frames_pint():
+    from pint import UnitRegistry
+
+    ureg = UnitRegistry(cache_folder=":auto:")
+
+    assert allclose(
+        array([[1.0, 2.0], [3.0, 4.0]]) * ureg.count,
+        average_all_frames(array([[1.0, 2.0], [3.0, 4.0]]) * ureg.count),
+    )

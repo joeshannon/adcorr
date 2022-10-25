@@ -353,3 +353,28 @@ def test_correct_dark_current_numcertain():
     )
     assert allclose(nominal(expected), nominal(computed))
     assert allclose(uncertainty(expected), uncertainty(computed))
+
+
+@pytest.mark.pint
+def test_correct_dark_current_pint():
+    from pint import UnitRegistry
+
+    ureg = UnitRegistry(cache_folder=":auto:")
+
+    assert allclose(
+        array(
+            [
+                [0.88, 1.88],
+                [2.88, 3.88],
+            ]
+        )
+        * ureg.count,
+        correct_dark_current(
+            array([[1.0, 2.0], [3.0, 4.0]]) * ureg.count,
+            array([0.1]) * ureg.second,
+            array([10.0]) * ureg.count,
+            0.1 * ureg.count,
+            0.1 * ureg.count / ureg.second,
+            0.001 * ureg.count / ureg.count,
+        ),
+    )

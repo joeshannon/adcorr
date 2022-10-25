@@ -77,3 +77,18 @@ def test_background_subtraction_numcertain():
     )
     assert allclose(nominal(expected), nominal(computed))
     assert allclose(uncertainty(expected), uncertainty(computed))
+
+
+@pytest.mark.pint
+def test_background_subtraction_pint():
+    from pint import UnitRegistry
+
+    ureg = UnitRegistry(cache_folder=":auto:")
+
+    assert allclose(
+        array([[0.9, 1.8], [2.7, 3.6]]) * ureg.count,
+        subtract_background(
+            array([[1.0, 2.0], [3.0, 4.0]]) * ureg.count,
+            array([[0.1, 0.2], [0.3, 0.4]]) * ureg.count,
+        ),
+    )
