@@ -80,9 +80,6 @@ def test_average_all_frames_masked_diag_2x2x2():
     )
 
 
-# Skipped awaiting support for numpy.mean in numcertain
-# https://github.com/DiamondLightSource/numcertain/issues/84
-@pytest.mark.skip
 @pytest.mark.numcertain
 def test_average_all_frames_numcertain():
     from numcertain import nominal, uncertain, uncertainty
