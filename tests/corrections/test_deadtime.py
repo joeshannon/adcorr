@@ -186,9 +186,6 @@ def test_correct_deadtime_minimum_separations_zero():
     )
 
 
-# Skipped awaiting support for scipy.special.lambertw in numcertain
-# https://github.com/DiamondLightSource/numcertain/issues/84
-@pytest.mark.skip
 @pytest.mark.numcertain
 def test_correct_deadtime_numcertain():
     from numcertain import nominal, uncertain, uncertainty
@@ -216,9 +213,6 @@ def test_correct_deadtime_numcertain():
     assert allclose(uncertainty(expected), uncertainty(computed))
 
 
-# Skipped awaiting support for scipy.special.lambertw in pint
-# https://github.com/hgrecco/pint/issues/114
-@pytest.mark.skip
 @pytest.mark.pint
 def test_correct_deadtime_pint():
     from pint import UnitRegistry
