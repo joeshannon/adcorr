@@ -56,6 +56,7 @@ Library Compatibility
 Library    Link                                             Coverage
 ---------- ------------------------------------------------ ----------------------------
 numcertain https://github.com/DiamondLightSource/numcertain |numcertain_compat_coverage|
+Pint       https://pint.readthedocs.io/en/stable/           |pint_compat_coverage|
 ========== ================================================ ============================
 
 .. |code_ci| image:: https://github.com/DiamondLightSource/adcorr/workflows/Code%20CI/badge.svg?branch=main
@@ -73,6 +74,10 @@ numcertain https://github.com/DiamondLightSource/numcertain |numcertain_compat_c
 .. |numcertain_compat_coverage| image:: https://codecov.io/gh/DiamondLightSource/adcorr/branch/main/graph/badge.svg?flag=numcertain
     :target: https://codecov.io/gh/DiamondLightSource/adcorr
     :alt: Numcertain Compatibility Test Coverage
+
+.. |pint_compat_coverage| image:: https://codecov.io/gh/DiamondLightSource/adcorr/branch/main/graph/badge.svg?flag=pint
+    :target: https://codecov.io/gh/DiamondLightSource/adcorr
+    :alt: Pint Compatibility Test Coverage
 
 .. |pypi_version| image:: https://img.shields.io/pypi/v/adcorr.svg
     :target: https://pypi.org/project/adcorr
