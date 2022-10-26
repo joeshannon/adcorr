@@ -52,12 +52,12 @@ A brief example of performing corrections using the library is presented below:
 Library Compatibility
 ---------------------
 
-========== ================================================ ================== =====================
-Library    Link                                             Tests              Coverage
----------- ------------------------------------------------ ------------------ ---------------------
-numcertain https://github.com/DiamondLightSource/numcertain |tests_numcertain| |coverage_numcertain|
-Pint       https://pint.readthedocs.io/en/stable/           |tests_pint|       |coverage_pint|
-========== ================================================ ================== =====================
+================================================================ ================== =====================
+Library                                                          Tests              Coverage
+---------------------------------------------------------------- ------------------ ---------------------
+`numcertain <https://github.com/DiamondLightSource/numcertain>`_ |tests_numcertain| |coverage_numcertain|
+`Pint <https://pint.readthedocs.io/en/stable/>`_                 |tests_pint|       |coverage_pint|
+================================================================ ================== =====================
 
 .. |code_ci| image:: https://github.com/DiamondLightSource/adcorr/workflows/Code%20CI/badge.svg?branch=main
     :target: https://github.com/DiamondLightSource/adcorr/actions?query=workflow%3A%22Code+CI%22
