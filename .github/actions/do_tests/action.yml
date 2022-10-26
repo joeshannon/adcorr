@@ -1,0 +1,87 @@
+name: do_tests
+description: Setup python, install dependancies, run tests & upload to codecov
+
+inputs:
+  github_token:
+    required: true
+    description: The github access token.
+    default: ${{ github.token }}
+
+  prefix:
+    required: true
+    description: The prefix to prepend to the codecov & badge file name
+
+  deploy:
+    required: false
+    description: Use requirements.txt for pinned dependencies
+    default: false
+
+  marker:
+    required: true
+    description: The pytest marker to test
+
+  python:
+    required: true
+    description: The python version to use
+
+runs:
+  using: composite
+  steps:
+    - name: Get branch name
+      id: branch_name
+      shell: bash
+      run: |
+        if [ ${{ github.head_ref }} ]
+        then
+          echo 'branch=${{ github.head_ref }}' >> $GITHUB_OUTPUT
+        else
+          echo 'branch=${GITHUB_REF#refs/heads/}' >> $GITHUB_OUTPUT
+        fi
+
+    - name: Setup python
+      uses: actions/setup-python@v4
+      with:
+        python-version: ${{ inputs.python }}
+
+    - name: Install dependancies
+      if: ${{ !inputs.deploy }}
+      shell: bash
+      run: |
+        python -m pip install --upgrade pip
+        pip install .[dev]
+
+    - name: Install dependancies (deploy)
+      if: ${{ inputs.deploy }}
+      shell: bash
+      run: |
+        python -m pip install --upgrade pip
+        pip install .[dev] -r requirements.txt
+
+    - name: Run tests with Pytest
+      id: tests
+      continue-on-error: true
+      shell: bash
+      run: pytest -m ${{ inputs.marker }}
+
+    - name: Upload coverage to Codecov
+      uses: codecov/codecov-action@v3
+      with:
+        name: ${{ inputs.prefix }}/${{ inputs.python }}/${{ inputs.deploy }}
+        flags: ${{ inputs.marker }}
+        files: cov.xml
+
+    - name: Create badge
+      if: github.event_name == 'pull_request' || github.ref == 'refs/heads/master'
+      uses: ./.github/actions/create_badge
+      with:
+        github_token: ${{ inputs.github_token }}
+        name: ${{ inputs.prefix }}_${{ inputs.python }}_${{ inputs.deploy }}_${{ inputs.marker }}
+        path: ${{ steps.branch_name.outputs.branch }}
+        label: "tests"
+        status: ${{ steps.tests.outcome == 'success' && 'passing' || 'failing' }}
+        color: ${{ steps.tests.outcome == 'success' && 'green' || 'red' }}
+
+    - name: Fail if tests failed
+      if: ${{ steps.tests.outcome == 'failure' }}
+      shell: bash
+      run: false
