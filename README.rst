@@ -60,11 +60,11 @@ Library                                                          Tests          
 ================================================================ ================== =====================
 
 .. |code_ci| image:: https://github.com/DiamondLightSource/adcorr/workflows/Code%20CI/badge.svg?branch=main
-    :target: https://github.com/DiamondLightSource/adcorr/actions?query=workflow%3A%22Code+CI%22
+    :target: https://github.com/DiamondLightSource/adcorr/actions?query=workflow%3ACode+branch%3Amain
     :alt: Code CI
 
 .. |docs_ci| image:: https://github.com/DiamondLightSource/adcorr/workflows/Docs%20CI/badge.svg?branch=main
-    :target: https://github.com/DiamondLightSource/adcorr/actions?query=workflow%3A%22Docs+CI%22
+    :target: https://github.com/DiamondLightSource/adcorr/actions?query=workflow%3ACode+branch%3Amain
     :alt: Docs CI
 
 .. |coverage| image:: https://codecov.io/gh/DiamondLightSource/adcorr/branch/main/graph/badge.svg?flag=core
@@ -72,7 +72,7 @@ Library                                                          Tests          
     :alt: Test Coverage
 
 .. |tests_numcertain| image:: https://raw.githubusercontent.com/DiamondLightSource/adcorr/gh-badges/badges/main/ubuntu-latest_3.9_false_numcertain_outcome.svg
-    :target: https://github.com/DiamondLightSource/adcorr/actions?query=workflow%3A%22Code+CI%22
+    :target: https://github.com/DiamondLightSource/adcorr/actions?query=workflow%3ACode+branch%3Amain
     :alt: Numcertain Compatibility Test Outcome
 
 .. |coverage_numcertain| image:: https://codecov.io/gh/DiamondLightSource/adcorr/branch/main/graph/badge.svg?flag=numcertain
@@ -80,7 +80,7 @@ Library                                                          Tests          
     :alt: Numcertain Compatibility Test Coverage
 
 .. |tests_pint| image:: https://raw.githubusercontent.com/DiamondLightSource/adcorr/gh-badges/badges/main/ubuntu-latest_3.9_false_pint_outcome.svg
-    :target: https://github.com/DiamondLightSource/adcorr/actions?query=workflow%3A%22Code+CI%22
+    :target: https://github.com/DiamondLightSource/adcorr/actions?query=workflow%3ACode+branch%3Amain
     :alt: Pint Compatibility Test Outcome
 
 .. |coverage_pint| image:: https://codecov.io/gh/DiamondLightSource/adcorr/branch/main/graph/badge.svg?flag=pint
