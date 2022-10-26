@@ -33,9 +33,9 @@ runs:
       run: |
         if [ ${{ github.head_ref }} ]
         then
-          echo 'branch=${{ github.head_ref }}' >> $GITHUB_OUTPUT
+          echo branch=${{ github.head_ref }} >> $GITHUB_OUTPUT
         else
-          echo 'branch=${GITHUB_REF#refs/heads/}' >> $GITHUB_OUTPUT
+          echo branch=${GITHUB_REF#refs/heads/} >> $GITHUB_OUTPUT
         fi
 
     - name: Setup python
