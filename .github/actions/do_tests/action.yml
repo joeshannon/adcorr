@@ -71,7 +71,7 @@ runs:
         files: cov.xml
 
     - name: Create badge
-      if: github.event_name == 'pull_request' || github.ref == 'refs/heads/master'
+      if: github.event_name == 'pull_request' || github.ref == 'refs/heads/main'
       uses: ./.github/actions/create_badge
       with:
         github_token: ${{ inputs.github_token }}
