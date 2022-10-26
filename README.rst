@@ -71,7 +71,7 @@ Library                                                          Tests          
     :target: https://codecov.io/gh/DiamondLightSource/adcorr
     :alt: Test Coverage
 
-.. |tests_numcertain| image:: https://raw.githubusercontent.com/DiamondLightSource/adcorr/gh-badges/badges/main/ubuntu-latest_3.9_false_numcertain_outcome.svg
+.. |tests_numcertain| image:: https://raw.githubusercontent.com/DiamondLightSource/adcorr/gh-badges/badges/main/ubuntu-latest_3.9_false_numcertain.svg
     :target: https://github.com/DiamondLightSource/adcorr/actions?query=workflow%3ACode+branch%3Amain
     :alt: Numcertain Compatibility Test Outcome
 
@@ -79,7 +79,7 @@ Library                                                          Tests          
     :target: https://codecov.io/gh/DiamondLightSource/adcorr
     :alt: Numcertain Compatibility Test Coverage
 
-.. |tests_pint| image:: https://raw.githubusercontent.com/DiamondLightSource/adcorr/gh-badges/badges/main/ubuntu-latest_3.9_false_pint_outcome.svg
+.. |tests_pint| image:: https://raw.githubusercontent.com/DiamondLightSource/adcorr/gh-badges/badges/main/ubuntu-latest_3.9_false_pint.svg
     :target: https://github.com/DiamondLightSource/adcorr/actions?query=workflow%3ACode+branch%3Amain
     :alt: Pint Compatibility Test Outcome
 
