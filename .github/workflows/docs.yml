@@ -34,7 +34,15 @@ jobs:
           python -m pip install --upgrade pip
           pip install .[docs] -r requirements.txt
 
+      - name: Cache tutorial dataset
+        id: cache-tutorial-dataset
+        uses: actions/cache@v3
+        with:
+          path: /tmp/I22 Tutorial Dataset/
+          key: tutorial-dataset
+
       - name: Download tutorial dataset
+        if: ${{ !steps.cache-tutorial-dataset.cache-hit }}
         run: |
           wget https://zenodo.org/record/2671750/files/I22%20Tutorial%20Dataset.zip -O /tmp/i22_dataset.zip
           unzip /tmp/i22_dataset.zip -d /tmp/
