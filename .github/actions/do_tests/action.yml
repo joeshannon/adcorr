@@ -58,12 +58,11 @@ runs:
         pip install .[dev] -r requirements.txt
 
     - name: Run tests with Pytest
-      id: tests
-      continue-on-error: true
       shell: bash
       run: pytest -m ${{ inputs.marker }}
 
     - name: Upload coverage to Codecov
+      if: always()
       uses: codecov/codecov-action@v3
       with:
         name: ${{ inputs.prefix }}/${{ inputs.python }}/${{ inputs.deploy }}
@@ -71,6 +70,7 @@ runs:
         files: cov.xml
 
     - name: Create badge
+      if: always()
       uses: ./.github/actions/create_badge
       with:
         github_token: ${{ inputs.github_token }}
@@ -79,8 +79,3 @@ runs:
         label: "tests"
         status: ${{ steps.tests.outcome == 'success' && 'passing' || 'failing' }}
         color: ${{ steps.tests.outcome == 'success' && 'green' || 'red' }}
-
-    - name: Fail if tests failed
-      if: ${{ steps.tests.outcome == 'failure' }}
-      shell: bash
-      run: false
