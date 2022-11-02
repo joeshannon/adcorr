@@ -14,7 +14,7 @@ inputs:
   deploy:
     required: false
     description: Use requirements.txt for pinned dependencies
-    default: false
+    default: "false"
 
   marker:
     required: true
@@ -27,17 +27,6 @@ inputs:
 runs:
   using: composite
   steps:
-    - name: Get branch name
-      id: branch_name
-      shell: bash
-      run: |
-        if [ ${{ github.head_ref }} ]
-        then
-          echo branch=${{ github.head_ref }} >> $GITHUB_OUTPUT
-        else
-          echo branch=${GITHUB_REF#refs/heads/} >> $GITHUB_OUTPUT
-        fi
-
     - name: Setup python
       uses: actions/setup-python@v4
       with:
@@ -70,12 +59,11 @@ runs:
         files: cov.xml
 
     - name: Create badge
-      if: always()
+      if: always() && github.ref == 'refs/heads/main'
       uses: ./.github/actions/create_badge
       with:
         github_token: ${{ inputs.github_token }}
         name: ${{ inputs.prefix }}_${{ inputs.python }}_${{ inputs.deploy }}_${{ inputs.marker }}
-        path: ${{ steps.branch_name.outputs.branch }}
         label: "tests"
         status: ${{ steps.tests.outcome == 'success' && 'passing' || 'failing' }}
         color: ${{ steps.tests.outcome == 'success' && 'green' || 'red' }}
