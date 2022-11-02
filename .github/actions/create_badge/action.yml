@@ -12,10 +12,6 @@ inputs:
     description: The branch to store badges on.
     default: gh-badges
 
-  path:
-    required: true
-    description: The prefix for badge paths.
-
   name:
     required: true
     description: The name of the badge, used as the storage path.
@@ -27,7 +23,7 @@ inputs:
   label_color:
     required: true
     description: Hex or named color for the label.
-    default: 555
+    default: "555"
 
   status:
     required: true
@@ -35,7 +31,8 @@ inputs:
 
   color:
     required: true
-    description: An array (comma separated) with hex or named colors of the badge value
+    description:
+      An array (comma separated) with hex or named colors of the badge value
       background. More than one creates gradient background.
     default: blue
 
@@ -47,7 +44,7 @@ inputs:
   scale:
     required: false
     description: Set badge scale.
-    default: 1
+    default: "1"
 
   gradient:
     required: false
@@ -61,14 +58,10 @@ runs:
       with:
         ref: ${{ inputs.branch }}
 
-    - name: Make badge dir
-      shell: bash
-      run: mkdir -p badges/${{ inputs.path }}
-
     - name: Generate badge
       uses: jaywcjlove/generated-badges@v1.0.9
       with:
-        output: badges/${{ inputs.path }}/${{ inputs.name }}.svg
+        output: badges/${{ inputs.name }}.svg
         label: ${{ inputs.label }}
         labelColor: ${{ inputs.label_color }}
         status: ${{ inputs.status }}
@@ -82,7 +75,7 @@ runs:
       run: |
         git config --local user.email "github-actions[bot]@users.noreply.github.com"
         git config --local user.name "github-actions[bot]"
-        git add badges/${{ inputs.path }}/${{ inputs.name }}.svg
+        git add badges/${{ inputs.name }}.svg
         git commit -m "Add/Update badge" || true
 
     - name: Push badge commit
