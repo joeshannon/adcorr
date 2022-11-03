@@ -107,6 +107,8 @@ jobs:
     needs: ["test_core", "test_compat"]
     if: always()
     runs-on: "ubuntu-latest"
+    permissions:
+      contents: write
     steps:
       - name: Checkout workflow branch
         uses: actions/checkout@v3
