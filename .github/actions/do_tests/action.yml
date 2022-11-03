@@ -58,7 +58,7 @@ runs:
       if: always()
       uses: jaywcjlove/generated-badges@v1.0.9
       with:
-        output: badges/${{ inputs.prefix }}_${{ inputs.python }}_${{ inputs.deploy }}_${{ inputs.marker }}.svg
+        output: ${{ inputs.prefix }}_${{ inputs.python }}_${{ inputs.deploy }}_${{ inputs.marker }}.svg
         label: "tests"
         labelColor: ${{ inputs.label_color }}
         status: ${{ steps.tests.outcome == 'success' && 'passing' || 'failing' }}
@@ -73,5 +73,5 @@ runs:
       uses: actions/upload-artifact@v3
       with:
         name: badges-${{ steps.branch-name.outputs.name }}
-        path: badges/${{ inputs.prefix }}_${{ inputs.python }}_${{ inputs.deploy }}_${{ inputs.marker }}.svg
+        path: ${{ inputs.prefix }}_${{ inputs.python }}_${{ inputs.deploy }}_${{ inputs.marker }}.svg
         retention-days: 1
