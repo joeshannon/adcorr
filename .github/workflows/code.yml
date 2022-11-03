@@ -141,7 +141,6 @@ jobs:
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           branch: gh-badges
-          directory: badges
 
   sdist_wheel:
     needs: [exhausive_lock, lint, test_core]
