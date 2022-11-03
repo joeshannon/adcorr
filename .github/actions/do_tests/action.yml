@@ -19,15 +19,6 @@ inputs:
     required: true
     description: The python version to use
 
-outputs:
-  badge_name:
-    description: The name to be given to the badge
-    value: ${{ inputs.prefix }}_${{ inputs.python }}_${{ inputs.deploy }}_${{ inputs.marker }}.svg
-
-  badge_svg:
-    description: A SVG string for the test badge
-    value: ${{ steps.generate-badge.outputs.svg }}
-
 runs:
   using: composite
   steps:
@@ -67,7 +58,19 @@ runs:
       if: always()
       uses: jaywcjlove/generated-badges@v1.0.9
       with:
+        output: badges/${{ inputs.prefix }}_${{ inputs.python }}_${{ inputs.deploy }}_${{ inputs.marker }}.svg
         label: "tests"
         labelColor: ${{ inputs.label_color }}
         status: ${{ steps.tests.outcome == 'success' && 'passing' || 'failing' }}
         color: ${{ steps.tests.outcome == 'success' && 'green' || 'red' }}
+
+    - name: Get branch name
+      id: branch-name
+      uses: ./.github/actions/branch_name
+
+    - name: Upload badge
+      if: always()
+      uses: actions/upload-artifact@v3
+      with:
+        name: badges-${{ steps.branch-name.outputs.name }}
+        path: badges/${{ inputs.prefix }}_${{ inputs.python }}_${{ inputs.deploy }}_${{ inputs.marker }}.svg
