@@ -126,11 +126,12 @@ jobs:
         uses: actions/download-artifact@v3
         with:
           name: badges-${{ steps.branch-name.outputs.name }}
+          path: badges
 
       - name: Create badge commit
         shell: bash
         run: |
-          unzip badges-${{ steps.branch-name.outputs.name }} -d badges
+          tree
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
           git add badges/*.svg
