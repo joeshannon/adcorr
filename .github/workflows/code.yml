@@ -110,7 +110,7 @@ jobs:
     steps:
       - name: Get branch name
         id: branch-name
-        uses: ./.github/actions/branch_name
+        uses: ./.github/actions/get_branch
 
       - name: Download badges
         uses: actions/download-artifact@v3
