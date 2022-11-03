@@ -137,6 +137,7 @@ jobs:
           git commit -m "Add/Update badges" || true
 
       - name: Push badge commit
+        if: ${{ secrets.GITHUB_TOKEN != "" }}
         uses: ad-m/github-push-action@master
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
