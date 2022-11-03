@@ -65,6 +65,7 @@ runs:
         color: ${{ steps.tests.outcome == 'success' && 'green' || 'red' }}
 
     - name: Get branch name
+      if: always()
       id: branch-name
       uses: ./.github/actions/get_branch
 
