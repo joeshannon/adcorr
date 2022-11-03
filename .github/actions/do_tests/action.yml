@@ -2,11 +2,6 @@ name: do_tests
 description: Setup python, install dependancies, run tests & upload to codecov
 
 inputs:
-  github_token:
-    required: true
-    description: The github access token.
-    default: ${{ github.token }}
-
   prefix:
     required: true
     description: The prefix to prepend to the codecov & badge file name
@@ -23,6 +18,15 @@ inputs:
   python:
     required: true
     description: The python version to use
+
+outputs:
+  badge_name:
+    description: The name to be given to the badge
+    value: ${{ inputs.prefix }}_${{ inputs.python }}_${{ inputs.deploy }}_${{ inputs.marker }}.svg
+
+  badge_svg:
+    description: A SVG string for the test badge
+    value: ${{ steps.generate-badge.outputs.svg }}
 
 runs:
   using: composite
@@ -58,12 +62,12 @@ runs:
         flags: ${{ inputs.marker }}
         files: cov.xml
 
-    - name: Create badge
-      if: always() && github.ref == 'refs/heads/main'
-      uses: ./.github/actions/create_badge
+    - name: Generate badge
+      id: generate-badge
+      if: always()
+      uses: jaywcjlove/generated-badges@v1.0.9
       with:
-        github_token: ${{ inputs.github_token }}
-        name: ${{ inputs.prefix }}_${{ inputs.python }}_${{ inputs.deploy }}_${{ inputs.marker }}
         label: "tests"
+        labelColor: ${{ inputs.label_color }}
         status: ${{ steps.tests.outcome == 'success' && 'passing' || 'failing' }}
         color: ${{ steps.tests.outcome == 'success' && 'green' || 'red' }}
