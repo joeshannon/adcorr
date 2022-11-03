@@ -120,28 +120,27 @@ jobs:
       - name: Checkout badges branch
         uses: actions/checkout@v3
         with:
-          ref: ${{ steps.branch-name.outputs.name }}
+          ref: gh-badges
 
       - name: Download badges
         uses: actions/download-artifact@v3
         with:
           name: badges-${{ steps.branch-name.outputs.name }}
-          path: badges
+          path: ${{ steps.branch-name.outputs.name }}
 
       - name: Create badge commit
         shell: bash
         run: |
-          tree
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
-          git add badges/*.svg
+          git add ${{ steps.branch-name.outputs.name }}/*.svg
           git commit -m "Add/Update badges" || true
 
       - name: Push badge commit
         uses: ad-m/github-push-action@master
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          branch: ${{ steps.branch-name.outputs.name }}
+          branch: gh-badges
           directory: badges
 
   sdist_wheel:
