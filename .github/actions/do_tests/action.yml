@@ -74,3 +74,4 @@ runs:
       with:
         name: badges-${{ steps.branch-name.outputs.name }}
         path: badges/${{ inputs.prefix }}_${{ inputs.python }}_${{ inputs.deploy }}_${{ inputs.marker }}.svg
+        retention-days: 1
