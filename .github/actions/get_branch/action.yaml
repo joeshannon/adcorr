@@ -6,6 +6,10 @@ outputs:
     description: The name of the branch
     value: ${{ steps.branch_name.outputs.name }}
 
+  sanitized_name:
+    description: The name of the branch, with / replaced with -
+    value: ${{ steps.sanitized_branch_name.outputs.name }}
+
 runs:
   using: composite
   steps:
@@ -19,3 +23,9 @@ runs:
         else
           echo name=${GITHUB_REF#refs/heads/} >> $GITHUB_OUTPUT
         fi
+
+    - name: Replace illegal characters
+      id: sanitized_branch_name
+      shell: bash
+      run: |
+        echo name=$(echo ${{ steps.branch_name.outputs.name }} | tr / -) >> $GITHUB_OUTPUT
