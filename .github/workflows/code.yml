@@ -125,15 +125,15 @@ jobs:
       - name: Download badges
         uses: actions/download-artifact@v3
         with:
-          name: badges-${{ steps.branch-name.outputs.name }}
-          path: ${{ steps.branch-name.outputs.name }}
+          name: badges-${{ steps.branch-name.outputs.sanitized_name }}
+          path: ${{ steps.branch-name.outputs.sanitized_name }}
 
       - name: Create badge commit
         shell: bash
         run: |
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
-          git add ${{ steps.branch-name.outputs.name }}/*.svg
+          git add ${{ steps.branch-name.outputs.sanitized_name }}/*.svg
           git commit -m "Add/Update badges" || true
 
       - name: Push badge commit

@@ -73,6 +73,6 @@ runs:
       if: always()
       uses: actions/upload-artifact@v3
       with:
-        name: badges-${{ steps.branch-name.outputs.name }}
+        name: badges-${{ steps.branch-name.outputs.sanitized_name }}
         path: ${{ inputs.prefix }}_${{ inputs.python }}_${{ inputs.deploy }}_${{ inputs.marker }}.svg
         retention-days: 1
