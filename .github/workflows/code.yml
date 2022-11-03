@@ -108,6 +108,11 @@ jobs:
     if: always()
     runs-on: "ubuntu-latest"
     steps:
+      - name: Checkout workflow branch
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
       - name: Get branch name
         id: branch-name
         uses: ./.github/actions/get_branch
@@ -137,11 +142,6 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           branch: ${{ steps.branch-name.outputs.name }}
           directory: badges
-
-      - name: Checkout original branch
-        uses: actions/checkout@v3
-        with:
-          ref: ${{ github.head_ref }}
 
   sdist_wheel:
     needs: [exhausive_lock, lint, test_core]
