@@ -1,0 +1,21 @@
+name: get_branch
+description: Gets the name of the originating branch
+
+outputs:
+  name:
+    description: The name of the branch
+    value: ${{ steps.branch_name.outputs.name }}
+
+runs:
+  using: composite
+  steps:
+    - name: Get branch name
+      id: branch_name
+      shell: bash
+      run: |
+        if [ ${{ github.head_ref }} ]
+        then
+          echo name=${{ github.head_ref }} >> $GITHUB_OUTPUT
+        else
+          echo name=${GITHUB_REF#refs/heads/} >> $GITHUB_OUTPUT
+        fi
