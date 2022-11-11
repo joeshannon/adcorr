@@ -86,7 +86,7 @@ addopts = """\
     """
 filterwarnings = "error"
 markers = ["core", "numcertain", "pint"]
-testpaths = "src tests"
+testpaths = "tests"
 
 [tool.coverage.run]
 data_file = "/tmp/adcorr.coverage"
