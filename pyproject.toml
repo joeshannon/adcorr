@@ -9,7 +9,7 @@ classifiers = [
     "Programming Language :: Python :: 3.9",
     "Programming Language :: Python :: 3.10",
 ]
-dependencies = ["click", "numpy", "scipy"]
+dependencies = ["numpy", "scipy"]
 description = "Area detector corrections as pure python functions."
 dynamic = ["version"]
 license = { file = "LICENCE" }
@@ -19,9 +19,6 @@ requires-python = ">=3.9"
 
 [project.urls]
 GitHub = "https://github.com/DiamondLightSource/adcorr"
-
-[project.scripts]
-adcorr = "adcorr.cli:main"
 
 [[project.authors]]
 email = "garry.o'donnell@diamond.ac.uk"
