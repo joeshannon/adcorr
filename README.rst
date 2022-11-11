@@ -3,8 +3,9 @@ adcorr
 
 |code_ci| |docs_ci| |coverage| |pypi_version| |license|
 
-This package provides a set of pure python functions for performing corrections on area
-detector data.
+A library providing a set of pure python functions for performing corrections on area
+detector data. For interfaces with hdf5 and zocalo, see the related projects section
+below.
 
 Install via PyPI with:
 
@@ -15,12 +16,12 @@ Install via PyPI with:
 Useful Links
 ------------
 
-============== ==============================================
+============== =====================================================
 PyPI           https://pypi.org/project/adcorr/
 Source code    https://github.com/DiamondLightSource/adcorr
 Documentation  https://DiamondLightSource.github.io/adcorr
 Releases       https://github.com/DiamondLightSource/adcorr/releases
-============== ==============================================
+============== =====================================================
 
 Brief Example
 -------------
@@ -48,6 +49,16 @@ A brief example of performing corrections using the library is presented below:
         FLUX_DEPENDANT_DARK_CURRENT,
     )
     ...
+
+Related Projects
+----------------
+
+======================================================================
+Project
+----------------------------------------------------------------------
+`adcorr-hdf5 <https://github.com/DiamondLightSource/adcorr-hdf5>`_
+`adcorr-zocalo <https://github.com/DiamondLightSource/adcorr-zocalo>`_
+======================================================================
 
 Library Compatibility
 ---------------------
