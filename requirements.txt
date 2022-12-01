@@ -73,7 +73,7 @@ pluggy==1.0.0
 plumbum==1.8.0
 ply==3.11
 pre-commit==2.20.0
-prompt-toolkit==3.0.31
+prompt-toolkit==3.0.33
 psutil==5.9.3
 ptyprocess==0.7.0
 pure-eval==0.2.2
