@@ -1,9 +1,33 @@
-ARG VARIANT="3.10-bullseye"
-FROM mcr.microsoft.com/vscode/devcontainers/python:0-${VARIANT}
+# This file is for use as a devcontainer and a runtime container
+#
+# The devcontainer should use the build target and run as root with podman
+# or docker with user namespaces.
+#
+FROM python:3.10 as build
 
-RUN export DEBIAN_FRONTEND=noninteractive \
-    && apt-get update \
-    && apt-get -y upgrade \
-    && apt-get install -y pandoc
+ARG PIP_OPTIONS
 
-RUN python -m pip install --upgrade pip
+# Add any system dependencies for the developer/build environment here e.g.
+RUN apt-get update && apt-get upgrade -y && \
+    apt-get install -y --no-install-recommends \
+    pandoc \
+    && rm -rf /var/lib/apt/lists/*
+
+# set up a virtual environment and put it in PATH
+RUN python -m venv /venv
+ENV PATH=/venv/bin:$PATH
+
+# Copy any required context for the pip install over
+COPY . /context
+WORKDIR /context
+
+# install python package into /venv
+RUN pip install ${PIP_OPTIONS}
+
+FROM python:3.10-slim as runtime
+
+# Add apt-get system dependecies for runtime here if needed
+
+# copy the virtual environment from the build stage and put it in PATH
+COPY --from=build /venv/ /venv/
+ENV PATH=/venv/bin:$PATH
