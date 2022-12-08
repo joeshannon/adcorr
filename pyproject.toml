@@ -50,6 +50,7 @@ docs = [
     "sphinx-autobuild",
     "sphinx-copybutton",
     "sphinx-design",
+    "tox-direct",
     "nbsphinx",
     "pandoc",
     "ipykernel",

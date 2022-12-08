@@ -28,7 +28,7 @@ jobs:
         with:
           python_version: "3.9"
           requirements_file: requirements-dev-3.x.txt
-          install_options: -e .[dev,docs]
+          install_options: -e .[docs]
 
       - name: Cache tutorial dataset
         id: cache-tutorial-dataset
