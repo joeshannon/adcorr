@@ -1,0 +1,1113 @@
+
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+
+    <title>i22 Corrections &#8212; adcorr 0.2.1 documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=796348d33e8b1d947c94" rel="stylesheet">
+<link href="../../_static/styles/bootstrap.css?digest=796348d33e8b1d947c94" rel="stylesheet">
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=796348d33e8b1d947c94" rel="stylesheet">
+
+  
+  <link href="../../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=796348d33e8b1d947c94" rel="stylesheet">
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2">
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2">
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2">
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=796348d33e8b1d947c94">
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=796348d33e8b1d947c94">
+
+    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/sphinx_highlight.js"></script>
+    <script src="../../_static/clipboard.min.js"></script>
+    <script src="../../_static/copybutton.js"></script>
+    <script src="../../_static/design-tabs.js"></script>
+    <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'user/tutorials/i22_corrections';</script>
+    <script>
+        DOCUMENTATION_OPTIONS.theme_switcher_json_url = 'https://DiamondLightSource.github.io/adcorr/switcher.json';
+        DOCUMENTATION_OPTIONS.theme_switcher_version_match = '0.2.1';
+        </script>
+    <link rel="shortcut icon" href="../../_static/dls-favicon.ico"/>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Run in a container" href="../how-to/run-container.html" />
+    <link rel="prev" title="Installation" href="installation.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="docsearch:language" content="en">
+  </head>
+  
+  
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="180" data-default-mode="">
+
+  
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+
+  
+  <input type="checkbox" class="sidebar-toggle" name="__primary" id="__primary">
+  <label class="overlay overlay-primary" for="__primary"></label>
+
+  
+  <input type="checkbox" class="sidebar-toggle" name="__secondary" id="__secondary">
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+      
+<form class="bd-search d-flex align-items-center" action="../../search.html" method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search the docs ..." aria-label="Search the docs ..." autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+    </div>
+  </div>
+
+  
+  <nav class="bd-header navbar navbar-expand-lg bd-navbar" id="navbar-main"><div class="bd-header__inner bd-page-width">
+  <label class="sidebar-toggle primary-toggle" for="__primary">
+      <span class="fa-solid fa-bars"></span>
+  </label>
+  <div id="navbar-start">
+    
+    
+  
+
+
+<a class="navbar-brand logo" href="../../index.html">
+
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <img src="../../_static/dls-logo.svg" class="logo__image only-light" alt="Logo image">
+    <img src="../../_static/dls-logo.svg" class="logo__image only-dark" alt="Logo image">
+  
+  
+    <p class="title logo__title">adcorr</p>
+  
+</a>
+    
+  </div>
+
+  
+  <div class="col-lg-9 navbar-header-items">
+    <div id="navbar-center" class="mr-auto">
+      
+      <div class="navbar-center-item">
+        <nav class="navbar-nav">
+    <p class="sidebar-header-items__title" role="heading" aria-level="1" aria-label="Site Navigation">
+        Site Navigation
+    </p>
+    <ul id="navbar-main-elements" class="navbar-nav">
+        
+                    <li class="nav-item current active">
+                      <a class="nav-link nav-internal" href="../index.html">
+                        User Guide
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../developer/index.html">
+                        Developer Guide
+                      </a>
+                    </li>
+                
+
+                <li class="nav-item">
+                  <a class="nav-link nav-external" href="https://github.com/DiamondLightSource/adcorr/releases">
+                    Release Notes
+                  </a>
+                </li>
+                
+    </ul>
+</nav>
+      </div>
+      
+    </div>
+
+    <div id="navbar-end">
+      
+        <div class="navbar-end-item navbar-persistent--container">
+          
+<button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-toggle="tooltip">
+  <i class="fa-solid fa-magnifying-glass"></i>
+</button>
+        </div>
+      
+      
+      <div class="navbar-end-item">
+        <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-toggle="tooltip">
+    <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
+    <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
+    <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
+</button>
+      </div>
+      
+      <div class="navbar-end-item">
+        <ul id="navbar-icon-links" class="navbar-nav" aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/DiamondLightSource/adcorr" title="GitHub" class="nav-link" rel="noopener" target="_blank" data-toggle="tooltip"><span><i class="fa-brands fa-square-github"></i></span>
+            <label class="sr-only">GitHub</label></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://pypi.org/project/adcorr" title="PyPI" class="nav-link" rel="noopener" target="_blank" data-toggle="tooltip"><span><i class="fas fa-cube"></i></span>
+            <label class="sr-only">PyPI</label></a>
+        </li>
+      </ul>
+      </div>
+      
+      <div class="navbar-end-item">
+        <div class="version-switcher__container dropdown">
+    <button type="button" class="version-switcher__button btn btn-sm navbar-btn dropdown-toggle" data-toggle="dropdown">
+        0.2.1  <!-- this text may get changed later by javascript -->
+        <span class="caret"></span>
+    </button>
+    <div class="version-switcher__menu dropdown-menu list-group-flush py-0">
+    <!-- dropdown will be populated by javascript on page load -->
+    </div>
+</div>
+      </div>
+      
+    </div>
+  </div>
+
+
+  
+  
+    <div class="navbar-persistent--mobile">
+<button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-toggle="tooltip">
+  <i class="fa-solid fa-magnifying-glass"></i>
+</button>
+    </div>
+  
+
+  
+  <label class="sidebar-toggle secondary-toggle" for="__secondary">
+      <span class="fa-solid fa-outdent"></span>
+  </label>
+  
+
+</div>
+  </nav>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+      
+      <div class="navbar-center-item">
+        <nav class="navbar-nav">
+    <p class="sidebar-header-items__title" role="heading" aria-level="1" aria-label="Site Navigation">
+        Site Navigation
+    </p>
+    <ul id="navbar-main-elements" class="navbar-nav">
+        
+                    <li class="nav-item current active">
+                      <a class="nav-link nav-internal" href="../index.html">
+                        User Guide
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../developer/index.html">
+                        Developer Guide
+                      </a>
+                    </li>
+                
+
+                <li class="nav-item">
+                  <a class="nav-link nav-external" href="https://github.com/DiamondLightSource/adcorr/releases">
+                    Release Notes
+                  </a>
+                </li>
+                
+    </ul>
+</nav>
+      </div>
+      
+      </div>
+    
+
+    
+    
+    <div class="sidebar-header-items__end">
+      
+      <div class="navbar-end-item">
+        <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-toggle="tooltip">
+    <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
+    <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
+    <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
+</button>
+      </div>
+      
+      <div class="navbar-end-item">
+        <ul id="navbar-icon-links" class="navbar-nav" aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/DiamondLightSource/adcorr" title="GitHub" class="nav-link" rel="noopener" target="_blank" data-toggle="tooltip"><span><i class="fa-brands fa-square-github"></i></span>
+            <label class="sr-only">GitHub</label></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://pypi.org/project/adcorr" title="PyPI" class="nav-link" rel="noopener" target="_blank" data-toggle="tooltip"><span><i class="fas fa-cube"></i></span>
+            <label class="sr-only">PyPI</label></a>
+        </li>
+      </ul>
+      </div>
+      
+      <div class="navbar-end-item">
+        <div class="version-switcher__container dropdown">
+    <button type="button" class="version-switcher__button btn btn-sm navbar-btn dropdown-toggle" data-toggle="dropdown">
+        0.2.1  <!-- this text may get changed later by javascript -->
+        <span class="caret"></span>
+    </button>
+    <div class="version-switcher__menu dropdown-menu list-group-flush py-0">
+    <!-- dropdown will be populated by javascript on page load -->
+    </div>
+</div>
+      </div>
+      
+    </div>
+    
+  </div>
+
+  
+  <div class="sidebar-start-items sidebar-primary__section">
+    <div class="sidebar-start-items__item"><nav class="bd-links" id="bd-docs-nav" aria-label="Section navigation">
+  <p class="bd-links__title" role="heading" aria-level="1">
+    Section Navigation
+  </p>
+  <div class="bd-toc-item navbar-nav">
+    <p aria-level="2" class="caption" role="heading"><span class="caption-text">Tutorials</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">i22 Corrections</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">How-to Guides</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../how-to/run-container.html">Run in a container</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Explanations</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../explanations/docs-structure.html">About the documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../explanations/correction-implementations.html">Correction Implementations</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Reference</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../reference/api.html">API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../genindex.html">Index</a></li>
+</ul>
+
+  </div>
+</nav>
+    </div>
+  </div>
+  
+
+  
+  <div class="sidebar-end-items sidebar-primary__section">
+    <div class="sidebar-end-items__item">
+    </div>
+  </div>
+
+  
+  <div id="rtd-footer-container"></div>
+
+      </div>
+      <main id="main-content" class="bd-main">
+        
+        
+        <div class="bd-content">
+          <div class="bd-article-container">
+            
+            <div class="bd-header-article">
+                
+            </div>
+            
+            
+            <article class="bd-article" role="main">
+              
+  
+<style>
+/* CSS for nbsphinx extension */
+
+/* remove conflicting styling from Sphinx themes */
+div.nbinput.container div.prompt *,
+div.nboutput.container div.prompt *,
+div.nbinput.container div.input_area pre,
+div.nboutput.container div.output_area pre,
+div.nbinput.container div.input_area .highlight,
+div.nboutput.container div.output_area .highlight {
+    border: none;
+    padding: 0;
+    margin: 0;
+    box-shadow: none;
+}
+
+div.nbinput.container > div[class*=highlight],
+div.nboutput.container > div[class*=highlight] {
+    margin: 0;
+}
+
+div.nbinput.container div.prompt *,
+div.nboutput.container div.prompt * {
+    background: none;
+}
+
+div.nboutput.container div.output_area .highlight,
+div.nboutput.container div.output_area pre {
+    background: unset;
+}
+
+div.nboutput.container div.output_area div.highlight {
+    color: unset;  /* override Pygments text color */
+}
+
+/* avoid gaps between output lines */
+div.nboutput.container div[class*=highlight] pre {
+    line-height: normal;
+}
+
+/* input/output containers */
+div.nbinput.container,
+div.nboutput.container {
+    display: -webkit-flex;
+    display: flex;
+    align-items: flex-start;
+    margin: 0;
+    width: 100%;
+}
+@media (max-width: 540px) {
+    div.nbinput.container,
+    div.nboutput.container {
+        flex-direction: column;
+    }
+}
+
+/* input container */
+div.nbinput.container {
+    padding-top: 5px;
+}
+
+/* last container */
+div.nblast.container {
+    padding-bottom: 5px;
+}
+
+/* input prompt */
+div.nbinput.container div.prompt pre {
+    color: #307FC1;
+}
+
+/* output prompt */
+div.nboutput.container div.prompt pre {
+    color: #BF5B3D;
+}
+
+/* all prompts */
+div.nbinput.container div.prompt,
+div.nboutput.container div.prompt {
+    width: 4.5ex;
+    padding-top: 5px;
+    position: relative;
+    user-select: none;
+}
+
+div.nbinput.container div.prompt > div,
+div.nboutput.container div.prompt > div {
+    position: absolute;
+    right: 0;
+    margin-right: 0.3ex;
+}
+
+@media (max-width: 540px) {
+    div.nbinput.container div.prompt,
+    div.nboutput.container div.prompt {
+        width: unset;
+        text-align: left;
+        padding: 0.4em;
+    }
+    div.nboutput.container div.prompt.empty {
+        padding: 0;
+    }
+
+    div.nbinput.container div.prompt > div,
+    div.nboutput.container div.prompt > div {
+        position: unset;
+    }
+}
+
+/* disable scrollbars and line breaks on prompts */
+div.nbinput.container div.prompt pre,
+div.nboutput.container div.prompt pre {
+    overflow: hidden;
+    white-space: pre;
+}
+
+/* input/output area */
+div.nbinput.container div.input_area,
+div.nboutput.container div.output_area {
+    -webkit-flex: 1;
+    flex: 1;
+    overflow: auto;
+}
+@media (max-width: 540px) {
+    div.nbinput.container div.input_area,
+    div.nboutput.container div.output_area {
+        width: 100%;
+    }
+}
+
+/* input area */
+div.nbinput.container div.input_area {
+    border: 1px solid #e0e0e0;
+    border-radius: 2px;
+    /*background: #f5f5f5;*/
+}
+
+/* override MathJax center alignment in output cells */
+div.nboutput.container div[class*=MathJax] {
+    text-align: left !important;
+}
+
+/* override sphinx.ext.imgmath center alignment in output cells */
+div.nboutput.container div.math p {
+    text-align: left;
+}
+
+/* standard error */
+div.nboutput.container div.output_area.stderr {
+    background: #fdd;
+}
+
+/* ANSI colors */
+.ansi-black-fg { color: #3E424D; }
+.ansi-black-bg { background-color: #3E424D; }
+.ansi-black-intense-fg { color: #282C36; }
+.ansi-black-intense-bg { background-color: #282C36; }
+.ansi-red-fg { color: #E75C58; }
+.ansi-red-bg { background-color: #E75C58; }
+.ansi-red-intense-fg { color: #B22B31; }
+.ansi-red-intense-bg { background-color: #B22B31; }
+.ansi-green-fg { color: #00A250; }
+.ansi-green-bg { background-color: #00A250; }
+.ansi-green-intense-fg { color: #007427; }
+.ansi-green-intense-bg { background-color: #007427; }
+.ansi-yellow-fg { color: #DDB62B; }
+.ansi-yellow-bg { background-color: #DDB62B; }
+.ansi-yellow-intense-fg { color: #B27D12; }
+.ansi-yellow-intense-bg { background-color: #B27D12; }
+.ansi-blue-fg { color: #208FFB; }
+.ansi-blue-bg { background-color: #208FFB; }
+.ansi-blue-intense-fg { color: #0065CA; }
+.ansi-blue-intense-bg { background-color: #0065CA; }
+.ansi-magenta-fg { color: #D160C4; }
+.ansi-magenta-bg { background-color: #D160C4; }
+.ansi-magenta-intense-fg { color: #A03196; }
+.ansi-magenta-intense-bg { background-color: #A03196; }
+.ansi-cyan-fg { color: #60C6C8; }
+.ansi-cyan-bg { background-color: #60C6C8; }
+.ansi-cyan-intense-fg { color: #258F8F; }
+.ansi-cyan-intense-bg { background-color: #258F8F; }
+.ansi-white-fg { color: #C5C1B4; }
+.ansi-white-bg { background-color: #C5C1B4; }
+.ansi-white-intense-fg { color: #A1A6B2; }
+.ansi-white-intense-bg { background-color: #A1A6B2; }
+
+.ansi-default-inverse-fg { color: #FFFFFF; }
+.ansi-default-inverse-bg { background-color: #000000; }
+
+.ansi-bold { font-weight: bold; }
+.ansi-underline { text-decoration: underline; }
+
+
+div.nbinput.container div.input_area div[class*=highlight] > pre,
+div.nboutput.container div.output_area div[class*=highlight] > pre,
+div.nboutput.container div.output_area div[class*=highlight].math,
+div.nboutput.container div.output_area.rendered_html,
+div.nboutput.container div.output_area > div.output_javascript,
+div.nboutput.container div.output_area:not(.rendered_html) > img{
+    padding: 5px;
+    margin: 0;
+}
+
+/* fix copybtn overflow problem in chromium (needed for 'sphinx_copybutton') */
+div.nbinput.container div.input_area > div[class^='highlight'],
+div.nboutput.container div.output_area > div[class^='highlight']{
+    overflow-y: hidden;
+}
+
+/* hide copybtn icon on prompts (needed for 'sphinx_copybutton') */
+.prompt .copybtn {
+    display: none;
+}
+
+/* Some additional styling taken form the Jupyter notebook CSS */
+.jp-RenderedHTMLCommon table,
+div.rendered_html table {
+  border: none;
+  border-collapse: collapse;
+  border-spacing: 0;
+  color: black;
+  font-size: 12px;
+  table-layout: fixed;
+}
+.jp-RenderedHTMLCommon thead,
+div.rendered_html thead {
+  border-bottom: 1px solid black;
+  vertical-align: bottom;
+}
+.jp-RenderedHTMLCommon tr,
+.jp-RenderedHTMLCommon th,
+.jp-RenderedHTMLCommon td,
+div.rendered_html tr,
+div.rendered_html th,
+div.rendered_html td {
+  text-align: right;
+  vertical-align: middle;
+  padding: 0.5em 0.5em;
+  line-height: normal;
+  white-space: normal;
+  max-width: none;
+  border: none;
+}
+.jp-RenderedHTMLCommon th,
+div.rendered_html th {
+  font-weight: bold;
+}
+.jp-RenderedHTMLCommon tbody tr:nth-child(odd),
+div.rendered_html tbody tr:nth-child(odd) {
+  background: #f5f5f5;
+}
+.jp-RenderedHTMLCommon tbody tr:hover,
+div.rendered_html tbody tr:hover {
+  background: rgba(66, 165, 245, 0.2);
+}
+</style>
+<section id="i22-Corrections">
+<h1>i22 Corrections<a class="headerlink" href="#i22-Corrections" title="Permalink to this heading">#</a></h1>
+<section id="Installation">
+<h2>Installation<a class="headerlink" href="#Installation" title="Permalink to this heading">#</a></h2>
+<p>To run this notebook locally, first clone the git repository and install the python dependencies as shown below:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git clone https://github.com/DiamondLightSource/adcorr.git
+<span class="nb">cd</span> adcorr
+pip install -e .<span class="o">[</span>dev,docs<span class="o">]</span> -r requirements.txt
+</pre></div>
+</div>
+<p>Alternatively, you may wish to clone the repository and open the project in a container with Visual Studio Code and the Remote Containers extension (<code class="docutils literal notranslate"><span class="pre">ms-vscode-remote.remote-containers</span></code>).</p>
+</section>
+<section id="Import-dependencies">
+<h2>Import dependencies<a class="headerlink" href="#Import-dependencies" title="Permalink to this heading">#</a></h2>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">math</span> <span class="kn">import</span> <span class="n">prod</span>
+<span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
+
+<span class="kn">from</span> <span class="nn">h5py</span> <span class="kn">import</span> <span class="n">File</span>
+<span class="kn">from</span> <span class="nn">numpy</span> <span class="kn">import</span> <span class="n">array</span><span class="p">,</span> <span class="n">ones</span>
+
+<span class="kn">from</span> <span class="nn">adcorr.corrections</span> <span class="kn">import</span> <span class="n">mask_frames</span>
+<span class="kn">from</span> <span class="nn">adcorr.sequences</span> <span class="kn">import</span> <span class="n">pauw_dispersed_sample_sequence</span>
+
+<span class="kn">from</span> <span class="nn">matplotlib.pyplot</span> <span class="kn">import</span> <span class="n">imshow</span><span class="p">,</span> <span class="n">subplots</span>
+<span class="kn">from</span> <span class="nn">matplotlib.colors</span> <span class="kn">import</span> <span class="n">LogNorm</span>
+</pre></div>
+</div>
+</div>
+</section>
+<section id="Download-i22-tutorial-dataset">
+<h2>Download i22 tutorial dataset<a class="headerlink" href="#Download-i22-tutorial-dataset" title="Permalink to this heading">#</a></h2>
+<p>In this tutorial we will use the PEG dataset included in the Diamond Light Source i22 Tutorial Dataset, hosted on zenodo: <a class="reference external" href="https://zenodo.org/record/2671750">https://zenodo.org/record/2671750</a></p>
+<p>Please download this file and extract it; Once complete please set the <code class="docutils literal notranslate"><span class="pre">SAMPLE_PATH</span></code>, <code class="docutils literal notranslate"><span class="pre">DISPERSANT_PATH</span></code> and <code class="docutils literal notranslate"><span class="pre">BACKGROUND_PATH</span></code> to the locations of the <code class="docutils literal notranslate"><span class="pre">i22-363095.nxs</span></code>, <code class="docutils literal notranslate"><span class="pre">i22-363096.nxs</span></code> and <code class="docutils literal notranslate"><span class="pre">i22-363098.nxs</span></code> files respectively.</p>
+<p>The PEG dataset contains a series of NeXus files corresponding to individual experimental captures, by reading the <code class="docutils literal notranslate"><span class="pre">entry1/title</span></code> entry of each we can deduce that they have the following correspondence:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">i22-363095.nxs</span></code>: Empty capillary tube</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">i22-363096.nxs</span></code>: Water in capillary tube</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">i22-363098.nxs</span></code> - <code class="docutils literal notranslate"><span class="pre">i22-363107.nxs</span></code>: PEG in water (varying concentrations)</p></li>
+</ul>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">SAMPLE_PATH</span> <span class="o">=</span>  <span class="n">Path</span><span class="p">(</span><span class="s2">&quot;/tmp/I22 Tutorial Dataset/I22 PEG Tutorial/i22-363105.nxs&quot;</span><span class="p">)</span>
+<span class="n">DISPERSANT_PATH</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="s2">&quot;/tmp/I22 Tutorial Dataset/I22 PEG Tutorial/i22-363096.nxs&quot;</span><span class="p">)</span>
+<span class="n">BACKGROUND_PATH</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="s2">&quot;/tmp/I22 Tutorial Dataset/I22 PEG Tutorial/i22-363095.nxs&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</section>
+<section id="Load-required-data-from-files">
+<h2>Load required data from files<a class="headerlink" href="#Load-required-data-from-files" title="Permalink to this heading">#</a></h2>
+<p>We shall now extract all available requisite data from the available NeXus files.</p>
+<p>From each the sample, dispersant and background files we will load the following:</p>
+<ul class="simple">
+<li><p>Image stack, from <code class="docutils literal notranslate"><span class="pre">entry1/Pilatus2M_WAXS/data</span></code></p></li>
+<li><p>Count times, from <code class="docutils literal notranslate"><span class="pre">entry1/instrument/Pilatus2M_WAXS/count_time</span></code></p></li>
+<li><p>Incident flux, from <code class="docutils literal notranslate"><span class="pre">entry1/I0/data</span></code></p></li>
+<li><p>Transmitted flux, from <code class="docutils literal notranslate"><span class="pre">entry1/It/data</span></code></p></li>
+</ul>
+<p>Additionally, we will extract the following data from solely the sample NeXus file:</p>
+<ul class="simple">
+<li><p>Pixel wise mask, from <code class="docutils literal notranslate"><span class="pre">entry1/Pilatus2M_WAXS/pixel_mask</span></code></p></li>
+<li><p>Beam center x &amp; y, from <code class="docutils literal notranslate"><span class="pre">entry1/instrument/Pilatus2M_WAXS/beam_center_x</span></code> &amp; <code class="docutils literal notranslate"><span class="pre">entry1/instrument/Pilatus2M_WAXS/beam_center_y</span></code> respectively</p></li>
+<li><p>Physical pixel sizes in x &amp; y, from <code class="docutils literal notranslate"><span class="pre">entry1/instrument/Pilatus2M_WAXS/x_pixel_size</span></code> &amp; <code class="docutils literal notranslate"><span class="pre">entry1/instrument/Pilatus2M_WAXS/y_pixel_size</span></code> respectively</p></li>
+<li><p>Distance between sample and detector, from <code class="docutils literal notranslate"><span class="pre">entry1/instrument/Pilatus2M_WAXS/distance</span></code></p></li>
+<li><p>Sample thickness, from <code class="docutils literal notranslate"><span class="pre">entry1/sample/thickness</span></code></p></li>
+</ul>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="n">File</span><span class="p">(</span><span class="n">SAMPLE_PATH</span><span class="p">)</span> <span class="k">as</span> <span class="n">sample_file</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Retrieving sample from </span><span class="si">{</span><span class="n">array</span><span class="p">(</span><span class="n">sample_file</span><span class="p">[</span><span class="s1">&#39;entry1/title&#39;</span><span class="p">])</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="n">frames</span> <span class="o">=</span> <span class="n">array</span><span class="p">(</span><span class="n">sample_file</span><span class="p">[</span><span class="s2">&quot;entry1/Pilatus2M_WAXS/data&quot;</span><span class="p">])</span>
+    <span class="n">frames_count_times</span> <span class="o">=</span> <span class="n">array</span><span class="p">(</span><span class="n">sample_file</span><span class="p">[</span><span class="s2">&quot;entry1/instrument/Pilatus2M_WAXS/count_time&quot;</span><span class="p">])</span>
+    <span class="n">frames_incident_flux</span> <span class="o">=</span> <span class="n">array</span><span class="p">(</span><span class="n">sample_file</span><span class="p">[</span><span class="s2">&quot;entry1/I0/data&quot;</span><span class="p">])</span>
+    <span class="n">frames_transmitted_flux</span> <span class="o">=</span> <span class="n">array</span><span class="p">(</span><span class="n">sample_file</span><span class="p">[</span><span class="s2">&quot;entry1/It/data&quot;</span><span class="p">])</span>
+
+    <span class="n">mask</span> <span class="o">=</span> <span class="n">array</span><span class="p">(</span><span class="n">sample_file</span><span class="p">[</span><span class="s2">&quot;entry1/Pilatus2M_WAXS/pixel_mask&quot;</span><span class="p">])</span>
+    <span class="n">beam_center_x</span> <span class="o">=</span> <span class="n">array</span><span class="p">(</span><span class="n">sample_file</span><span class="p">[</span><span class="s2">&quot;entry1/instrument/Pilatus2M_WAXS/beam_center_x&quot;</span><span class="p">])</span>
+    <span class="n">beam_center_y</span> <span class="o">=</span> <span class="n">array</span><span class="p">(</span><span class="n">sample_file</span><span class="p">[</span><span class="s2">&quot;entry1/instrument/Pilatus2M_WAXS/beam_center_y&quot;</span><span class="p">])</span>
+    <span class="n">x_pixel_size</span> <span class="o">=</span> <span class="n">array</span><span class="p">(</span><span class="n">sample_file</span><span class="p">[</span><span class="s2">&quot;entry1/instrument/Pilatus2M_WAXS/x_pixel_size&quot;</span><span class="p">])</span>
+    <span class="n">y_pixel_size</span> <span class="o">=</span> <span class="n">array</span><span class="p">(</span><span class="n">sample_file</span><span class="p">[</span><span class="s2">&quot;entry1/instrument/Pilatus2M_WAXS/y_pixel_size&quot;</span><span class="p">])</span>
+    <span class="n">sample_detector_separation</span> <span class="o">=</span> <span class="n">array</span><span class="p">(</span><span class="n">sample_file</span><span class="p">[</span><span class="s2">&quot;entry1/instrument/Pilatus2M_WAXS/distance&quot;</span><span class="p">])</span>
+    <span class="n">sample_thickness</span> <span class="o">=</span> <span class="n">array</span><span class="p">(</span><span class="n">sample_file</span><span class="p">[</span><span class="s2">&quot;entry1/sample/thickness&quot;</span><span class="p">])</span>
+
+<span class="k">with</span> <span class="n">File</span><span class="p">(</span><span class="n">DISPERSANT_PATH</span><span class="p">)</span> <span class="k">as</span> <span class="n">dispersant_file</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Retrieving dispersant from </span><span class="si">{</span><span class="n">array</span><span class="p">(</span><span class="n">dispersant_file</span><span class="p">[</span><span class="s1">&#39;entry1/title&#39;</span><span class="p">])</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="n">dispersants</span> <span class="o">=</span> <span class="n">array</span><span class="p">(</span><span class="n">dispersant_file</span><span class="p">[</span><span class="s2">&quot;entry1/Pilatus2M_WAXS/data&quot;</span><span class="p">])</span>
+    <span class="n">dispersants_count_times</span> <span class="o">=</span> <span class="n">array</span><span class="p">(</span><span class="n">dispersant_file</span><span class="p">[</span><span class="s2">&quot;entry1/instrument/Pilatus2M_WAXS/count_time&quot;</span><span class="p">])</span>
+    <span class="n">dispersants_incident_flux</span> <span class="o">=</span> <span class="n">array</span><span class="p">(</span><span class="n">dispersant_file</span><span class="p">[</span><span class="s2">&quot;entry1/I0/data&quot;</span><span class="p">])</span>
+    <span class="n">dispersants_transmitted_flux</span> <span class="o">=</span> <span class="n">array</span><span class="p">(</span><span class="n">dispersant_file</span><span class="p">[</span><span class="s2">&quot;entry1/It/data&quot;</span><span class="p">])</span>
+
+<span class="k">with</span> <span class="n">File</span><span class="p">(</span><span class="n">BACKGROUND_PATH</span><span class="p">)</span> <span class="k">as</span> <span class="n">background_file</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Retrieving background from </span><span class="si">{</span><span class="n">array</span><span class="p">(</span><span class="n">background_file</span><span class="p">[</span><span class="s1">&#39;entry1/title&#39;</span><span class="p">])</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="n">backgrounds</span> <span class="o">=</span> <span class="n">array</span><span class="p">(</span><span class="n">background_file</span><span class="p">[</span><span class="s2">&quot;entry1/Pilatus2M_WAXS/data&quot;</span><span class="p">])</span>
+    <span class="n">backgrounds_count_times</span> <span class="o">=</span> <span class="n">array</span><span class="p">(</span><span class="n">background_file</span><span class="p">[</span><span class="s2">&quot;entry1/instrument/Pilatus2M_WAXS/count_time&quot;</span><span class="p">])</span>
+    <span class="n">backgrounds_incident_flux</span> <span class="o">=</span> <span class="n">array</span><span class="p">(</span><span class="n">background_file</span><span class="p">[</span><span class="s2">&quot;entry1/I0/data&quot;</span><span class="p">])</span>
+    <span class="n">backgrounds_transmitted_flux</span> <span class="o">=</span> <span class="n">array</span><span class="p">(</span><span class="n">background_file</span><span class="p">[</span><span class="s2">&quot;entry1/It/data&quot;</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Retrieving sample from b&#39;PEG in water (80:20 v/v)&#39;
+Retrieving dispersant from b&#39;Water in capillary tube&#39;
+Retrieving background from b&#39;Empty capillary tube&#39;
+</pre></div></div>
+</div>
+</section>
+<section id="Prepare-data-for-processing">
+<h2>Prepare data for processing<a class="headerlink" href="#Prepare-data-for-processing" title="Permalink to this heading">#</a></h2>
+<section id="Re-shape-&amp;-scale-loaded-data">
+<h3>Re-shape &amp; scale loaded data<a class="headerlink" href="#Re-shape-&-scale-loaded-data" title="Permalink to this heading">#</a></h3>
+<p>Prior to correction, we must re-shape and scale the loaded data to fit out requisite dimensionality and units.</p>
+<p>For each the sample, dispersant and background we will apply the following re-shaping:</p>
+<ul class="simple">
+<li><p>Image stacks will be reshaped to three dimensions (<code class="docutils literal notranslate"><span class="pre">NumFrames</span></code>, <code class="docutils literal notranslate"><span class="pre">FrameWidth</span></code>, <code class="docutils literal notranslate"><span class="pre">FrameHeight</span></code>)</p></li>
+<li><p>Count times will be flattened to a one dimensional array</p></li>
+<li><p>Incident flux will be flattened to a one dimensional array</p></li>
+<li><p>Transmitted flux will be flattened to a one dimensional array</p></li>
+</ul>
+<p>Additionally, we will extract the singular value in each the beam center, pixel size and thickness arrays and convert them to a scalar value.</p>
+<p>Finally, we will perform the following scaling:</p>
+<ul class="simple">
+<li><p>Incident flux will be scaled from milli-counts to counts</p></li>
+<li><p>Transmitted flux will be scaled from micro-counts to counts</p></li>
+<li><p>Sample thickness will be scaled from milli-metres to metres</p></li>
+</ul>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">frames</span> <span class="o">=</span> <span class="n">frames</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">prod</span><span class="p">(</span><span class="n">frames</span><span class="o">.</span><span class="n">shape</span><span class="p">[:</span><span class="o">-</span><span class="mi">2</span><span class="p">]),</span> <span class="o">*</span><span class="n">frames</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="o">-</span><span class="mi">2</span><span class="p">:])</span>
+<span class="n">frames_count_times</span> <span class="o">=</span> <span class="n">frames_count_times</span><span class="o">.</span><span class="n">flatten</span><span class="p">()</span>
+<span class="n">frames_incident_flux</span> <span class="o">=</span> <span class="n">frames_incident_flux</span><span class="o">.</span><span class="n">flatten</span><span class="p">()</span> <span class="o">*</span> <span class="mf">1e-3</span>
+<span class="n">frames_transmitted_flux</span> <span class="o">=</span> <span class="n">frames_transmitted_flux</span><span class="o">.</span><span class="n">flatten</span><span class="p">()</span> <span class="o">*</span> <span class="mf">1e-6</span>
+
+<span class="n">dispersants</span> <span class="o">=</span> <span class="n">dispersants</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">prod</span><span class="p">(</span><span class="n">dispersants</span><span class="o">.</span><span class="n">shape</span><span class="p">[:</span><span class="o">-</span><span class="mi">2</span><span class="p">]),</span> <span class="o">*</span><span class="n">dispersants</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="o">-</span><span class="mi">2</span><span class="p">:])</span>
+<span class="n">dispersants_count_times</span> <span class="o">=</span> <span class="n">dispersants_count_times</span><span class="o">.</span><span class="n">flatten</span><span class="p">()</span>
+<span class="n">dispersants_incident_flux</span> <span class="o">=</span> <span class="n">dispersants_incident_flux</span><span class="o">.</span><span class="n">flatten</span><span class="p">()</span> <span class="o">*</span> <span class="mf">1e-3</span>
+<span class="n">dispersants_transmitted_flux</span> <span class="o">=</span> <span class="n">dispersants_transmitted_flux</span><span class="o">.</span><span class="n">flatten</span><span class="p">()</span> <span class="o">*</span> <span class="mf">1e-6</span>
+
+<span class="n">backgrounds</span> <span class="o">=</span> <span class="n">backgrounds</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">prod</span><span class="p">(</span><span class="n">backgrounds</span><span class="o">.</span><span class="n">shape</span><span class="p">[:</span><span class="o">-</span><span class="mi">2</span><span class="p">]),</span> <span class="o">*</span><span class="n">backgrounds</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="o">-</span><span class="mi">2</span><span class="p">:])</span>
+<span class="n">backgrounds_count_times</span> <span class="o">=</span> <span class="n">backgrounds_count_times</span><span class="o">.</span><span class="n">flatten</span><span class="p">()</span>
+<span class="n">backgrounds_incident_flux</span> <span class="o">=</span> <span class="n">backgrounds_incident_flux</span><span class="o">.</span><span class="n">flatten</span><span class="p">()</span> <span class="o">*</span> <span class="mf">1e-3</span>
+<span class="n">backgrounds_transmitted_flux</span> <span class="o">=</span> <span class="n">backgrounds_transmitted_flux</span><span class="o">.</span><span class="n">flatten</span><span class="p">()</span> <span class="o">*</span> <span class="mf">1e-6</span>
+
+<span class="n">beam_center_pixels</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="n">beam_center_y</span><span class="o">.</span><span class="n">item</span><span class="p">(),</span>
+    <span class="n">beam_center_x</span><span class="o">.</span><span class="n">item</span><span class="p">()</span>
+<span class="p">)</span>
+<span class="n">pixel_sizes</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="n">x_pixel_size</span><span class="o">.</span><span class="n">item</span><span class="p">(),</span>
+    <span class="n">y_pixel_size</span><span class="o">.</span><span class="n">item</span><span class="p">()</span>
+<span class="p">)</span>
+<span class="n">sample_thickness</span> <span class="o">=</span> <span class="n">sample_thickness</span><span class="o">.</span><span class="n">item</span><span class="p">()</span> <span class="o">*</span> <span class="mf">1e-3</span>
+</pre></div>
+</div>
+</div>
+</section>
+<section id="Add-additional-fields">
+<h3>Add additional fields<a class="headerlink" href="#Add-additional-fields" title="Permalink to this heading">#</a></h3>
+<p>Several required fields are not available from the downloaded datasets, as such we will have to provide constants, as follows:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">FLATFIELD</span></code> is assigned a uniform field of ones, as flatfield correction has been applied by the detector</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">MINIMUM_PULSE_SEPARATION</span></code> is assigned a value of 2μs, this is typical for a photon counting detector</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">MINIMUM_ARRIVAL_SEPARATION</span></code> is assigned a value of 3μs, this is typical for a photon counting detector</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">BASE_DARK_CURRENT</span></code> is assigned a value of zero, as we have no information on it</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">TEMPORAL_DARK_CURRENT</span></code> is assigned a value of zero, as we have no information on it</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">FLUX_DEPENDANT_DARK_CURRENT</span></code> is assigned a value of zero, as we have no information on it</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">SENSOR_ABSORPTION_COEFFICIENT</span></code> is assigned a value of 0.85, this is typical for a silicone based sensor</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">SENSOR_THICKNESS</span></code> is assigned a value of 1mm, this is typical for a silicone based photon counting detector</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">BEAM_POLARIZATION</span></code> is assigned a value of 0.5, representing unpolarized light</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">DISPLACED_FRACTION</span></code> is assigned a value of 0.8, as shown in the <code class="docutils literal notranslate"><span class="pre">entry1/title</span></code> field of the sample file</p></li>
+</ul>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">FLATFIELD</span> <span class="o">=</span> <span class="n">ones</span><span class="p">(</span><span class="n">frames</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="o">-</span><span class="mi">2</span><span class="p">:])</span>
+<span class="n">MINIMUM_PULSE_SEPARATION</span> <span class="o">=</span> <span class="mf">2e-6</span>
+<span class="n">MINIMUM_ARRIVAL_SEPARATION</span> <span class="o">=</span> <span class="mf">3e-6</span>
+<span class="n">BASE_DARK_CURRENT</span> <span class="o">=</span> <span class="mf">0.0</span>
+<span class="n">TEMPORAL_DARK_CURRENT</span> <span class="o">=</span> <span class="mf">0.0</span>
+<span class="n">FLUX_DEPENDANT_DARK_CURRENT</span> <span class="o">=</span> <span class="mf">0.0</span>
+<span class="n">SENSOR_ABSORPTION_COEFFICIENT</span> <span class="o">=</span> <span class="mf">0.85</span>
+<span class="n">SENSOR_THICKNESS</span> <span class="o">=</span> <span class="mf">1e-3</span>
+<span class="n">BEAM_POLARIZATION</span> <span class="o">=</span> <span class="mf">0.5</span>
+<span class="n">DISPLACED_FRACTION</span> <span class="o">=</span> <span class="mf">0.8</span>
+</pre></div>
+</div>
+</div>
+</section>
+</section>
+<section id="Visualize-raw-data">
+<h2>Visualize raw data<a class="headerlink" href="#Visualize-raw-data" title="Permalink to this heading">#</a></h2>
+<p>As a sanity check, we will visualize the first image from the images stack of each the sample, dispersant and background datasets, with the pixelwise mask applied.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+<span class="n">fig</span><span class="o">.</span><span class="n">set_size_inches</span><span class="p">(</span><span class="mi">60</span><span class="p">,</span><span class="mi">20</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">mask_frames</span><span class="p">(</span><span class="n">frames</span><span class="p">,</span> <span class="n">mask</span><span class="p">)[</span><span class="mi">0</span><span class="p">],</span> <span class="n">norm</span><span class="o">=</span><span class="n">LogNorm</span><span class="p">(),</span> <span class="n">interpolation</span><span class="o">=</span><span class="s2">&quot;none&quot;</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">title</span><span class="o">.</span><span class="n">set_text</span><span class="p">(</span><span class="s2">&quot;Sample&quot;</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">mask_frames</span><span class="p">(</span><span class="n">dispersants</span><span class="p">,</span> <span class="n">mask</span><span class="p">)[</span><span class="mi">0</span><span class="p">],</span> <span class="n">norm</span><span class="o">=</span><span class="n">LogNorm</span><span class="p">(),</span> <span class="n">interpolation</span><span class="o">=</span><span class="s2">&quot;none&quot;</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">title</span><span class="o">.</span><span class="n">set_text</span><span class="p">(</span><span class="s2">&quot;Dispersant&quot;</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">mask_frames</span><span class="p">(</span><span class="n">backgrounds</span><span class="p">,</span> <span class="n">mask</span><span class="p">)[</span><span class="mi">0</span><span class="p">],</span> <span class="n">norm</span><span class="o">=</span><span class="n">LogNorm</span><span class="p">(),</span> <span class="n">interpolation</span><span class="o">=</span><span class="s2">&quot;none&quot;</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">title</span><span class="o">.</span><span class="n">set_text</span><span class="p">(</span><span class="s2">&quot;Background&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../../_images/user_tutorials_i22_corrections_11_0.png" src="../../_images/user_tutorials_i22_corrections_11_0.png" />
+</div>
+</div>
+</section>
+<section id="Correct-data-using-Pauw-dispersed-sample-sequence">
+<h2>Correct data using Pauw dispersed sample sequence<a class="headerlink" href="#Correct-data-using-Pauw-dispersed-sample-sequence" title="Permalink to this heading">#</a></h2>
+<p>We will now apply the dispersed sample data correction sequence described by Pauw et al. (2017) [<a class="reference external" href="https://doi.org/10.1107/S1600576717015096">https://doi.org/10.1107/S1600576717015096</a>] by calling the <code class="docutils literal notranslate"><span class="pre">pauw_dispersed_sample_sequence</span></code> with all requisite parameters. The resultant corrected images will be stored in the <code class="docutils literal notranslate"><span class="pre">corrected_frames</span></code> variable for subsequent visualization.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">corrected_frames</span> <span class="o">=</span> <span class="n">pauw_dispersed_sample_sequence</span><span class="p">(</span>
+    <span class="n">frames</span><span class="p">,</span>
+    <span class="n">dispersants</span><span class="p">,</span>
+    <span class="n">backgrounds</span><span class="p">,</span>
+    <span class="n">mask</span><span class="p">,</span>
+    <span class="n">FLATFIELD</span><span class="p">,</span>
+    <span class="n">frames_count_times</span><span class="p">,</span>
+    <span class="n">dispersants_count_times</span><span class="p">,</span>
+    <span class="n">backgrounds_count_times</span><span class="p">,</span>
+    <span class="n">frames_incident_flux</span><span class="p">,</span>
+    <span class="n">frames_transmitted_flux</span><span class="p">,</span>
+    <span class="n">dispersants_incident_flux</span><span class="p">,</span>
+    <span class="n">dispersants_transmitted_flux</span><span class="p">,</span>
+    <span class="n">backgrounds_incident_flux</span><span class="p">,</span>
+    <span class="n">backgrounds_transmitted_flux</span><span class="p">,</span>
+    <span class="n">MINIMUM_PULSE_SEPARATION</span><span class="p">,</span>
+    <span class="n">MINIMUM_ARRIVAL_SEPARATION</span><span class="p">,</span>
+    <span class="n">BASE_DARK_CURRENT</span><span class="p">,</span>
+    <span class="n">TEMPORAL_DARK_CURRENT</span><span class="p">,</span>
+    <span class="n">FLUX_DEPENDANT_DARK_CURRENT</span><span class="p">,</span>
+    <span class="n">beam_center_pixels</span><span class="p">,</span>
+    <span class="n">pixel_sizes</span><span class="p">,</span>
+    <span class="n">sample_detector_separation</span><span class="p">,</span>
+    <span class="n">SENSOR_ABSORPTION_COEFFICIENT</span><span class="p">,</span>
+    <span class="n">sample_thickness</span><span class="p">,</span>
+    <span class="n">SENSOR_THICKNESS</span><span class="p">,</span>
+    <span class="n">BEAM_POLARIZATION</span><span class="p">,</span>
+    <span class="n">DISPLACED_FRACTION</span><span class="p">,</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</section>
+<section id="Visualize-corrected-data">
+<h2>Visualize corrected data<a class="headerlink" href="#Visualize-corrected-data" title="Permalink to this heading">#</a></h2>
+<p>Finally, we will visualize both the first image of the uncorrected sample image stack beside the first image of the corrected image stack. As you can see, several artifacts due to the beam are removed including most notably the small Kapton ring near the beam center.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+<span class="n">fig</span><span class="o">.</span><span class="n">set_size_inches</span><span class="p">(</span><span class="mi">40</span><span class="p">,</span><span class="mi">20</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">mask_frames</span><span class="p">(</span><span class="n">frames</span><span class="p">,</span> <span class="n">mask</span><span class="p">)[</span><span class="mi">0</span><span class="p">],</span> <span class="n">norm</span><span class="o">=</span><span class="n">LogNorm</span><span class="p">())</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">title</span><span class="o">.</span><span class="n">set_text</span><span class="p">(</span><span class="s2">&quot;Uncorrected&quot;</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">corrected_frames</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">norm</span><span class="o">=</span><span class="n">LogNorm</span><span class="p">())</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">title</span><span class="o">.</span><span class="n">set_text</span><span class="p">(</span><span class="s2">&quot;Corrected&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../../_images/user_tutorials_i22_corrections_15_0.png" src="../../_images/user_tutorials_i22_corrections_15_0.png" />
+</div>
+</div>
+</section>
+</section>
+
+
+            </article>
+            
+            
+            
+            <footer class="bd-footer-article">
+                <!-- Previous / next buttons -->
+<div class='prev-next-area'>
+  <a class='left-prev' id="prev-link" href="installation.html" title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+          <p class="prev-next-subtitle">previous</p>
+          <p class="prev-next-title">Installation</p>
+      </div>
+  </a>
+  <a class='right-next' id="next-link" href="../how-to/run-container.html" title="next page">
+  <div class="prev-next-info">
+      <p class="prev-next-subtitle">next</p>
+      <p class="prev-next-title">Run in a container</p>
+  </div>
+  <i class="fa-solid fa-angle-right"></i>
+  </a>
+</div>
+            </footer>
+            
+          </div>
+          
+          
+          
+            <div class="bd-sidebar-secondary bd-toc">
+              
+<div class="toc-item">
+  
+<div class="tocsection onthispage">
+    <i class="fa-solid fa-list"></i> On this page
+</div>
+<nav id="bd-toc-nav" class="page-toc">
+    <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#Installation">
+   Installation
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#Import-dependencies">
+   Import dependencies
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#Download-i22-tutorial-dataset">
+   Download i22 tutorial dataset
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#Load-required-data-from-files">
+   Load required data from files
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#Prepare-data-for-processing">
+   Prepare data for processing
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#Re-shape-&amp;-scale-loaded-data">
+     Re-shape &amp; scale loaded data
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#Add-additional-fields">
+     Add additional fields
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#Visualize-raw-data">
+   Visualize raw data
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#Correct-data-using-Pauw-dispersed-sample-sequence">
+   Correct data using Pauw dispersed sample sequence
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#Visualize-corrected-data">
+   Visualize corrected data
+  </a>
+ </li>
+</ul>
+
+</nav>
+</div>
+
+<div class="toc-item">
+  
+<div id="searchbox"></div>
+</div>
+
+<div class="toc-item">
+  
+
+<div class="tocsection editthispage">
+    <a href="https://github.com/DiamondLightSource/adcorr/edit/0.2.1/docs/user/tutorials/i22_corrections.ipynb">
+        <i class="fa-solid fa-pencil"></i> Edit this page
+    </a>
+</div>
+
+</div>
+
+<div class="toc-item">
+  
+<div class="tocsection sourcelink">
+    <a href="../../_sources/user/tutorials/i22_corrections.ipynb.txt">
+        <i class="fa-solid fa-file-lines"></i> Show Source
+    </a>
+</div>
+
+</div>
+
+            </div>
+          
+          
+        </div>
+        <footer class="bd-footer-content">
+          <div class="bd-footer-content__inner">
+            
+          </div>
+        </footer>
+        
+      </main>
+    </div>
+  </div>
+
+  
+    
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../_static/scripts/bootstrap.js?digest=796348d33e8b1d947c94"></script>
+<script src="../../_static/scripts/pydata-sphinx-theme.js?digest=796348d33e8b1d947c94"></script>
+
+  <footer class="bd-footer"><div class="bd-footer__inner container">
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    <p class="theme-version">
+    Built with the
+    <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">
+        PyData Sphinx Theme
+    </a>
+    0.12.0.
+</p>
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+  </footer>
+  </body>
+</html>
