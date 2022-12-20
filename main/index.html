@@ -6,7 +6,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
 
-    <title>adcorr &#8212; adcorr 0.2.2.dev1+gabb2326 documentation</title>
+    <title>papermill_service &#8212; adcorr 0.2.2.dev2+ga04794d documentation</title>
   
   
   
@@ -356,78 +356,34 @@
             
             <article class="bd-article" role="main">
               
-  <section id="adcorr">
-<h1>adcorr<a class="headerlink" href="#adcorr" title="Permalink to this heading">#</a></h1>
-<p><a class="reference external" href="https://github.com/DiamondLightSource/adcorr/actions?query=workflow%3ACode+branch%3Amain"><img alt="Code CI" src="https://github.com/DiamondLightSource/adcorr/workflows/Code%20CI/badge.svg?branch=main" /></a> <a class="reference external" href="https://github.com/DiamondLightSource/adcorr/actions?query=workflow%3ACode+branch%3Amain"><img alt="Docs CI" src="https://github.com/DiamondLightSource/adcorr/workflows/Docs%20CI/badge.svg?branch=main" /></a> <a class="reference external" href="https://codecov.io/gh/DiamondLightSource/adcorr"><img alt="Test Coverage" src="https://codecov.io/gh/DiamondLightSource/adcorr/branch/main/graph/badge.svg?flag=core" /></a> <a class="reference external" href="https://pypi.org/project/adcorr"><img alt="Latest PyPI version" src="https://img.shields.io/pypi/v/adcorr.svg" /></a> <a class="reference external" href="https://opensource.org/licenses/Apache-2.0"><img alt="Apache License" src="https://img.shields.io/badge/License-Apache%202.0-blue.svg" /></a></p>
-<p>This package provides a set of pure python functions for performing corrections on area
-detector data.</p>
-<p>Install via PyPI with:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip install adcorr
-</pre></div>
-</div>
-<section id="useful-links">
-<h2>Useful Links<a class="headerlink" href="#useful-links" title="Permalink to this heading">#</a></h2>
+  <section id="papermill-service">
+<h1>papermill_service<a class="headerlink" href="#papermill-service" title="Permalink to this heading">#</a></h1>
+<p><a class="reference external" href="https://github.com/garryod/papermill_service/actions/workflows/code.yml"><img alt="Code CI" src="https://github.com/garryod/papermill_service/actions/workflows/code.yml/badge.svg?branch=main" /></a> <a class="reference external" href="https://github.com/garryod/papermill_service/actions/workflows/docs.yml"><img alt="Docs CI" src="https://github.com/garryod/papermill_service/actions/workflows/docs.yml/badge.svg?branch=main" /></a> <a class="reference external" href="https://codecov.io/gh/garryod/papermill_service"><img alt="Test Coverage" src="https://codecov.io/gh/garryod/papermill_service/branch/main/graph/badge.svg" /></a> <a class="reference external" href="https://pypi.org/project/papermill_service"><img alt="Latest PyPI version" src="https://img.shields.io/pypi/v/papermill_service.svg" /></a> <a class="reference external" href="https://anaconda.org/garryod/papermill_service"><img alt="Latest Anaconda version" src="https://anaconda.org/garryod/papermill_service/badges/version.svg" /></a> <a class="reference external" href="https://opensource.org/licenses/Apache-2.0"><img alt="Apache License" src="https://img.shields.io/badge/License-Apache%202.0-blue.svg" /></a></p>
+<p>This package provides a service-line runner for jupyter notebooks, combining fastAPI and papermill.</p>
 <table class="table">
 <tbody>
 <tr class="row-odd"><td><p>PyPI</p></td>
-<td><p><a class="reference external" href="https://pypi.org/project/adcorr/">https://pypi.org/project/adcorr/</a></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">papermill_service</span></code></p></td>
 </tr>
-<tr class="row-even"><td><p>Source code</p></td>
-<td><p><a class="github reference external" href="https://github.com/DiamondLightSource/adcorr">DiamondLightSource/adcorr</a></p></td>
+<tr class="row-even"><td><p>Conda</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">conda</span> <span class="pre">install</span> <span class="pre">-c</span> <span class="pre">garryod</span> <span class="pre">papermill_service</span></code></p></td>
 </tr>
-<tr class="row-odd"><td><p>Documentation</p></td>
-<td><p><a class="reference external" href="https://DiamondLightSource.github.io/adcorr">https://DiamondLightSource.github.io/adcorr</a></p></td>
+<tr class="row-odd"><td><p>Source code</p></td>
+<td><p><a class="github reference external" href="https://github.com/garryod/papermill_service">garryod/papermill_service</a></p></td>
 </tr>
-<tr class="row-even"><td><p>Releases</p></td>
-<td><p><a class="github reference external" href="https://github.com/DiamondLightSource/adcorr/releases">DiamondLightSource/adcorr</a></p></td>
+<tr class="row-even"><td><p>Documentation</p></td>
+<td><p><a class="reference external" href="https://garryod.github.io/papermill_service">https://garryod.github.io/papermill_service</a></p></td>
+</tr>
+<tr class="row-odd"><td><p>Releases</p></td>
+<td><p><a class="github reference external" href="https://github.com/garryod/papermill_service/releases">garryod/papermill_service</a></p></td>
 </tr>
 </tbody>
 </table>
-</section>
-<section id="brief-example">
-<h2>Brief Example<a class="headerlink" href="#brief-example" title="Permalink to this heading">#</a></h2>
-<p>A brief example of performing corrections using the library is presented below:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">frames</span> <span class="o">=</span> <span class="n">load_my_frames</span><span class="p">()</span>
-<span class="n">mask</span> <span class="o">=</span> <span class="n">load_my_mask</span><span class="p">()</span>
-<span class="n">count_times</span> <span class="o">=</span> <span class="n">load_count_times</span><span class="p">()</span>
-
-<span class="n">frames</span> <span class="o">=</span> <span class="n">mask_frames</span><span class="p">(</span><span class="n">frames</span><span class="p">,</span> <span class="n">mask</span><span class="p">)</span>
-<span class="n">frames</span> <span class="o">=</span> <span class="n">correct_deadtime</span><span class="p">(</span>
-    <span class="n">frames</span><span class="p">,</span>
-    <span class="n">count_times</span><span class="p">,</span>
-    <span class="n">DETECTOR_MINIMUM_PULSE_SEPARATION</span><span class="p">,</span>
-    <span class="n">DETECTOR_MINIMUM_ARRIVAL_SEPARATION</span><span class="p">,</span>
-<span class="p">)</span>
-<span class="n">frames</span> <span class="o">=</span> <span class="n">correct_dark_current</span><span class="p">(</span>
-    <span class="n">frames</span><span class="p">,</span>
-    <span class="n">count_times</span><span class="p">,</span>
-    <span class="n">BASE_DARK_CURRENT</span><span class="p">,</span>
-    <span class="n">TEMPORAL_DARK_CURRENT</span><span class="p">,</span>
-    <span class="n">FLUX_DEPENDANT_DARK_CURRENT</span><span class="p">,</span>
-<span class="p">)</span>
-<span class="o">...</span>
+<p>To configure th</p>
+<p>To start the service, simply run:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ NOTEBOOK_PATH=/path/to/notebook.ipynb python -m papermill_service
 </pre></div>
 </div>
-</section>
-<section id="library-compatibility">
-<h2>Library Compatibility<a class="headerlink" href="#library-compatibility" title="Permalink to this heading">#</a></h2>
-<table class="table">
-<tbody>
-<tr class="row-odd"><td><p>Library</p></td>
-<td><p>Tests</p></td>
-<td><p>Coverage</p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference external" href="https://github.com/DiamondLightSource/numcertain">numcertain</a></p></td>
-<td><p><a class="reference external" href="https://github.com/DiamondLightSource/adcorr/actions?query=workflow%3ACode+branch%3Amain"><img alt="Numcertain Compatibility Test Outcome" src="https://raw.githubusercontent.com/DiamondLightSource/adcorr/gh-badges/main/ubuntu-latest_3.9_false_numcertain.svg" /></a></p></td>
-<td><p><a class="reference external" href="https://codecov.io/gh/DiamondLightSource/adcorr"><img alt="Numcertain Compatibility Test Coverage" src="https://codecov.io/gh/DiamondLightSource/adcorr/branch/main/graph/badge.svg?flag=numcertain" /></a></p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference external" href="https://pint.readthedocs.io/en/stable/">Pint</a></p></td>
-<td><p><a class="reference external" href="https://github.com/DiamondLightSource/adcorr/actions?query=workflow%3ACode+branch%3Amain"><img alt="Pint Compatibility Test Outcome" src="https://raw.githubusercontent.com/DiamondLightSource/adcorr/gh-badges/main/ubuntu-latest_3.9_false_pint.svg" /></a></p></td>
-<td><p><a class="reference external" href="https://codecov.io/gh/DiamondLightSource/adcorr"><img alt="Pint Compatibility Test Coverage" src="https://codecov.io/gh/DiamondLightSource/adcorr/branch/main/graph/badge.svg?flag=pint" /></a></p></td>
-</tr>
-</tbody>
-</table>
-</section>
 <section id="how-the-documentation-is-structured">
 <h2>How the documentation is structured<a class="headerlink" href="#how-the-documentation-is-structured" title="Permalink to this heading">#</a></h2>
 <p>The documentation is split into 2 sections:</p>
