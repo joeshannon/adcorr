@@ -26,5 +26,18 @@ jobs:
           requirements_file: requirements-dev-3.x.txt
           install_options: -e .[docs]
 
+      - name: Cache tutorial dataset
+        id: cache-tutorial-dataset
+        uses: actions/cache@v3
+        with:
+          path: /tmp/I22 Tutorial Dataset/
+          key: tutorial-dataset
+
+      - name: Download tutorial dataset
+        if: steps.cache-tutorial-dataset.outputs.cache-hit != 'true'
+        run: |
+          wget https://zenodo.org/record/2671750/files/I22%20Tutorial%20Dataset.zip -O /tmp/i22_dataset.zip
+          unzip /tmp/i22_dataset.zip -d /tmp/
+
       - name: Check links
         run: tox -e docs build -- -b linkcheck
