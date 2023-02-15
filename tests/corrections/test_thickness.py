@@ -95,7 +95,6 @@ def test_normalize_thickness_numcertain():
 
 @pytest.mark.pint
 def test_normalize_thickness_pint():
-
     from pint import UnitRegistry
 
     ureg = UnitRegistry(cache_folder=":auto:")
