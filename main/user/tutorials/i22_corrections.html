@@ -1,5 +1,4 @@
 
-
 <!DOCTYPE html>
 
 
@@ -7,9 +6,9 @@
 
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>i22 Corrections &#8212; adcorr 0.2.2.dev9+gc85b6c2 documentation</title>
+    <title>i22 Corrections &#8212; adcorr 0.2.2.dev10+g152064e documentation</title>
   
   
   
@@ -29,25 +28,22 @@
 <link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
 <link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
 
-    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
-    <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css" />
-    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css" />
-    <link rel="stylesheet" type="text/css" href="../../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css?v=eafc0fe6" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../_static/design-style.1e8bd061cd6da7fc9cf755528e8ffc24.min.css?v=0a3b3ea7" />
     <link rel="stylesheet" type="text/css" href="../../_static/nbsphinx-code-cells.css" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
   <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=e353d410970836974a52" />
 <link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52" />
 
-    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
-    <script src="../../_static/jquery.js"></script>
-    <script src="../../_static/underscore.js"></script>
-    <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
-    <script src="../../_static/doctools.js"></script>
-    <script src="../../_static/sphinx_highlight.js"></script>
-    <script src="../../_static/clipboard.min.js"></script>
-    <script src="../../_static/copybutton.js"></script>
-    <script src="../../_static/design-tabs.js"></script>
+    <script src="../../_static/documentation_options.js?v=50c5e173"></script>
+    <script src="../../_static/doctools.js?v=888ff710"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../_static/copybutton.js?v=30646c52"></script>
+    <script src="../../_static/design-tabs.js?v=36754332"></script>
     <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
     <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
@@ -56,7 +52,7 @@
         DOCUMENTATION_OPTIONS.theme_switcher_json_url = 'https://DiamondLightSource.github.io/adcorr/switcher.json';
         DOCUMENTATION_OPTIONS.theme_switcher_version_match = 'main';
         </script>
-    <link rel="shortcut icon" href="../../_static/dls-favicon.ico"/>
+    <link rel="icon" href="../../_static/dls-favicon.ico"/>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
     <link rel="next" title="Run in a container" href="../how-to/run-container.html" />
@@ -457,9 +453,9 @@ document.write(`
                 <article class="bd-article" role="main">
                   
   <section id="i22-Corrections">
-<h1>i22 Corrections<a class="headerlink" href="#i22-Corrections" title="Permalink to this heading">#</a></h1>
+<h1>i22 Corrections<a class="headerlink" href="#i22-Corrections" title="Link to this heading">#</a></h1>
 <section id="Installation">
-<h2>Installation<a class="headerlink" href="#Installation" title="Permalink to this heading">#</a></h2>
+<h2>Installation<a class="headerlink" href="#Installation" title="Link to this heading">#</a></h2>
 <p>To run this notebook locally, first clone the git repository and install the python dependencies as shown below:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/DiamondLightSource/adcorr.git
 <span class="nb">cd</span><span class="w"> </span>adcorr
@@ -469,7 +465,7 @@ pip<span class="w"> </span>install<span class="w"> </span>-e<span class="w"> </s
 <p>Alternatively, you may wish to clone the repository and open the project in a container with Visual Studio Code and the Remote Containers extension (<code class="docutils literal notranslate"><span class="pre">ms-vscode-remote.remote-containers</span></code>).</p>
 </section>
 <section id="Import-dependencies">
-<h2>Import dependencies<a class="headerlink" href="#Import-dependencies" title="Permalink to this heading">#</a></h2>
+<h2>Import dependencies<a class="headerlink" href="#Import-dependencies" title="Link to this heading">#</a></h2>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
 </pre></div>
@@ -490,7 +486,7 @@ pip<span class="w"> </span>install<span class="w"> </span>-e<span class="w"> </s
 </div>
 </section>
 <section id="Download-i22-tutorial-dataset">
-<h2>Download i22 tutorial dataset<a class="headerlink" href="#Download-i22-tutorial-dataset" title="Permalink to this heading">#</a></h2>
+<h2>Download i22 tutorial dataset<a class="headerlink" href="#Download-i22-tutorial-dataset" title="Link to this heading">#</a></h2>
 <p>In this tutorial we will use the PEG dataset included in the Diamond Light Source i22 Tutorial Dataset, hosted on zenodo: <a class="reference external" href="https://zenodo.org/record/2671750">https://zenodo.org/record/2671750</a></p>
 <p>Please download this file and extract it; Once complete please set the <code class="docutils literal notranslate"><span class="pre">SAMPLE_PATH</span></code>, <code class="docutils literal notranslate"><span class="pre">DISPERSANT_PATH</span></code> and <code class="docutils literal notranslate"><span class="pre">BACKGROUND_PATH</span></code> to the locations of the <code class="docutils literal notranslate"><span class="pre">i22-363095.nxs</span></code>, <code class="docutils literal notranslate"><span class="pre">i22-363096.nxs</span></code> and <code class="docutils literal notranslate"><span class="pre">i22-363098.nxs</span></code> files respectively.</p>
 <p>The PEG dataset contains a series of NeXus files corresponding to individual experimental captures, by reading the <code class="docutils literal notranslate"><span class="pre">entry1/title</span></code> entry of each we can deduce that they have the following correspondence:</p>
@@ -511,7 +507,7 @@ pip<span class="w"> </span>install<span class="w"> </span>-e<span class="w"> </s
 </div>
 </section>
 <section id="Load-required-data-from-files">
-<h2>Load required data from files<a class="headerlink" href="#Load-required-data-from-files" title="Permalink to this heading">#</a></h2>
+<h2>Load required data from files<a class="headerlink" href="#Load-required-data-from-files" title="Link to this heading">#</a></h2>
 <p>We shall now extract all available requisite data from the available NeXus files.</p>
 <p>From each the sample, dispersant and background files we will load the following:</p>
 <ul class="simple">
@@ -575,9 +571,9 @@ Retrieving background from b&#39;Empty capillary tube&#39;
 </div>
 </section>
 <section id="Prepare-data-for-processing">
-<h2>Prepare data for processing<a class="headerlink" href="#Prepare-data-for-processing" title="Permalink to this heading">#</a></h2>
+<h2>Prepare data for processing<a class="headerlink" href="#Prepare-data-for-processing" title="Link to this heading">#</a></h2>
 <section id="Re-shape-&amp;-scale-loaded-data">
-<h3>Re-shape &amp; scale loaded data<a class="headerlink" href="#Re-shape-&-scale-loaded-data" title="Permalink to this heading">#</a></h3>
+<h3>Re-shape &amp; scale loaded data<a class="headerlink" href="#Re-shape-&-scale-loaded-data" title="Link to this heading">#</a></h3>
 <p>Prior to correction, we must re-shape and scale the loaded data to fit out requisite dimensionality and units.</p>
 <p>For each the sample, dispersant and background we will apply the following re-shaping:</p>
 <ul class="simple">
@@ -626,7 +622,7 @@ Retrieving background from b&#39;Empty capillary tube&#39;
 </div>
 </section>
 <section id="Add-additional-fields">
-<h3>Add additional fields<a class="headerlink" href="#Add-additional-fields" title="Permalink to this heading">#</a></h3>
+<h3>Add additional fields<a class="headerlink" href="#Add-additional-fields" title="Link to this heading">#</a></h3>
 <p>Several required fields are not available from the downloaded datasets, as such we will have to provide constants, as follows:</p>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">FLATFIELD</span></code> is assigned a uniform field of ones, as flatfield correction has been applied by the detector</p></li>
@@ -660,7 +656,7 @@ Retrieving background from b&#39;Empty capillary tube&#39;
 </section>
 </section>
 <section id="Visualize-raw-data">
-<h2>Visualize raw data<a class="headerlink" href="#Visualize-raw-data" title="Permalink to this heading">#</a></h2>
+<h2>Visualize raw data<a class="headerlink" href="#Visualize-raw-data" title="Link to this heading">#</a></h2>
 <p>As a sanity check, we will visualize the first image from the images stack of each the sample, dispersant and background datasets, with the pixelwise mask applied.</p>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
@@ -686,7 +682,7 @@ Retrieving background from b&#39;Empty capillary tube&#39;
 </div>
 </section>
 <section id="Correct-data-using-Pauw-dispersed-sample-sequence">
-<h2>Correct data using Pauw dispersed sample sequence<a class="headerlink" href="#Correct-data-using-Pauw-dispersed-sample-sequence" title="Permalink to this heading">#</a></h2>
+<h2>Correct data using Pauw dispersed sample sequence<a class="headerlink" href="#Correct-data-using-Pauw-dispersed-sample-sequence" title="Link to this heading">#</a></h2>
 <p>We will now apply the dispersed sample data correction sequence described by Pauw et al. (2017) [<a class="reference external" href="https://doi.org/10.1107/S1600576717015096">https://doi.org/10.1107/S1600576717015096</a>] by calling the <code class="docutils literal notranslate"><span class="pre">pauw_dispersed_sample_sequence</span></code> with all requisite parameters. The resultant corrected images will be stored in the <code class="docutils literal notranslate"><span class="pre">corrected_frames</span></code> variable for subsequent visualization.</p>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
@@ -726,7 +722,7 @@ Retrieving background from b&#39;Empty capillary tube&#39;
 </div>
 </section>
 <section id="Visualize-corrected-data">
-<h2>Visualize corrected data<a class="headerlink" href="#Visualize-corrected-data" title="Permalink to this heading">#</a></h2>
+<h2>Visualize corrected data<a class="headerlink" href="#Visualize-corrected-data" title="Link to this heading">#</a></h2>
 <p>Finally, we will visualize both the first image of the uncorrected sample image stack beside the first image of the corrected image stack. As you can see, several artifacts due to the beam are removed including most notably the small Kapton ring near the beam center.</p>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
