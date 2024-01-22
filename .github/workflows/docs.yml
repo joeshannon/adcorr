@@ -32,7 +32,7 @@ jobs:
 
       - name: Cache tutorial dataset
         id: cache-tutorial-dataset
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: /tmp/I22 Tutorial Dataset/
           key: tutorial-dataset
