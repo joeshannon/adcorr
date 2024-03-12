@@ -1,0 +1,350 @@
+{
+    "cells": [
+        {
+            "cell_type": "markdown",
+            "metadata": {},
+            "source": [
+                "# i22 Corrections\n",
+                "\n",
+                "## Installation\n",
+                "\n",
+                "To run this notebook locally, first clone the git repository and install the python dependencies as shown below:\n",
+                "\n",
+                "```bash\n",
+                "    git clone https://github.com/DiamondLightSource/adcorr.git\n",
+                "    cd adcorr\n",
+                "    pip install -e .[dev,docs] -r requirements.txt\n",
+                "```\n",
+                "\n",
+                "Alternatively, you may wish to clone the repository and open the project in a container with Visual Studio Code and the Remote Containers extension (``ms-vscode-remote.remote-containers``).\n",
+                "\n",
+                "## Import dependencies"
+            ]
+        },
+        {
+            "cell_type": "code",
+            "execution_count": null,
+            "metadata": {},
+            "outputs": [],
+            "source": [
+                "from math import prod\n",
+                "from pathlib import Path\n",
+                "\n",
+                "from h5py import File\n",
+                "from numpy import array, ones\n",
+                "\n",
+                "from adcorr.corrections import mask_frames\n",
+                "from adcorr.sequences import pauw_dispersed_sample_sequence\n",
+                "\n",
+                "from matplotlib.pyplot import imshow, subplots\n",
+                "from matplotlib.colors import LogNorm"
+            ]
+        },
+        {
+            "cell_type": "markdown",
+            "metadata": {},
+            "source": [
+                "## Download i22 tutorial dataset\n",
+                "\n",
+                "In this tutorial we will use the PEG dataset included in the Diamond Light Source i22 Tutorial Dataset, hosted on zenodo: https://zenodo.org/record/2671750\n",
+                "\n",
+                "Please download this file and extract it; Once complete please set the ``SAMPLE_PATH``, ``DISPERSANT_PATH`` and ``BACKGROUND_PATH`` to the locations of the ``i22-363095.nxs``, ``i22-363096.nxs`` and ``i22-363098.nxs`` files respectively.\n",
+                "\n",
+                "The PEG dataset contains a series of NeXus files corresponding to individual experimental captures, by reading the ``entry1/title`` entry of each we can deduce that they have the following correspondence:\n",
+                "\n",
+                "* ``i22-363095.nxs``: Empty capillary tube\n",
+                "* ``i22-363096.nxs``: Water in capillary tube\n",
+                "* ``i22-363098.nxs`` - ``i22-363107.nxs``: PEG in water (varying concentrations)"
+            ]
+        },
+        {
+            "cell_type": "code",
+            "execution_count": null,
+            "metadata": {},
+            "outputs": [],
+            "source": [
+                "SAMPLE_PATH =  Path(\"/tmp/I22 Tutorial Dataset/I22 PEG Tutorial/i22-363105.nxs\")\n",
+                "DISPERSANT_PATH = Path(\"/tmp/I22 Tutorial Dataset/I22 PEG Tutorial/i22-363096.nxs\")\n",
+                "BACKGROUND_PATH = Path(\"/tmp/I22 Tutorial Dataset/I22 PEG Tutorial/i22-363095.nxs\")"
+            ]
+        },
+        {
+            "cell_type": "markdown",
+            "metadata": {},
+            "source": [
+                "## Load required data from files\n",
+                "\n",
+                "We shall now extract all available requisite data from the available NeXus files.\n",
+                "\n",
+                "From each the sample, dispersant and background files we will load the following:\n",
+                "\n",
+                "* Image stack, from ``entry1/Pilatus2M_WAXS/data``\n",
+                "* Count times, from ``entry1/instrument/Pilatus2M_WAXS/count_time``\n",
+                "* Incident flux, from ``entry1/I0/data``\n",
+                "* Transmitted flux, from ``entry1/It/data``\n",
+                "\n",
+                "Additionally, we will extract the following data from solely the sample NeXus file:\n",
+                "\n",
+                "* Pixel wise mask, from ``entry1/Pilatus2M_WAXS/pixel_mask``\n",
+                "* Beam center x & y, from ``entry1/instrument/Pilatus2M_WAXS/beam_center_x`` & ``entry1/instrument/Pilatus2M_WAXS/beam_center_y`` respectively\n",
+                "* Physical pixel sizes in x & y, from ``entry1/instrument/Pilatus2M_WAXS/x_pixel_size`` & ``entry1/instrument/Pilatus2M_WAXS/y_pixel_size`` respectively\n",
+                "* Distance between sample and detector, from ``entry1/instrument/Pilatus2M_WAXS/distance``\n",
+                "* Sample thickness, from ``entry1/sample/thickness``"
+            ]
+        },
+        {
+            "cell_type": "code",
+            "execution_count": null,
+            "metadata": {},
+            "outputs": [],
+            "source": [
+                "with File(SAMPLE_PATH) as sample_file:\n",
+                "    print(f\"Retrieving sample from {array(sample_file['entry1/title'])}\")\n",
+                "    frames = array(sample_file[\"entry1/Pilatus2M_WAXS/data\"])\n",
+                "    frames_count_times = array(sample_file[\"entry1/instrument/Pilatus2M_WAXS/count_time\"])\n",
+                "    frames_incident_flux = array(sample_file[\"entry1/I0/data\"])\n",
+                "    frames_transmitted_flux = array(sample_file[\"entry1/It/data\"])\n",
+                "\n",
+                "    mask = array(sample_file[\"entry1/Pilatus2M_WAXS/pixel_mask\"])\n",
+                "    beam_center_x = array(sample_file[\"entry1/instrument/Pilatus2M_WAXS/beam_center_x\"])\n",
+                "    beam_center_y = array(sample_file[\"entry1/instrument/Pilatus2M_WAXS/beam_center_y\"])\n",
+                "    x_pixel_size = array(sample_file[\"entry1/instrument/Pilatus2M_WAXS/x_pixel_size\"])\n",
+                "    y_pixel_size = array(sample_file[\"entry1/instrument/Pilatus2M_WAXS/y_pixel_size\"])\n",
+                "    sample_detector_separation = array(sample_file[\"entry1/instrument/Pilatus2M_WAXS/distance\"])\n",
+                "    sample_thickness = array(sample_file[\"entry1/sample/thickness\"])\n",
+                "\n",
+                "with File(DISPERSANT_PATH) as dispersant_file:\n",
+                "    print(f\"Retrieving dispersant from {array(dispersant_file['entry1/title'])}\")\n",
+                "    dispersants = array(dispersant_file[\"entry1/Pilatus2M_WAXS/data\"])\n",
+                "    dispersants_count_times = array(dispersant_file[\"entry1/instrument/Pilatus2M_WAXS/count_time\"])\n",
+                "    dispersants_incident_flux = array(dispersant_file[\"entry1/I0/data\"])\n",
+                "    dispersants_transmitted_flux = array(dispersant_file[\"entry1/It/data\"])\n",
+                "\n",
+                "with File(BACKGROUND_PATH) as background_file:\n",
+                "    print(f\"Retrieving background from {array(background_file['entry1/title'])}\")\n",
+                "    backgrounds = array(background_file[\"entry1/Pilatus2M_WAXS/data\"])\n",
+                "    backgrounds_count_times = array(background_file[\"entry1/instrument/Pilatus2M_WAXS/count_time\"])\n",
+                "    backgrounds_incident_flux = array(background_file[\"entry1/I0/data\"])\n",
+                "    backgrounds_transmitted_flux = array(background_file[\"entry1/It/data\"])"
+            ]
+        },
+        {
+            "cell_type": "markdown",
+            "metadata": {},
+            "source": [
+                "## Prepare data for processing\n",
+                "\n",
+                "### Re-shape & scale loaded data\n",
+                "\n",
+                "Prior to correction, we must re-shape and scale the loaded data to fit out requisite dimensionality and units.\n",
+                "\n",
+                "For each the sample, dispersant and background we will apply the following re-shaping:\n",
+                "\n",
+                "* Image stacks will be reshaped to three dimensions (``NumFrames``, ``FrameWidth``, ``FrameHeight``)\n",
+                "* Count times will be flattened to a one dimensional array\n",
+                "* Incident flux will be flattened to a one dimensional array\n",
+                "* Transmitted flux will be flattened to a one dimensional array\n",
+                "\n",
+                "Additionally, we will extract the singular value in each the beam center, pixel size and thickness arrays and convert them to a scalar value.\n",
+                "\n",
+                "Finally, we will perform the following scaling:\n",
+                "\n",
+                "* Incident flux will be scaled from milli-counts to counts\n",
+                "* Transmitted flux will be scaled from micro-counts to counts\n",
+                "* Sample thickness will be scaled from milli-metres to metres"
+            ]
+        },
+        {
+            "cell_type": "code",
+            "execution_count": null,
+            "metadata": {},
+            "outputs": [],
+            "source": [
+                "frames = frames.reshape(prod(frames.shape[:-2]), *frames.shape[-2:])\n",
+                "frames_count_times = frames_count_times.flatten()\n",
+                "frames_incident_flux = frames_incident_flux.flatten() * 1e-3\n",
+                "frames_transmitted_flux = frames_transmitted_flux.flatten() * 1e-6\n",
+                "\n",
+                "dispersants = dispersants.reshape(prod(dispersants.shape[:-2]), *dispersants.shape[-2:])\n",
+                "dispersants_count_times = dispersants_count_times.flatten()\n",
+                "dispersants_incident_flux = dispersants_incident_flux.flatten() * 1e-3\n",
+                "dispersants_transmitted_flux = dispersants_transmitted_flux.flatten() * 1e-6\n",
+                "\n",
+                "backgrounds = backgrounds.reshape(prod(backgrounds.shape[:-2]), *backgrounds.shape[-2:])\n",
+                "backgrounds_count_times = backgrounds_count_times.flatten()\n",
+                "backgrounds_incident_flux = backgrounds_incident_flux.flatten() * 1e-3\n",
+                "backgrounds_transmitted_flux = backgrounds_transmitted_flux.flatten() * 1e-6\n",
+                "\n",
+                "beam_center_pixels = (\n",
+                "    beam_center_y.item(),\n",
+                "    beam_center_x.item()\n",
+                ")\n",
+                "pixel_sizes = (\n",
+                "    x_pixel_size.item(),\n",
+                "    y_pixel_size.item()\n",
+                ")\n",
+                "sample_thickness = sample_thickness.item() * 1e-3"
+            ]
+        },
+        {
+            "cell_type": "markdown",
+            "metadata": {},
+            "source": [
+                "### Add additional fields\n",
+                "\n",
+                "Several required fields are not available from the downloaded datasets, as such we will have to provide constants, as follows:\n",
+                "\n",
+                "* ``FLATFIELD`` is assigned a uniform field of ones, as flatfield correction has been applied by the detector\n",
+                "* ``MINIMUM_PULSE_SEPARATION`` is assigned a value of 2μs, this is typical for a photon counting detector\n",
+                "* ``MINIMUM_ARRIVAL_SEPARATION`` is assigned a value of 3μs, this is typical for a photon counting detector\n",
+                "* ``BASE_DARK_CURRENT`` is assigned a value of zero, as we have no information on it\n",
+                "* ``TEMPORAL_DARK_CURRENT`` is assigned a value of zero, as we have no information on it\n",
+                "* ``FLUX_DEPENDANT_DARK_CURRENT`` is assigned a value of zero, as we have no information on it\n",
+                "* ``SENSOR_ABSORPTION_COEFFICIENT`` is assigned a value of 0.85, this is typical for a silicone based sensor\n",
+                "* ``SENSOR_THICKNESS`` is assigned a value of 1mm, this is typical for a silicone based photon counting detector\n",
+                "* ``BEAM_POLARIZATION`` is assigned a value of 0.5, representing unpolarized light\n",
+                "* ``DISPLACED_FRACTION`` is assigned a value of 0.8, as shown in the ``entry1/title`` field of the sample file\n",
+                "\n"
+            ]
+        },
+        {
+            "cell_type": "code",
+            "execution_count": null,
+            "metadata": {},
+            "outputs": [],
+            "source": [
+                "FLATFIELD = ones(frames.shape[-2:])\n",
+                "MINIMUM_PULSE_SEPARATION = 2e-6\n",
+                "MINIMUM_ARRIVAL_SEPARATION = 3e-6\n",
+                "BASE_DARK_CURRENT = 0.0\n",
+                "TEMPORAL_DARK_CURRENT = 0.0\n",
+                "FLUX_DEPENDANT_DARK_CURRENT = 0.0\n",
+                "SENSOR_ABSORPTION_COEFFICIENT = 0.85\n",
+                "SENSOR_THICKNESS = 1e-3\n",
+                "BEAM_POLARIZATION = 0.5\n",
+                "DISPLACED_FRACTION = 0.8"
+            ]
+        },
+        {
+            "cell_type": "markdown",
+            "metadata": {},
+            "source": [
+                "## Visualize raw data\n",
+                "\n",
+                "As a sanity check, we will visualize the first image from the images stack of each the sample, dispersant and background datasets, with the pixelwise mask applied."
+            ]
+        },
+        {
+            "cell_type": "code",
+            "execution_count": null,
+            "metadata": {},
+            "outputs": [],
+            "source": [
+                "fig, axes = subplots(1, 3)\n",
+                "fig.set_size_inches(60,20)\n",
+                "axes[0].imshow(mask_frames(frames, mask)[0], norm=LogNorm(), interpolation=\"none\")\n",
+                "axes[0].title.set_text(\"Sample\")\n",
+                "axes[1].imshow(mask_frames(dispersants, mask)[0], norm=LogNorm(), interpolation=\"none\")\n",
+                "axes[1].title.set_text(\"Dispersant\")\n",
+                "axes[2].imshow(mask_frames(backgrounds, mask)[0], norm=LogNorm(), interpolation=\"none\")\n",
+                "axes[2].title.set_text(\"Background\")"
+            ]
+        },
+        {
+            "cell_type": "markdown",
+            "metadata": {},
+            "source": [
+                "## Correct data using Pauw dispersed sample sequence\n",
+                "\n",
+                "We will now apply the dispersed sample data correction sequence described by Pauw et al. (2017) [https://doi.org/10.1107/S1600576717015096] by calling the ``pauw_dispersed_sample_sequence`` with all requisite parameters. The resultant corrected images will be stored in the ``corrected_frames`` variable for subsequent visualization."
+            ]
+        },
+        {
+            "cell_type": "code",
+            "execution_count": null,
+            "metadata": {},
+            "outputs": [],
+            "source": [
+                "corrected_frames = pauw_dispersed_sample_sequence(\n",
+                "    frames,\n",
+                "    dispersants,\n",
+                "    backgrounds,\n",
+                "    mask,\n",
+                "    FLATFIELD,\n",
+                "    frames_count_times,\n",
+                "    dispersants_count_times,\n",
+                "    backgrounds_count_times,\n",
+                "    frames_incident_flux,\n",
+                "    frames_transmitted_flux,\n",
+                "    dispersants_incident_flux,\n",
+                "    dispersants_transmitted_flux,\n",
+                "    backgrounds_incident_flux,\n",
+                "    backgrounds_transmitted_flux,\n",
+                "    MINIMUM_PULSE_SEPARATION,\n",
+                "    MINIMUM_ARRIVAL_SEPARATION,\n",
+                "    BASE_DARK_CURRENT,\n",
+                "    TEMPORAL_DARK_CURRENT,\n",
+                "    FLUX_DEPENDANT_DARK_CURRENT,\n",
+                "    beam_center_pixels,\n",
+                "    pixel_sizes,\n",
+                "    sample_detector_separation,\n",
+                "    SENSOR_ABSORPTION_COEFFICIENT,\n",
+                "    sample_thickness,\n",
+                "    SENSOR_THICKNESS,\n",
+                "    BEAM_POLARIZATION,\n",
+                "    DISPLACED_FRACTION,\n",
+                ")"
+            ]
+        },
+        {
+            "cell_type": "markdown",
+            "metadata": {},
+            "source": [
+                "## Visualize corrected data\n",
+                "\n",
+                "Finally, we will visualize both the first image of the uncorrected sample image stack beside the first image of the corrected image stack. As you can see, several artifacts due to the beam are removed including most notably the small Kapton ring near the beam center."
+            ]
+        },
+        {
+            "cell_type": "code",
+            "execution_count": null,
+            "metadata": {},
+            "outputs": [],
+            "source": [
+                "fig, axes = subplots(1, 2)\n",
+                "fig.set_size_inches(40,20)\n",
+                "axes[0].imshow(mask_frames(frames, mask)[0], norm=LogNorm())\n",
+                "axes[0].title.set_text(\"Uncorrected\")\n",
+                "axes[1].imshow(corrected_frames[0], norm=LogNorm())\n",
+                "axes[1].title.set_text(\"Corrected\")"
+            ]
+        }
+    ],
+    "metadata": {
+        "kernelspec": {
+            "display_name": "Python 3.10.8 ('venv')",
+            "language": "python",
+            "name": "python3"
+        },
+        "language_info": {
+            "codemirror_mode": {
+                "name": "ipython",
+                "version": 3
+            },
+            "file_extension": ".py",
+            "mimetype": "text/x-python",
+            "name": "python",
+            "nbconvert_exporter": "python",
+            "pygments_lexer": "ipython3",
+            "version": "3.10.8"
+        },
+        "orig_nbformat": 4,
+        "vscode": {
+            "interpreter": {
+                "hash": "006d5deb8e6cdcd4312641bdf15f3bc20f0769a7305d81173599a7b40f33b4a2"
+            }
+        }
+    },
+    "nbformat": 4,
+    "nbformat_minor": 2
+}
